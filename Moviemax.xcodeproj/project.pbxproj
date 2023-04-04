@@ -71,10 +71,10 @@
 		02E964C729DAC2D6001649E5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				CE141F4629DBF95100658CA8 /* UILabelText.swift */,
 				02E964BC29DABF2C001649E5 /* Assets.xcassets */,
 				02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */,
 				02E964C129DABF2C001649E5 /* Info.plist */,
-				CE141F4629DBF95100658CA8 /* UILabelText.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
