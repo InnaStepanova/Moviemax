@@ -13,6 +13,9 @@
 		02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */; };
 		02E964BD29DABF2C001649E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BC29DABF2C001649E5 /* Assets.xcassets */; };
 		02E964C029DABF2C001649E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */; };
+		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
+		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
+		CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		02E964BC29DABF2C001649E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02E964BF29DABF2C001649E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02E964C129DABF2C001649E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
+		CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,7 @@
 		02E964C729DAC2D6001649E5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				CE141F4629DBF95100658CA8 /* UILabelText.swift */,
 				02E964BC29DABF2C001649E5 /* Assets.xcassets */,
 				02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */,
 				02E964C129DABF2C001649E5 /* Info.plist */,
@@ -94,7 +101,10 @@
 		02E964C929DAC34A001649E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+
 				02357A7C29DACFC6008CE17A /* TabBar */,
+				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
+				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -169,9 +179,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
+				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
 				02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */,
+				CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */,
 				02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */,
 				02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */,
+				CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

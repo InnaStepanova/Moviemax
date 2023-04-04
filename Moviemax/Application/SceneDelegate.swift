@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = TabBarController()
         tabBarController.selectedIndex = 2
         window?.rootViewController = tabBarController
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
