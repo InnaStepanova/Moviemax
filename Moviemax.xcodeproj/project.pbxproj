@@ -63,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				02357A7D29DAD017008CE17A /* TabBarController.swift */,
+				95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -109,7 +110,6 @@
 				601C944729DDD977005F22DC /* Extensions */,
 				02357A8C29DD53AB008CE17A /* Fonts */,
 				CE141F4629DBF95100658CA8 /* UILabelText.swift */,
-				95879E9929DDAD8D00D20934 /* Image.swift */,
 				02357A9129DD5F36008CE17A /* Resources.swift */,
 				02E964BC29DABF2C001649E5 /* Assets.xcassets */,
 				02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */,
@@ -132,7 +132,6 @@
 			children = (
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
-				95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 				601C944429DDD214005F22DC /* ProfileSettings */,
@@ -241,7 +240,6 @@
 				CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */,
 				601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
-				95879E9A29DDAD8D00D20934 /* Image.swift in Sources */,
 				95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
