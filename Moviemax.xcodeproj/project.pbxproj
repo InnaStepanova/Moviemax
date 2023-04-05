@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A7D29DAD017008CE17A /* TabBarController.swift */; };
-		02357A8929DC752B008CE17A /* FilmLargeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A8829DC752B008CE17A /* FilmLargeCell.swift */; };
+		02357A8929DC752B008CE17A /* MovieLargeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A8829DC752B008CE17A /* MovieLargeCell.swift */; };
+		02357A8E29DD53FC008CE17A /* PlusJakartaSans-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02357A8D29DD53FC008CE17A /* PlusJakartaSans-VariableFont_wght.ttf */; };
+		02357A9029DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02357A8F29DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf */; };
+		02357A9229DD5F36008CE17A /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A9129DD5F36008CE17A /* Resources.swift */; };
 		02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B029DABF26001649E5 /* AppDelegate.swift */; };
 		02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B229DABF26001649E5 /* SceneDelegate.swift */; };
 		02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */; };
@@ -21,7 +24,10 @@
 
 /* Begin PBXFileReference section */
 		02357A7D29DAD017008CE17A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		02357A8829DC752B008CE17A /* FilmLargeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmLargeCell.swift; sourceTree = "<group>"; };
+		02357A8829DC752B008CE17A /* MovieLargeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLargeCell.swift; sourceTree = "<group>"; };
+		02357A8D29DD53FC008CE17A /* PlusJakartaSans-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlusJakartaSans-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		02357A8F29DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		02357A9129DD5F36008CE17A /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		02E964AD29DABF26001649E5 /* Moviemax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moviemax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E964B029DABF26001649E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02E964B229DABF26001649E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +57,15 @@
 				02357A7D29DAD017008CE17A /* TabBarController.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		02357A8C29DD53AB008CE17A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				02357A8F29DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf */,
+				02357A8D29DD53FC008CE17A /* PlusJakartaSans-VariableFont_wght.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		02E964A429DABF26001649E5 = {
@@ -83,7 +98,9 @@
 		02E964C729DAC2D6001649E5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				02357A8C29DD53AB008CE17A /* Fonts */,
 				CE141F4629DBF95100658CA8 /* UILabelText.swift */,
+				02357A9129DD5F36008CE17A /* Resources.swift */,
 				02E964BC29DABF2C001649E5 /* Assets.xcassets */,
 				02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */,
 				02E964C129DABF2C001649E5 /* Info.plist */,
@@ -106,7 +123,7 @@
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
-				02357A8829DC752B008CE17A /* FilmLargeCell.swift */,
+				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -169,8 +186,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02357A9029DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf in Resources */,
 				02E964C029DABF2C001649E5 /* LaunchScreen.storyboard in Resources */,
 				02E964BD29DABF2C001649E5 /* Assets.xcassets in Resources */,
+				02357A8E29DD53FC008CE17A /* PlusJakartaSans-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,8 +201,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
-				02357A8929DC752B008CE17A /* FilmLargeCell.swift in Sources */,
+				02357A8929DC752B008CE17A /* MovieLargeCell.swift in Sources */,
 				02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */,
+				02357A9229DD5F36008CE17A /* Resources.swift in Sources */,
 				CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */,
 				02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */,
 				02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */,
