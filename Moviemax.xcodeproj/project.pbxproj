@@ -101,7 +101,6 @@
 		02E964C929DAC34A001649E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
@@ -179,7 +178,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
 				02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */,
 				CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */,
@@ -325,6 +323,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7LRMH9N592;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moviemax/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -355,6 +354,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7LRMH9N592;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moviemax/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
