@@ -17,6 +17,7 @@
 		02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */; };
 		02E964BD29DABF2C001649E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BC29DABF2C001649E5 /* Assets.xcassets */; };
 		02E964C029DABF2C001649E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */; };
+		95879E9A29DDAD8D00D20934 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95879E9929DDAD8D00D20934 /* Image.swift */; };
 		95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */; };
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
@@ -36,6 +37,7 @@
 		02E964BC29DABF2C001649E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02E964BF29DABF2C001649E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02E964C129DABF2C001649E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95879E9929DDAD8D00D20934 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
@@ -57,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				02357A7D29DAD017008CE17A /* TabBarController.swift */,
-				95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -103,6 +104,7 @@
 			children = (
 				02357A8C29DD53AB008CE17A /* Fonts */,
 				CE141F4629DBF95100658CA8 /* UILabelText.swift */,
+				95879E9929DDAD8D00D20934 /* Image.swift */,
 				02357A9129DD5F36008CE17A /* Resources.swift */,
 				02E964BC29DABF2C001649E5 /* Assets.xcassets */,
 				02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */,
@@ -125,6 +127,7 @@
 			children = (
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
+				95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 			);
@@ -212,6 +215,7 @@
 				02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */,
 				CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
+				95879E9A29DDAD8D00D20934 /* Image.swift in Sources */,
 				95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
