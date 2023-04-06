@@ -17,9 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
 
-        let tabBarController = TabBarController()
+        let tabBarController = MovieDetail()
 //        tabBarController.selectedIndex = 2
-        window?.rootViewController = ProfileSettingsVC()
+        window?.rootViewController = tabBarController
 
     }
 
