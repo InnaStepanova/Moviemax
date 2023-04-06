@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-        let tabBarController = MovieDetail()
+        let tabBarController = ProbaVC()
 //        tabBarController.selectedIndex = 2
         window?.rootViewController = tabBarController
 
