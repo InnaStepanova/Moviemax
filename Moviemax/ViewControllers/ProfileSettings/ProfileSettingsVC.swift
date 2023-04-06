@@ -179,14 +179,6 @@ final class ProfileSettingsVC: UIViewController {
         return textView
     }()
     
-    private lazy var searchIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "search_alt")
-        imageView.contentMode = .scaleToFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.isEnabled = false
@@ -233,7 +225,6 @@ final class ProfileSettingsVC: UIViewController {
         scrollView.addSubview(femaleButton)
         scrollView.addSubview(locationLabel)
         scrollView.addSubview(locationTextView)
-        scrollView.addSubview(searchIcon)
         scrollView.addSubview(saveButton)
         setupConstraints()
     }
@@ -313,10 +304,7 @@ final class ProfileSettingsVC: UIViewController {
             locationTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants.Spacing.trailingStandartSpacing.negative),
             locationTextView.heightAnchor.constraint(equalToConstant: Constants.Size.locationTextFieldHeight),
             
-            searchIcon.topAnchor.constraint(equalTo: locationTextView.bottomAnchor, constant: Constants.Spacing.searchIconTopSpacing),
-            searchIcon.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            saveButton.topAnchor.constraint(equalTo: searchIcon.bottomAnchor, constant: Constants.Spacing.topStandartSpacing.half),
+            saveButton.topAnchor.constraint(equalTo: locationTextView.bottomAnchor, constant: Constants.Spacing.saveButtonTopSpacing),
             saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.Spacing.leadingStandartSpacing),
             saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants.Spacing.trailingStandartSpacing.negative),
             saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: Constants.Spacing.saveButtonBottomSpacing.negative),
@@ -336,7 +324,7 @@ private extension ProfileSettingsVC {
             static let topSpacingForScrollView: CGFloat = 37
             static let leadingSpacingForEditAvatar: CGFloat = 28
             static let spaceBetweenGenderButtons: CGFloat = 16
-            static let searchIconTopSpacing: CGFloat = 33
+            static let saveButtonTopSpacing: CGFloat = 64
             static let saveButtonBottomSpacing: CGFloat = 34
         }
         enum Size {
