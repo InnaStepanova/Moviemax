@@ -9,8 +9,15 @@ import UIKit
 
 final class MovieLargeCell: UICollectionViewCell {
     
+    private lazy var likeButton: LikeButton = {
+        let button = LikeButton()
+        return button
+    }()
+    
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         imageView.image = UIImage(named: "DriftingHome")
         return imageView
@@ -86,6 +93,7 @@ final class MovieLargeCell: UICollectionViewCell {
         addSubview(dateLabel)
         addSubview(movieIcon)
         addSubview(watchNowButton)
+        addSubview(likeButton)
     }
     
     private func setConstraint() {
@@ -97,6 +105,7 @@ final class MovieLargeCell: UICollectionViewCell {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         movieIcon.translatesAutoresizingMaskIntoConstraints = false
         watchNowButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             movieImage.heightAnchor.constraint(equalToConstant: 160),
@@ -125,6 +134,9 @@ final class MovieLargeCell: UICollectionViewCell {
             
             watchNowButton.centerYAnchor.constraint(equalTo: movieIcon.centerYAnchor),
             watchNowButton.leadingAnchor.constraint(equalTo: movieIcon.trailingAnchor, constant: 5),
+            
+            likeButton.centerYAnchor.constraint(equalTo: movieName.centerYAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28)
         ])
     }
 }
