@@ -18,20 +18,21 @@ class StartViewController: UIViewController {
     private lazy var moviemaxLabel: UILabel = {
         let label = UILabel()
         label.text = "Moviemax"
-        label.font = Resources.Fonts.plusJakartaSansBold(with: 32)
+        label.textColor = .white
+        label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 32)
         return label
     }()
     
     private lazy var roundView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 44
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.2)
         return view
     }()
     
     private lazy var loadingIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "loadingIcon")
+        imageView.image = UIImage(named: "Loading")
         return imageView
     }()
     
@@ -72,7 +73,7 @@ class StartViewController: UIViewController {
             loadingIcon.heightAnchor.constraint(equalToConstant: 70),
             loadingIcon.widthAnchor.constraint(equalToConstant: 70),
             loadingIcon.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingIcon.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -74),
+            loadingIcon.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -74),
         ])
     }
 }

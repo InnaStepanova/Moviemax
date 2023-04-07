@@ -11,10 +11,10 @@ final class SearchView: UIView {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.backgroundImage = UIImage()
         searchBar.setImage(UIImage(named: "Search"), for: .search, state: .normal)
-        searchBar.barTintColor = UIColor.clear
-
-//        searchBar.placeholder = "Search your Movies and TV Shows"
+        searchBar.searchTextField.backgroundColor = .white
+        searchBar.placeholder = "Search Movies and TV shows"
         return searchBar
     }()
     

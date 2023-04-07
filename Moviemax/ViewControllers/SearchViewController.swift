@@ -18,6 +18,12 @@ final class SearchViewController: UIViewController {
     
     private lazy var searchView = SearchView()
     
+    private lazy var categoryView = CategoryCollectionView()
+    
+    private lazy var moviesCollection = MoviesLargeCollectionView()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -28,11 +34,15 @@ final class SearchViewController: UIViewController {
     private func addViews() {
         view.addSubview(searchLabel)
         view.addSubview(searchView)
+        view.addSubview(categoryView)
+        view.addSubview(moviesCollection)
     }
     
     private func setConstraints() {
         searchLabel.translatesAutoresizingMaskIntoConstraints = false
         searchView.translatesAutoresizingMaskIntoConstraints = false
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        moviesCollection.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             searchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -41,7 +51,17 @@ final class SearchViewController: UIViewController {
             searchView.topAnchor.constraint(equalTo: searchLabel.bottomAnchor, constant: 35),
             searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            searchView.heightAnchor.constraint(equalToConstant: 52)
+            searchView.heightAnchor.constraint(equalToConstant: 52),
+            
+            categoryView.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 24),
+            categoryView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            categoryView.heightAnchor.constraint(equalToConstant: 34),
+            categoryView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            moviesCollection.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 24),
+            moviesCollection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            moviesCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            moviesCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }
