@@ -16,7 +16,7 @@ final class MovieLargeCell: UICollectionViewCell {
     
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         imageView.image = UIImage(named: "DriftingHome")

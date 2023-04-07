@@ -13,20 +13,6 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     let boxDS = BoxCollectionDataSource()
     let tabBar = TabBarController()
     
-    private lazy var filmCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 390, height: 190)
-        layout.minimumLineSpacing = 100
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLarge")
-        return collectionView
-    }()
-
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 400, height: 100)
@@ -41,7 +27,7 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         collectionView.register(MovieLittleCell.self, forCellWithReuseIdentifier: "boxCollection")
         return collectionView
     }()
-    
+    private lazy var filmCollectionView = FilmCellView()
     private lazy var categoryCollectionView = CategoryCollectionView()
 
     private lazy var avatarImageView: UIImageView = {
@@ -133,7 +119,7 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
             filmCollectionView.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
             filmCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             filmCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            filmCollectionView.heightAnchor.constraint(equalToConstant: 210),
+            filmCollectionView.heightAnchor.constraint(equalToConstant: 280),
             
             categoryLabel.topAnchor.constraint(equalTo: filmCollectionView.bottomAnchor, constant: 40),
             categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
