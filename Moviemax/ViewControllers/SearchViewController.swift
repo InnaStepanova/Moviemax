@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     private lazy var searchLabel: UILabel = {
         let label = UILabel()
@@ -20,7 +20,19 @@ final class SearchViewController: UIViewController {
     
     private lazy var categoryView = CategoryCollectionView()
     
-    private lazy var moviesCollection = MoviesLargeCollectionView()
+    private lazy var moviesCollection: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: view.bounds.width, height: 160)
+        layout.minimumLineSpacing = 24
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
+        return collectionView
+    }()
     
     
     
@@ -64,4 +76,16 @@ final class SearchViewController: UIViewController {
             moviesCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+}
+extension SearchViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
+        return cell
+    }
+    
+    
 }

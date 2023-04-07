@@ -16,9 +16,10 @@ class MoviesLargeCollectionView: UICollectionView, UICollectionViewDelegate {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: collectionLayout)
         setDelegate()
+        collectionLayout.sectionInset = UIEdgeInsets(top: 100, left: 20, bottom: 20, right: 20)
         collectionLayout.scrollDirection = .vertical
-        collectionLayout.itemSize = CGSize(width: frame.width, height: 184)
-//        showsVerticalScrollIndicator = false
+        collectionLayout.itemSize = CGSize(width: frame.width, height: 160)
+        collectionLayout.minimumLineSpacing = 24
         register(MovieLargeCell.self, forCellWithReuseIdentifier: cellId)
     }
     
@@ -51,4 +52,5 @@ extension MoviesLargeCollectionView: UICollectionViewDataSource {
         //           что будет при нажатии на ячейку
     }
 }
+
 
