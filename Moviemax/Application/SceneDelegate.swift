@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let tabBarController = TabBarController()
 //        tabBarController.selectedIndex = 2
-        window?.rootViewController = ProfileSettingsVC()
+        window?.rootViewController = SearchViewController()
 
     }
 
