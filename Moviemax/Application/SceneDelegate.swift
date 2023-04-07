@@ -17,9 +17,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
 
+<<<<<<< HEAD
         let tabBarController = TabBarController()
 //        tabBarController.selectedIndex = 2
         window?.rootViewController = SearchViewController()
+=======
+      //  let tabBarController = TabBarController()
+//        tabBarController.selectedIndex = 2
+        window?.rootViewController = TestVC()
+>>>>>>> dev
 
     }
 
