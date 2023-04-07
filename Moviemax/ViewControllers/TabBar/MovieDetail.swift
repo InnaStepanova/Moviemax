@@ -10,7 +10,7 @@ import UIKit
 
 class MovieDetail: UIViewController {
     
-    let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "BackButton"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +25,7 @@ class MovieDetail: UIViewController {
         return label
     }()
     
-    let likeButton: UIButton = {
+    private lazy var likeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "heart"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
