@@ -144,15 +144,12 @@
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
-<<<<<<< HEAD
 				E7D6A12829DD9C000068C9EE /* StartViewController.swift */,
-=======
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
 				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
 				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
 				020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */,
 				601C944429DDD214005F22DC /* ProfileSettings */,
->>>>>>> dev
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
