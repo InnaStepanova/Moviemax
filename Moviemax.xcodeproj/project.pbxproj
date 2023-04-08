@@ -95,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				02357A7D29DAD017008CE17A /* TabBarController.swift */,
+				95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -128,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				02E964C829DAC333001649E5 /* Application */,
-				95A26B8A29DF0F4A00080236 /* Model */,
 				02E964C929DAC34A001649E5 /* ViewControllers */,
 				02E964C729DAC2D6001649E5 /* SupportingFiles */,
 				02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */,
@@ -162,15 +162,19 @@
 		02E964C929DAC34A001649E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5C6FB5CD29DCA18400B7D459 /* ViewCells */,
+				5C6FB5CD29DCA18400B7D459 /* TableViewCells */,
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
-
+				CE141F4C29E034EA00658CA8 /* MainVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
 				5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */,
+				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 				E7D6A12829DD9C000068C9EE /* StartViewController.swift */,
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
+				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
+				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
 				020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */,
+				CE141F4E29E0970D00658CA8 /* FilmCell.swift */,
 				CE141F5029E0975B00658CA8 /* FilmCellView.swift */,
 				604DCF1729E0CE3B0015B350 /* FavoritesScreen */,
 				601C944429DDD214005F22DC /* ProfileSettings */,
@@ -182,17 +186,13 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		5C6FB5CD29DCA18400B7D459 /* ViewCells */ = {
+		5C6FB5CD29DCA18400B7D459 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
 				5C6FB5CE29DCA1B400B7D459 /* SettingsTableViewCell.swift */,
 				5C6EEC5129DCBE810057E23F /* UserInfoTableViewCell.swift */,
-				CE141F4E29E0970D00658CA8 /* FilmCell.swift */,
-				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
-				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
 			);
-			path = ViewCells;
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		601C944429DDD214005F22DC /* ProfileSettings */ = {
@@ -208,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */,
-				95A26B8429DF058500080236 /* Image.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -293,7 +292,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
+				5C6EEC5229DCBE810057E23F /* UserInfoTableViewCell.swift in Sources */,
+				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
+				0262086B29DF2C5300BA1664 /* SearchView.swift in Sources */,
+				CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */,
 				02357A8929DC752B008CE17A /* MovieLargeCell.swift in Sources */,
 				0262086D29E0A5F600BA1664 /* MoviesLargeCollectionView.swift in Sources */,
 				601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */,
