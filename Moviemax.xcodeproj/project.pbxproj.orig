@@ -31,7 +31,6 @@
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
 		CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */; };
-		E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12829DD9C000068C9EE /* StartViewController.swift */; };
 		CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4C29E034EA00658CA8 /* MainVC.swift */; };
 		CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4E29E0970D00658CA8 /* FilmCell.swift */; };
 		CE141F5129E0975B00658CA8 /* FilmCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5029E0975B00658CA8 /* FilmCellView.swift */; };
@@ -64,7 +63,6 @@
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
 		CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
-		E7D6A12829DD9C000068C9EE /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		CE141F4C29E034EA00658CA8 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		CE141F4E29E0970D00658CA8 /* FilmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCell.swift; sourceTree = "<group>"; };
 		CE141F5029E0975B00658CA8 /* FilmCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCellView.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				CE141F4C29E034EA00658CA8 /* MainVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
-				E7D6A12829DD9C000068C9EE /* StartViewController.swift */,
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
 				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
 				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
@@ -262,8 +259,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
+<<<<<<< HEAD
 				0262086B29DF2C5300BA1664 /* SearchView.swift in Sources */,
+=======
 				CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */,
+>>>>>>> dev
 				02357A8929DC752B008CE17A /* MovieLargeCell.swift in Sources */,
 				0262086D29E0A5F600BA1664 /* MoviesLargeCollectionView.swift in Sources */,
 				601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */,
@@ -272,7 +272,6 @@
 				601C944629DDD23D005F22DC /* GenderCustomButton.swift in Sources */,
 				02357A9229DD5F36008CE17A /* Resources.swift in Sources */,
 				CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */,
-				E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */,
 				02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */,
 				02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */,
 				02357A9429DDF2C6008CE17A /* LikeButton.swift in Sources */,
@@ -423,7 +422,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7LRMH9N592;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moviemax/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -454,7 +452,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7LRMH9N592;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moviemax/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -110,9 +110,9 @@ final class MovieLargeCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             movieImage.heightAnchor.constraint(equalToConstant: 160),
             movieImage.widthAnchor.constraint(equalToConstant: 120),
-            movieImage.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            movieImage.topAnchor.constraint(equalTo: topAnchor),
             movieImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             movieName.topAnchor.constraint(equalTo: movieImage.topAnchor),
             movieName.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 15),

@@ -11,11 +11,10 @@ import UIKit
 class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let boxDS = BoxCollectionDataSource()
-    let tabBar = TabBarController()
     
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 400, height: 100)
+        layout.itemSize = CGSize(width: view.bounds.width, height: 80)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
@@ -78,7 +77,6 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func setupView(){
-        view.addSubview(tabBar.view)
         view.backgroundColor = .white
         view.addSubview(nameLabel)
         view.addSubview(statusLabel)
@@ -103,12 +101,12 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         boxCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
+            avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 55),
             avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             avatarImageView.heightAnchor.constraint(equalToConstant: 40),
             avatarImageView.widthAnchor.constraint(equalToConstant: 40),
             
-            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor , constant: 15),
            // nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             
@@ -117,7 +115,7 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
             
             
             filmCollectionView.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
-            filmCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            filmCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -100),
             filmCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             filmCollectionView.heightAnchor.constraint(equalToConstant: 280),
             
@@ -160,6 +158,10 @@ class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 8
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.item)
+    }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boxCollection", for: indexPath) as! MovieLittleCell
@@ -172,6 +174,8 @@ class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
             cell.transform = CGAffineTransform.identity
         }
     }
+    
+    
     
 }
 
