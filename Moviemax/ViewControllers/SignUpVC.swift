@@ -3,11 +3,12 @@ import Foundation
 import UIKit
 
 class SignUpVC: UIViewController {
-    
+
     //MARK: - Create UI
     private lazy var topStackView = UIStackView()
     private lazy var middleStackView = UIStackView()
     private lazy var lowStackView = UIStackView()
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "BackButton"), for: .normal)
@@ -29,7 +30,7 @@ class SignUpVC: UIViewController {
     private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.titleLabel?.font = Resources.Fonts.plusJakartaSansMedium(with: 16)
         button.setTitle("Sign Up", for: .normal)
         button.backgroundColor = UIColor(named: "BlueButtonColor")
         button.layer.cornerRadius = 28
@@ -46,33 +47,78 @@ class SignUpVC: UIViewController {
     private lazy var topCompleteLabel = UILabel.signBigLabel
     private lazy var topLowLabel = UILabel.signLowLabel
     private lazy var hintLoginLabel = UILabel.hintLabel
-    private lazy var loginLabel = UILabel.hintLabel
+    private lazy var loginLabel: UILabel = {
+       let loginLabel = UILabel.hintLabel
+        loginLabel.text = "Login"
+        loginLabel.textColor = .systemBlue
+         return loginLabel
+    }()
     
-    private lazy var firstNameTextField = UITextField()
-    private lazy var lastNameTextField = UITextField()
-    private lazy var emailTextField = UITextField()
-    private lazy var passwordTextField = UITextField()
-    private lazy var confPasswordTextField = UITextField()
+    private var firstNameTextField : UITextField = {
+       let textField = UITextField()
+        textField.backgroundColor = UIColor(named: "LightBlueTextField")
+        textField.placeholder = "Enter your first name" // задаем подсказку для текстового поля
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
+        textField.layer.cornerRadius = 20
+        return textField
+    }()
+    private var lastNameTextField : UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor(named: "LightBlueTextField")
+        textField.placeholder = "Enter your last name" // задаем подсказку для текстового поля
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
+        textField.layer.cornerRadius = 20
+         return textField
+    }()
+    private var emailTextField : UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor(named: "LightBlueTextField")
+        textField.placeholder = "Enter your email address" // задаем подсказку для текстового поля
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
+        textField.layer.cornerRadius = 20
+         return textField
+    }()
+    private var passwordTextField : UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor(named: "LightBlueTextField")
+        textField.placeholder = "Enter your password" // задаем подсказку для текстового поля
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
+        textField.layer.cornerRadius = 20
+        textField.isSecureTextEntry = true
+         return textField
+    }()
+    private var confPasswordTextField : UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor(named: "LightBlueTextField")
+        textField.placeholder = "Confirm your password" // задаем подсказку для текстового поля
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
+        textField.layer.cornerRadius = 20
+        textField.isSecureTextEntry = true
+         return textField
+    }()
     
     let passwordButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     let confPasswordButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
     
-    
     private func setupViews() {
-        // делаем отступ он начала текстового поля в 10 пикселей
+        // делаем отступ он начала текстового поля в 16 пикселей
         firstNameTextField.paddingLeft(16)
         lastNameTextField.paddingLeft(16)
         emailTextField.paddingLeft(16)
         passwordTextField.paddingLeft(16)
         confPasswordTextField.paddingLeft(16)
 
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundColor")
         topCompleteLabel.text = "Complet your account"
         topLowLabel.text = "Lorem ipsum dolor sit amet"
         firstNameLabel.text = "First Name"
@@ -82,13 +128,8 @@ class SignUpVC: UIViewController {
         passwordLabel.text = "Password"
         confPasswordLabel.text = "Confirm Password"
         hintLoginLabel.text = "Already have an account?"
-        loginLabel.text = "Login"
-        
-        loginLabel.textColor = .systemBlue
-        
-        //Тут вместо создания кнопки сделал, действие при нажатии на label
-        
-        let loginTapGesture = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
+
+        let loginTapGesture = UITapGestureRecognizer(target: self, action: #selector(loginTapped)) //Тут вместо создания кнопки сделал, действие при нажатии на label
         loginLabel.isUserInteractionEnabled = true
         loginLabel.addGestureRecognizer(loginTapGesture)
         
@@ -100,37 +141,10 @@ class SignUpVC: UIViewController {
         topStackView = UIStackView(arrangedSubviews: [backButton,signLabel])
         topStackView.spacing = 120
         topStackView.distribution = .fill
-        
+
         middleStackView = UIStackView(arrangedSubviews: [firstNameLabel,firstNameTextField,lastNameLabel,lastNameTextField,emailLabel,emailTextField,passwordLabel,passwordTextField,confPasswordLabel,confPasswordTextField])
         middleStackView.spacing = 12
         middleStackView.axis = .vertical
-        
-        firstNameTextField.backgroundColor = UIColor(named: "LightBlueTextField")
-        firstNameTextField.placeholder = "Enter your first name" // задаем подсказку для текстового поля
-        firstNameTextField.borderStyle = .none  // задаем стиль границы текстового поля
-        firstNameTextField.layer.cornerRadius = 20
-        
-        lastNameTextField.backgroundColor = UIColor(named: "LightBlueTextField")
-        lastNameTextField.placeholder = "Enter your last name" // задаем подсказку для текстового поля
-        lastNameTextField.borderStyle = .none  // задаем стиль границы текстового поля
-        lastNameTextField.layer.cornerRadius = 20
-        
-        emailTextField.backgroundColor = UIColor(named: "LightBlueTextField")
-        emailTextField.placeholder = "Enter your email address" // задаем подсказку для текстового поля
-        emailTextField.borderStyle = .none  // задаем стиль границы текстового поля
-        emailTextField.layer.cornerRadius = 20
-        
-        passwordTextField.backgroundColor = UIColor(named: "LightBlueTextField")
-        passwordTextField.placeholder = "Enter your password" // задаем подсказку для текстового поля
-        passwordTextField.borderStyle = .none  // задаем стиль границы текстового поля
-        passwordTextField.layer.cornerRadius = 20
-        passwordTextField.isSecureTextEntry = true
-        
-        confPasswordTextField.backgroundColor = UIColor(named: "LightBlueTextField")
-        confPasswordTextField.placeholder = "Confirm your password" // задаем подсказку для текстового поля
-        confPasswordTextField.borderStyle = .none  // задаем стиль границы текстового поля
-        confPasswordTextField.layer.cornerRadius = 20
-        confPasswordTextField.isSecureTextEntry = true
         
         passwordButtonView.addSubview(showPasswordButton)
         passwordTextField.rightView = passwordButtonView
