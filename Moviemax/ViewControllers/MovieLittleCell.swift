@@ -16,7 +16,7 @@ final class MovieLittleCell: UICollectionViewCell {
     
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
         imageView.image = UIImage(named: "DriftingHome")
@@ -112,9 +112,9 @@ final class MovieLittleCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             movieImage.heightAnchor.constraint(equalToConstant: 80),
             movieImage.widthAnchor.constraint(equalToConstant: 80),
-            movieImage.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            movieImage.topAnchor.constraint(equalTo: topAnchor),
             movieImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 23),
-            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             categoryLabel.topAnchor.constraint(equalTo: movieImage.topAnchor, constant: 5),
             categoryLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 12),
