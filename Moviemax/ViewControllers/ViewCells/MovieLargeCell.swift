@@ -64,14 +64,19 @@ final class MovieLargeCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var watchNowButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(named: "BlueButtonColor")
-        button.setTitle("   Watch now   ", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font  = Resources.Fonts.montserratMedium(with: 12)
-        button.layer.cornerRadius = 6
-        return button
+    private lazy var categoryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Action"
+        label.textColor = .white
+        label.font = Resources.Fonts.montserratMedium(with: 12)
+        return label
+    }()
+    
+    private lazy var categoryView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "PurpleBackGroundColor")
+        view.layer.cornerRadius = 6
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -92,8 +97,9 @@ final class MovieLargeCell: UICollectionViewCell {
         addSubview(dateIcon)
         addSubview(dateLabel)
         addSubview(movieIcon)
-        addSubview(watchNowButton)
         addSubview(likeButton)
+        addSubview(categoryView)
+        categoryView.addSubview(categoryLabel)
     }
     
     private func setConstraint() {
@@ -104,8 +110,9 @@ final class MovieLargeCell: UICollectionViewCell {
         dateIcon.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         movieIcon.translatesAutoresizingMaskIntoConstraints = false
-        watchNowButton.translatesAutoresizingMaskIntoConstraints = false
+        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         likeButton.translatesAutoresizingMaskIntoConstraints = false
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             movieImage.heightAnchor.constraint(equalToConstant: 160),
@@ -132,8 +139,13 @@ final class MovieLargeCell: UICollectionViewCell {
             movieIcon.topAnchor.constraint(equalTo: dateIcon.bottomAnchor, constant: 16),
             movieIcon.leadingAnchor.constraint(equalTo: movieName.leadingAnchor),
             
-            watchNowButton.centerYAnchor.constraint(equalTo: movieIcon.centerYAnchor),
-            watchNowButton.leadingAnchor.constraint(equalTo: movieIcon.trailingAnchor, constant: 5),
+            categoryView.centerYAnchor.constraint(equalTo: movieIcon.centerYAnchor),
+            categoryView.widthAnchor.constraint(equalToConstant: 65),
+            categoryView.heightAnchor.constraint(equalToConstant: 24),
+            categoryView.leadingAnchor.constraint(equalTo: movieIcon.trailingAnchor, constant: 6),
+            
+            categoryLabel.centerYAnchor.constraint(equalTo: movieIcon.centerYAnchor),
+            categoryLabel.centerXAnchor.constraint(equalTo: categoryView.centerXAnchor),
             
             likeButton.centerYAnchor.constraint(equalTo: movieName.centerYAnchor),
             likeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28)
