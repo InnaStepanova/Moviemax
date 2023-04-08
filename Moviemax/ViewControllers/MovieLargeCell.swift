@@ -76,6 +76,7 @@ final class MovieLargeCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraint()
     }

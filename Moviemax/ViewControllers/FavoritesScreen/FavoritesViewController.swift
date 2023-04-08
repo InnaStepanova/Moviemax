@@ -27,7 +27,7 @@ final class FavoritesViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = UIColor(named: "BackgroundColor")
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView

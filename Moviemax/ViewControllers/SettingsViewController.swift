@@ -42,6 +42,7 @@ class SettingsViewController: UIViewController {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.bounces = false
+        tableView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         tableView.register(UserInfoTableViewCell.self, forCellReuseIdentifier: "UserInfoCell")
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "SettingsCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +66,7 @@ class SettingsViewController: UIViewController {
     
     private func configureView() {
         configureConstraints()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         navigationItem.title = "Settings"
     }
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MoviesLargeCollectionView: UICollectionView, UICollectionViewDelegate {
+final class MoviesLargeCollectionView: UICollectionView, UICollectionViewDelegate {
     
     private let cellId = "cell"
     

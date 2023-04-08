@@ -57,7 +57,7 @@ class MovieDetail: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         setupViews()
         setContraints()
     }
@@ -108,7 +108,6 @@ extension MovieDetail {
             textLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             textLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 210),
-            
     ])
     }
 }

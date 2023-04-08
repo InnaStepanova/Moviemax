@@ -8,8 +8,7 @@
 import UIKit
 
 final class FilmCell: UICollectionViewCell {
-    
-    
+
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -38,7 +37,6 @@ final class FilmCell: UICollectionViewCell {
         return label
     }()
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -53,8 +51,6 @@ final class FilmCell: UICollectionViewCell {
         addSubview(movieImage)
         addSubview(movieName)
         addSubview(categoryLabel)
-
-        
         setConstraint()
     }
     

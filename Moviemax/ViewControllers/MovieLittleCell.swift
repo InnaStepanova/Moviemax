@@ -62,7 +62,6 @@ final class MovieLittleCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "4,4"
         label.textColor = UIColor(red: 250.0/255.0, green: 204.0/255.0, blue: 21.0/255.0, alpha: 1)
-
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 12)
         return label
     }()

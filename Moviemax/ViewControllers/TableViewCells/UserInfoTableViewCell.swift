@@ -40,6 +40,7 @@ final class UserInfoTableViewCell: UITableViewCell {
     
     func configureCell(fullName: String, nickName: String) {
         configureConstraints()
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         userFullNameLabel.text = fullName
         userNickNameLabel.text = nickName
         userIconImageView.image = UIImage(named: "User-photo")

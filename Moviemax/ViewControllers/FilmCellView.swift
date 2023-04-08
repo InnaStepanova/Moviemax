@@ -19,6 +19,7 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
