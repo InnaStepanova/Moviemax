@@ -25,6 +25,9 @@
 		02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */; };
 		02E964BD29DABF2C001649E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BC29DABF2C001649E5 /* Assets.xcassets */; };
 		02E964C029DABF2C001649E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */; };
+		5C6EEC5229DCBE810057E23F /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6EEC5129DCBE810057E23F /* UserInfoTableViewCell.swift */; };
+		5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */; };
+		5C6FB5CF29DCA1B400B7D459 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6FB5CE29DCA1B400B7D459 /* SettingsTableViewCell.swift */; };
 		601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944229DDB766005F22DC /* ProfileSettingsVC.swift */; };
 		601C944629DDD23D005F22DC /* GenderCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944529DDD23D005F22DC /* GenderCustomButton.swift */; };
 		601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */; };
@@ -59,6 +62,9 @@
 		02E964BC29DABF2C001649E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02E964BF29DABF2C001649E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02E964C129DABF2C001649E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C6EEC5129DCBE810057E23F /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
+		5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5C6FB5CE29DCA1B400B7D459 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		601C944229DDB766005F22DC /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		601C944529DDD23D005F22DC /* GenderCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCustomButton.swift; sourceTree = "<group>"; };
 		601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
@@ -154,10 +160,12 @@
 		02E964C929DAC34A001649E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5C6FB5CD29DCA18400B7D459 /* TableViewCells */,
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
 				CE141F4C29E034EA00658CA8 /* MainVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
+				5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 				E7D6A12829DD9C000068C9EE /* StartViewController.swift */,
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
@@ -173,6 +181,15 @@
 				02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5C6FB5CD29DCA18400B7D459 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				5C6FB5CE29DCA1B400B7D459 /* SettingsTableViewCell.swift */,
+				5C6EEC5129DCBE810057E23F /* UserInfoTableViewCell.swift */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		601C944429DDD214005F22DC /* ProfileSettings */ = {
@@ -264,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C6EEC5229DCBE810057E23F /* UserInfoTableViewCell.swift in Sources */,
 				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
 				0262086B29DF2C5300BA1664 /* SearchView.swift in Sources */,
 				CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */,
@@ -272,6 +290,7 @@
 				601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */,
 				CE141F5129E0975B00658CA8 /* FilmCellView.swift in Sources */,
 				02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */,
+				5C6FB5CF29DCA1B400B7D459 /* SettingsTableViewCell.swift in Sources */,
 				02A0D40B29E1433B00CE58A1 /* RecentWatchViewController.swift in Sources */,
 				601C944629DDD23D005F22DC /* GenderCustomButton.swift in Sources */,
 				02357A9229DD5F36008CE17A /* Resources.swift in Sources */,
@@ -287,6 +306,7 @@
 				020677D329DECB2C007F1BE2 /* CategoryCollectionViewCell.swift in Sources */,
 				020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
+				5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */,
 				CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */,
 				95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */,
 			);
