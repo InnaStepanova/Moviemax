@@ -24,6 +24,7 @@
 		601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944229DDB766005F22DC /* ProfileSettingsVC.swift */; };
 		601C944629DDD23D005F22DC /* GenderCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944529DDD23D005F22DC /* GenderCustomButton.swift */; };
 		601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */; };
+		604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */; };
 		95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */; };
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
@@ -53,6 +54,7 @@
 		601C944229DDB766005F22DC /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		601C944529DDD23D005F22DC /* GenderCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCustomButton.swift; sourceTree = "<group>"; };
 		601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
+		604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */,
 				CE141F4E29E0970D00658CA8 /* FilmCell.swift */,
 				CE141F5029E0975B00658CA8 /* FilmCellView.swift */,
+				604DCF1729E0CE3B0015B350 /* FavoritesScreen */,
 				601C944429DDD214005F22DC /* ProfileSettings */,
 			);
 			path = ViewControllers;
@@ -175,6 +178,14 @@
 				601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		604DCF1729E0CE3B0015B350 /* FavoritesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */,
+			);
+			path = FavoritesScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +276,7 @@
 				020677D129DEAEDD007F1BE2 /* MovieLittleCell.swift in Sources */,
 				601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */,
 				020677D329DECB2C007F1BE2 /* CategoryCollectionViewCell.swift in Sources */,
+				604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */,
 				020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
 				CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */,
