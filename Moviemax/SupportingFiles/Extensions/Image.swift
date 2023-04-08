@@ -4,8 +4,6 @@
 //
 //  Created by Николай on 05.04.2023.
 //
-
-import Foundation
 import UIKit
 
 extension UIImageView {
@@ -34,3 +32,4 @@ extension UIImageView {
     }
     
 }
+

@@ -53,7 +53,7 @@ final class TabBarController: UITabBarController {
             let searchViewController = SearchViewController()
             let videoViewController = RecentWatchViewController()
             let mainViewController = TestVC()
-            let favoritesViewController = CreateAccountVC()
+            let favoritesViewController = MovieDetail()
             let profileViewController = SettingsViewController()
             
             let searchNavigation = UINavigationController(rootViewController: searchViewController)
