@@ -32,6 +32,8 @@
 		601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944229DDB766005F22DC /* ProfileSettingsVC.swift */; };
 		601C944629DDD23D005F22DC /* GenderCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944529DDD23D005F22DC /* GenderCustomButton.swift */; };
 		601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */; };
+		95A26B8529DF058500080236 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A26B8429DF058500080236 /* Image.swift */; };
+		95A26B8929DF0D4300080236 /* MovieDretailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A26B8829DF0D4300080236 /* MovieDretailCollectionViewCell.swift */; };
 		95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */; };
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
@@ -70,6 +72,8 @@
 		601C944229DDB766005F22DC /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		601C944529DDD23D005F22DC /* GenderCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCustomButton.swift; sourceTree = "<group>"; };
 		601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
+		95A26B8429DF058500080236 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		95A26B8829DF0D4300080236 /* MovieDretailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDretailCollectionViewCell.swift; sourceTree = "<group>"; };
 		95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
