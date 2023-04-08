@@ -6,17 +6,55 @@
 //
 
 import UIKit
+class CustomCollectionViewCell: UICollectionViewCell {
+    
+        
+        let imageView = UIImageView()
+        let titleLabel = UILabel()
+        let subtitleLabel = UILabel()
 
-class MovieDretailCollectionViewCell: UICollectionViewCell {
-    private lazy var nameLabel = UILabel()
-    private lazy var nameImage = UIImageView()
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            // Добавляем subviews и настраиваем их
+            
+            // Добавляем UIImageView
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(imageView)
+            
+            // Добавляем titleLabel
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+            addSubview(titleLabel)
+            
+            // Добавляем subtitleLabel
+            subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            subtitleLabel.font = UIFont.systemFont(ofSize: 14)
+            subtitleLabel.textColor = UIColor.gray
+            addSubview(subtitleLabel)
+            
+            // Настраиваем constraints
 
-    var na: String? {
-        didSet {
-            nameLabel.text = self.na
-            if let image = self.na {
-                nameImage.image = UIImage(named: image)
-            }
+            NSLayoutConstraint.activate([
+                imageView.topAnchor.constraint(equalTo: topAnchor),
+                imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+                imageView.heightAnchor.constraint(equalToConstant: 50),
+                imageView.widthAnchor.constraint(equalToConstant: 50),
+                
+                titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 5),
+                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+                
+                subtitleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 2),
+                subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
+                subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            ])
         }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
     }
-}
+
+

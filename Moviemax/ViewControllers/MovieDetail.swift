@@ -42,7 +42,7 @@ class MovieDetail: UIViewController {
     } ()
     
     private lazy var filmLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel.signBigLabel
         label.text = "Drifting Home"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -119,7 +119,7 @@ class MovieDetail: UIViewController {
     }()
     
     private lazy var textStoryLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel.signTopLabel
         label.text = "Story Line"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -141,20 +141,50 @@ class MovieDetail: UIViewController {
         return label
     }()
     
-    var infoArray = ["avatar"]
+    var imageArray = ["author1","author2","author3"]
+    var nameArray = ["Josh Wats","Bill Kane","Eric Garcia"]
+    var profArray = ["Director", "Writers", "Compositor"]
     
     private lazy var collectionViewAuthor: UICollectionView = {
-        let cv = UICollectionView()
-        collectionViewAuthor.translatesAutoresizingMaskIntoConstraints = false
-        return cv
+        let collectionView = UICollectionView(frame:.zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.backgroundColor = .white
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
     }()
     
+    private lazy var layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 10, right: 20)
+        layout.itemSize = CGSize(width: 170, height: 150)
+        return layout
+    }()
+    
+    private lazy var watchNowButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .systemBlue
+        button.setTitle("Watch Now", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(watchNowButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    //функция для нажатия кнопки
+    @objc func watchNowButtonPressed () {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        collectionViewAuthor.dataSource = self
         collectionViewAuthor.delegate = self
+        collectionViewAuthor.dataSource = self
         setupViews()
         setContraints()
     }
@@ -171,6 +201,7 @@ class MovieDetail: UIViewController {
         view.addSubview(textStoryLabel)
         view.addSubview(castLabel)
         view.addSubview(collectionViewAuthor)
+        view.addSubview(watchNowButton)
         stackView.addArrangedSubview(dateImage)
         stackView.addArrangedSubview(dateLabel)
         stackView.addArrangedSubview(timeImage)
@@ -233,29 +264,39 @@ extension MovieDetail {
             textLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             
-            castLabel.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 20),
+            castLabel.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 5),
             castLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
 
-            collectionViewAuthor.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            collectionViewAuthor.topAnchor.constraint(equalTo: castLabel.bottomAnchor, constant: 10),
+            collectionViewAuthor.topAnchor.constraint(equalTo: castLabel.bottomAnchor, constant: 0),
+            collectionViewAuthor.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionViewAuthor.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionViewAuthor.heightAnchor.constraint(equalToConstant: 150),
             
+//            watchNowButton.topAnchor.constraint(equalTo: collectionViewAuthor.bottomAnchor, constant: 5),
+            watchNowButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+            watchNowButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+            watchNowButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            watchNowButton.heightAnchor.constraint(equalToConstant: 80)
     ])
     }
 }
 
 extension MovieDetail: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        infoArray.count
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionViewAuthor.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MovieDretailCollectionViewCell {
-            cell.na = infoArray[indexPath.row]
-            
-            return cell
-        }
-        
-        return UICollectionViewCell()
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        nameArray.count
     }
 
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCollectionViewCell
+        cell.titleLabel.text = nameArray[indexPath.row]
+        cell.subtitleLabel.text = profArray[indexPath.row]
+        cell.imageView.image = UIImage(named: imageArray[indexPath.row])
+        
+        return cell
+    }
 }
