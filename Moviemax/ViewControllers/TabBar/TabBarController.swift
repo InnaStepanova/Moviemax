@@ -51,9 +51,9 @@ final class TabBarController: UITabBarController {
             profileItem.imageInsets = UIEdgeInsets(top: 19, left: 0, bottom: -19, right: 0)
           
             let searchViewController = SearchViewController()
-            let videoViewController = RecentWatchViewController()
-            let mainViewController = TestVC()
-            let favoritesViewController = MovieDetail()
+            let videoViewController = MovieDetail()
+            let mainViewController = MainVC()
+            let favoritesViewController = UIViewController()
             let profileViewController = SettingsViewController()
             
             let searchNavigation = UINavigationController(rootViewController: searchViewController)

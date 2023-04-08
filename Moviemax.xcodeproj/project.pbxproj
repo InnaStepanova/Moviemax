@@ -41,6 +41,10 @@
 		CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4C29E034EA00658CA8 /* MainVC.swift */; };
 		CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4E29E0970D00658CA8 /* FilmCell.swift */; };
 		CE141F5129E0975B00658CA8 /* FilmCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5029E0975B00658CA8 /* FilmCellView.swift */; };
+		CE141F5329E1E5E900658CA8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE141F5229E1E5E900658CA8 /* GoogleService-Info.plist */; };
+		CE141F5629E1E8BA00658CA8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5529E1E8BA00658CA8 /* FirebaseAuth */; };
+		CE141F5829E1E8BA00658CA8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */; };
+		CE141F5A29E1F74800658CA8 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5929E1F74800658CA8 /* LoginVC.swift */; };
 		E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12829DD9C000068C9EE /* StartViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +85,8 @@
 		CE141F4C29E034EA00658CA8 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		CE141F4E29E0970D00658CA8 /* FilmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCell.swift; sourceTree = "<group>"; };
 		CE141F5029E0975B00658CA8 /* FilmCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCellView.swift; sourceTree = "<group>"; };
+		CE141F5229E1E5E900658CA8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE141F5929E1F74800658CA8 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E7D6A12829DD9C000068C9EE /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE141F5629E1E8BA00658CA8 /* FirebaseAuth in Frameworks */,
+				CE141F5829E1E8BA00658CA8 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +157,7 @@
 				02E964BC29DABF2C001649E5 /* Assets.xcassets */,
 				02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */,
 				02E964C129DABF2C001649E5 /* Info.plist */,
+				CE141F5229E1E5E900658CA8 /* GoogleService-Info.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -175,6 +184,7 @@
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
 				020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */,
 				CE141F5029E0975B00658CA8 /* FilmCellView.swift */,
+				CE141F5929E1F74800658CA8 /* LoginVC.swift */,
 				601C944429DDD214005F22DC /* ProfileSettings */,
 				0262086829DF28E400BA1664 /* SearchViewController.swift */,
 				0262086A29DF2C5300BA1664 /* SearchView.swift */,
@@ -232,6 +242,10 @@
 			dependencies = (
 			);
 			name = Moviemax;
+			packageProductDependencies = (
+				CE141F5529E1E8BA00658CA8 /* FirebaseAuth */,
+				CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */,
+			);
 			productName = Moviemax;
 			productReference = 02E964AD29DABF26001649E5 /* Moviemax.app */;
 			productType = "com.apple.product-type.application";
@@ -260,6 +274,9 @@
 				Base,
 			);
 			mainGroup = 02E964A429DABF26001649E5;
+			packageReferences = (
+				CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 02E964AE29DABF26001649E5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -276,6 +293,7 @@
 			files = (
 				02357A9029DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf in Resources */,
 				02E964C029DABF2C001649E5 /* LaunchScreen.storyboard in Resources */,
+				CE141F5329E1E5E900658CA8 /* GoogleService-Info.plist in Resources */,
 				02E964BD29DABF2C001649E5 /* Assets.xcassets in Resources */,
 				02357A8E29DD53FC008CE17A /* PlusJakartaSans-VariableFont_wght.ttf in Resources */,
 			);
@@ -303,6 +321,7 @@
 				CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */,
 				E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */,
 				02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */,
+				CE141F5A29E1F74800658CA8 /* LoginVC.swift in Sources */,
 				02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */,
 				02357A9429DDF2C6008CE17A /* LikeButton.swift in Sources */,
 				CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */,
@@ -532,6 +551,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CE141F5529E1E8BA00658CA8 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */ = {
