@@ -11,35 +11,31 @@ final class FavoritesViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = Resources.Fonts.plusJakartaSansBold(with: 18)
+        label.font = Resources.Fonts.plusJakartaSansBold(with: Constants.Size.titleLabelSize)
         label.text = "Favorites"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var favoritesList: UICollectionView = {
-        let collectionView = UICollectionView()
-        collectionView.dataSource = self
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: view.bounds.width, height: Constants.Size.itemSize)
+        layout.minimumLineSpacing = Constants.Spacing.minimumLineSpacing
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
-        collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
+        collectionView.dataSource = self
+        collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor(named: "BackgroundColor")
+        collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
-//    private var favoritesArray: Array<Any>
-    
-//    init(favoritesArray: Array<Any>) {
-//        self.favoritesArray = favoritesArray
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         setupUI()
     }
     
@@ -55,7 +51,7 @@ final class FavoritesViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.Spacing.topSpacingForTitle),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            favoritesList.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 42),
+            favoritesList.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.Spacing.favoritesListTopSpacing),
             favoritesList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             favoritesList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             favoritesList.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -63,25 +59,27 @@ final class FavoritesViewController: UIViewController {
     }
 }
 
-private extension FavoritesViewController {
-    enum Constants {
-        enum Spacing {
-            static let favoritesListTopSpacing: CGFloat = 16
-            static let topSpacingForTitle: CGFloat = 37
-        }
-    }
-}
-
 extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) else { return UICollectionViewCell() }
-        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as? MovieLargeCell else { return UICollectionViewCell() }
         return cell
     }
-    
+}
 
+private extension FavoritesViewController {
+    enum Constants {
+        enum Spacing {
+            static let favoritesListTopSpacing: CGFloat = 42
+            static let topSpacingForTitle: CGFloat = 30
+            static let minimumLineSpacing: CGFloat = 24
+        }
+        enum Size {
+            static let itemSize: CGFloat = 160
+            static let titleLabelSize: CGFloat = 18
+        }
+    }
 }
