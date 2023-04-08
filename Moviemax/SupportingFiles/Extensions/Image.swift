@@ -2,16 +2,8 @@
 //  Image.swift
 //  Moviemax
 //
-<<<<<<< HEAD
-//  Created by Лаванда on 08.04.2023.
-//
-
-=======
 //  Created by Николай on 05.04.2023.
 //
-
-import Foundation
->>>>>>> dev
 import UIKit
 
 extension UIImageView {
@@ -40,7 +32,4 @@ extension UIImageView {
     }
     
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> dev
