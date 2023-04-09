@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseAuth
 
 final class SignUpVC: UIViewController {
 
@@ -70,7 +71,7 @@ final class SignUpVC: UIViewController {
         textField.layer.cornerRadius = 20
          return textField
     }()
-    private var emailTextField : UITextField = {
+     var emailTextField : UITextField = {
         let textField = UITextField()
         textField.backgroundColor = UIColor(named: "LightBlueTextField")
         textField.placeholder = "Enter your email address" // задаем подсказку для текстового поля
@@ -103,9 +104,14 @@ final class SignUpVC: UIViewController {
     let passwordButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     let confPasswordButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
+    let mainVC = MainVC()
+    var emailRegister = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        print(emailRegister)
+        
     }
     
     private func setupViews() {
@@ -251,15 +257,29 @@ final class SignUpVC: UIViewController {
     
     @objc
     private func signUpButtonPressed() {
-        print("Sign Up button Press")
+        if passwordTextField.text == confPasswordTextField.text{
+            if let email = emailTextField.text, let password = passwordTextField.text{
+                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                    if let e = error {
+                        print(e)
+                    }else {
+                        self.mainVC.modalPresentationStyle = .fullScreen
+                        self.present(self.mainVC, animated: true)
+                    }
+                }
+            }
+        }
     }
     
     
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
-        // здесь можно добавить любое действие, которое должно происходить при нажатии на login
-        print("Loggin Pressed")
+        let loginVC = LoginVC()
+        loginVC.modalPresentationStyle = .fullScreen
+        loginVC.modalTransitionStyle = .crossDissolve 
+        present(loginVC, animated: true)
     }
 
+    
 }
 
     //MARK: Добавлям метод для создания отступа слева от текстового поля

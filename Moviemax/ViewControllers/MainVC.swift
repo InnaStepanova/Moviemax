@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+
+class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let boxDS = BoxCollectionDataSource()
     

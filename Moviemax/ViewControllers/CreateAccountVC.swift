@@ -64,7 +64,6 @@ final class CreateAccountVC : UIViewController {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
         textField.layer.cornerRadius = 28
-        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -104,6 +103,8 @@ final class CreateAccountVC : UIViewController {
         imageView.image = UIImage(named: "GmailImage")
         return imageView
     }()
+    
+    let signUpVC = SignUpVC()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,6 +216,12 @@ final class CreateAccountVC : UIViewController {
     @objc
     private func continueEmailButtonPressed() {
         print("continueEmailButtonPressed")
+        if let email = emailTextField.text {
+            self.signUpVC.modalPresentationStyle = .fullScreen
+            present(signUpVC, animated: true){
+                self.signUpVC.emailRegister = email
+            }
+        }
     }
     
     @objc
@@ -223,8 +230,10 @@ final class CreateAccountVC : UIViewController {
     }
     
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
-        // здесь можно добавить любое действие, которое должно происходить при нажатии на login
-        print("Loggin Pressed")
+        let loginVC = LoginVC()
+        loginVC.modalPresentationStyle = .fullScreen
+        loginVC.modalTransitionStyle = .crossDissolve
+        present(loginVC, animated: true)
     }
     
 }
