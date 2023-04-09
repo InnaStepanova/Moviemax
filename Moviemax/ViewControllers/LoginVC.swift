@@ -101,6 +101,8 @@ class LoginVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        emailTextField.text = "1@1.com"
+        passwordTextField.text = "123456"
     }
     
     
