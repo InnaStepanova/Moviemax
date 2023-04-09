@@ -200,9 +200,11 @@ class LoginVC : UIViewController {
                 if let e = error {
                     print(e)
                 }else {
-                    let mainVC = MainVC()
-                    mainVC.modalPresentationStyle = .fullScreen
-                    self!.present(mainVC, animated: true)
+                    let tabBarController = TabBarController()
+                    tabBarController.selectedIndex = 2
+//                    let mainVC = MainVC()
+                    tabBarController.modalPresentationStyle = .fullScreen
+                    self!.present(tabBarController, animated: true)
                 }
             }
         }
