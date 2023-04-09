@@ -192,9 +192,12 @@ final class ProfileSettingsVC: UIViewController {
         return button
     }()
     
+    private let customAlert = UserPhotoAlert()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        addTaps()
     }
 
     @objc private func backButtonPressed() {
@@ -310,6 +313,16 @@ final class ProfileSettingsVC: UIViewController {
             saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: Constants.Spacing.saveButtonBottomSpacing.negative),
             saveButton.heightAnchor.constraint(equalToConstant: Constants.Size.saveButtonHeight),
         ])
+    }
+    
+    private func addTaps() {
+        let tapImage = UITapGestureRecognizer(target: self, action: #selector(editAvatarTapped))
+        editAvatar.isUserInteractionEnabled = true
+        editAvatar.addGestureRecognizer(tapImage)
+    }
+
+    @objc private func editAvatarTapped() {
+        customAlert.setupAlert(viewController: self)
     }
 }
 
