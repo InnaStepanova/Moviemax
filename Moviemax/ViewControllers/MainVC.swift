@@ -5,10 +5,9 @@
 //  Created by user on 7.04.23.
 //
 
-import Foundation
 import UIKit
 
-class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+final class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let boxDS = BoxCollectionDataSource()
     
@@ -21,11 +20,13 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = boxDS
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(MovieLittleCell.self, forCellWithReuseIdentifier: "boxCollection")
         return collectionView
     }()
+    
     private lazy var filmCollectionView = FilmCellView()
     private lazy var categoryCollectionView = CategoryCollectionView()
 
@@ -69,7 +70,6 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         return label
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -77,7 +77,7 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func setupView(){
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         view.addSubview(nameLabel)
         view.addSubview(statusLabel)
         view.addSubview(avatarImageView)

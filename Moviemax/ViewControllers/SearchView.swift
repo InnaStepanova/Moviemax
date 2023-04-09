@@ -13,7 +13,7 @@ final class SearchView: UIView {
         let searchBar = UISearchBar()
         searchBar.backgroundImage = UIImage()
         searchBar.setImage(UIImage(named: "Search"), for: .search, state: .normal)
-        searchBar.searchTextField.backgroundColor = .white
+        searchBar.searchTextField.backgroundColor = UIColor(named: "BackgroundScreenColor")
         searchBar.placeholder = "Search Movies and TV shows"
         return searchBar
     }()
@@ -45,7 +45,7 @@ final class SearchView: UIView {
     }
     
     private func addViews() {
-        backgroundColor = .white
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         addSubview(searchBar)
         addSubview(closeButton)
         addSubview(filterButton)

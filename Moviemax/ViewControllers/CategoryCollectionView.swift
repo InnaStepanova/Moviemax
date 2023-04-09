@@ -16,6 +16,7 @@ class CategoryCollectionView: UICollectionView {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: collectionLayout)
         setDelegate()
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionLayout.scrollDirection = .horizontal
         showsHorizontalScrollIndicator = false
         selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .left)
