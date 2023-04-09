@@ -101,6 +101,8 @@ class LoginVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        emailTextField.text = "1@1.com"
+        passwordTextField.text = "123456"
     }
     
     
@@ -202,7 +204,6 @@ class LoginVC : UIViewController {
                 }else {
                     let tabBarController = TabBarController()
                     tabBarController.selectedIndex = 2
-//                    let mainVC = MainVC()
                     tabBarController.modalPresentationStyle = .fullScreen
                     self!.present(tabBarController, animated: true)
                 }
