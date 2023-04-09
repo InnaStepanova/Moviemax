@@ -36,7 +36,7 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraints()
     }

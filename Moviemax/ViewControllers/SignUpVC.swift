@@ -1,9 +1,7 @@
-
-import Foundation
 import UIKit
 import FirebaseAuth
 
-class SignUpVC: UIViewController {
+final class SignUpVC: UIViewController {
 
     //MARK: - Create UI
     private lazy var topStackView = UIStackView()

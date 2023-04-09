@@ -28,6 +28,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
@@ -38,7 +39,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraints()
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateAccountVC : UIViewController {
+final class CreateAccountVC : UIViewController {
     
     var topViewLabel: UILabel = {
         let label = UILabel(frame: .zero)

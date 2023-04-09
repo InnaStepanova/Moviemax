@@ -206,7 +206,7 @@ final class ProfileSettingsVC: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = #colorLiteral(red: 0.9960784314, green: 0.9960784314, blue: 0.9960784314, alpha: 1)
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(scrollView)

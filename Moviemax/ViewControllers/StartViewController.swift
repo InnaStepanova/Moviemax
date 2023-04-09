@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+final class StartViewController: UIViewController {
     
     private lazy var movieIcon: UIImageView = {
         let imageView = UIImageView()

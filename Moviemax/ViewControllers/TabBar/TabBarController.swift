@@ -17,7 +17,7 @@ enum Tabs: Int {
 }
 
 final class TabBarController: UITabBarController {
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -27,13 +27,10 @@ final class TabBarController: UITabBarController {
         super.viewDidLayoutSubviews()
         tabBar.frame.size.height = 75
         tabBar.frame.origin.y = view.frame.height - 75
-        
-
     }
     
-        private func configure() {
-            tabBar.backgroundColor = .white
-        
+    private func configure() {
+        tabBar.backgroundColor = UIColor(named: "TabBarBGColor")
             
             let homeItem = UITabBarItem(title: nil, image: UIImage(named: "home"), selectedImage: UIImage(named: "home"))
             homeItem.imageInsets = UIEdgeInsets(top: 15, left: 0, bottom: -15, right: 0)
