@@ -19,6 +19,7 @@
 		02357A9429DDF2C6008CE17A /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A9329DDF2C6008CE17A /* LikeButton.swift */; };
 		0262086929DF28E400BA1664 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262086829DF28E400BA1664 /* SearchViewController.swift */; };
 		0262086B29DF2C5300BA1664 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262086A29DF2C5300BA1664 /* SearchView.swift */; };
+		0271B25729E40946002C955D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271B25629E40946002C955D /* StorageManager.swift */; };
 		02A0D40B29E1433B00CE58A1 /* RecentWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */; };
 		02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B029DABF26001649E5 /* AppDelegate.swift */; };
 		02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B229DABF26001649E5 /* SceneDelegate.swift */; };
@@ -60,6 +61,7 @@
 		02357A9329DDF2C6008CE17A /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		0262086829DF28E400BA1664 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		0262086A29DF2C5300BA1664 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		0271B25629E40946002C955D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentWatchViewController.swift; sourceTree = "<group>"; };
 		02E964AD29DABF26001649E5 /* Moviemax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moviemax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E964B029DABF26001649E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +121,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		0271B25529E408F8002C955D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0271B25629E40946002C955D /* StorageManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		02E964A429DABF26001649E5 = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				02E964C829DAC333001649E5 /* Application */,
+				0271B25529E408F8002C955D /* Managers */,
 				02E964C929DAC34A001649E5 /* ViewControllers */,
 				02E964C729DAC2D6001649E5 /* SupportingFiles */,
 				02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */,
@@ -344,6 +355,7 @@
 				5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */,
 				CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */,
 				95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */,
+				0271B25729E40946002C955D /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
