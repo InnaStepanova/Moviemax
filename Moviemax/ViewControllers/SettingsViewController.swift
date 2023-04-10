@@ -128,7 +128,6 @@ extension SettingsViewController: UITableViewDataSource {
             }
             
             cell.configureCell(currentUser: StorageManader.shared.getCurrentUser())
-//            cell.configureCell(currentUser)
             
             return cell
         case .personalInfo:
@@ -156,6 +155,14 @@ extension SettingsViewController: UITableViewDataSource {
             }
             
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if sections[indexPath.section] == .personalInfo {
+            let profileSettingsVS = ProfileSettingsVC()
+            navigationController?.pushViewController(profileSettingsVS, animated: true)
         }
     }
 }
