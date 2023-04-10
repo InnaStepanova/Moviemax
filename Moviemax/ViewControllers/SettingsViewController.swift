@@ -37,6 +37,7 @@ class SettingsViewController: UIViewController {
     }
     
     // MARK: - Properties
+    let currentUser = StorageManader.shared.getCurrentUser()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -126,7 +127,8 @@ extension SettingsViewController: UITableViewDataSource {
                 fatalError("Can't find cell with reuse identifier: UserInfoCell")
             }
             
-            cell.configureCell(fullName: "Test Test", nickName: "@test")
+            cell.configureCell(currentUser: StorageManader.shared.getCurrentUser())
+//            cell.configureCell(currentUser)
             
             return cell
         case .personalInfo:

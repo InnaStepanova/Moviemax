@@ -38,12 +38,16 @@ final class UserInfoTableViewCell: UITableViewCell {
         
     // MARK: - Public methods
     
-    func configureCell(fullName: String, nickName: String) {
+    func configureCell(currentUser: CurrentUser?) {
         configureConstraints()
         backgroundColor = UIColor(named: "BackgroundScreenColor")
-        userFullNameLabel.text = fullName
-        userNickNameLabel.text = nickName
-        userIconImageView.image = UIImage(named: "User-photo")
+        userFullNameLabel.text = "\(currentUser?.user?.firstName ?? "") \(currentUser?.user?.lastName ?? "")"
+        userNickNameLabel.text = currentUser?.user?.email
+        if let photoData = currentUser?.user?.photo {
+            userIconImageView.image = UIImage(data: photoData)
+        } else {
+            userIconImageView.image = UIImage(named: "User-photo")
+        }
         selectionStyle = .none
     }
 
