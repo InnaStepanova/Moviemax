@@ -202,10 +202,17 @@ class LoginVC : UIViewController {
                 if let e = error {
                     print(e)
                 }else {
-                    let tabBarController = TabBarController()
-                    tabBarController.selectedIndex = 2
-                    tabBarController.modalPresentationStyle = .fullScreen
-                    self!.present(tabBarController, animated: true)
+                    if let user = StorageManader.shared.findUser(email: self?.emailTextField.text, password: self?.passwordTextField.text) {
+                        StorageManader.shared.saveCurrentUser(user: user)
+                        let tabBarController = TabBarController()
+                        tabBarController.selectedIndex = 2
+                        tabBarController.modalPresentationStyle = .fullScreen
+                        self!.present(tabBarController, animated: true)
+                    }
+//                    let tabBarController = TabBarController()
+//                    tabBarController.selectedIndex = 2
+//                    tabBarController.modalPresentationStyle = .fullScreen
+//                    self!.present(tabBarController, animated: true)
                 }
             }
         }

@@ -33,11 +33,40 @@ final class StorageManader {
         saveContext()
     }
     
+    func findUser(email: String?, password: String?) -> User? {
+        let fetchReguest: NSFetchRequest<User> = User.fetchRequest()
+        do {
+            let users = try viewContex.fetch(fetchReguest)
+            for user in users {
+                if user.email == email && user.password == password {
+                    return user
+                }
+            }
+            
+        } catch let error {
+            print("Failed to fetch data", error)
+        }
+        return nil
+    }
+    
     func saveCurrentUser(user: User) {
+        cleanCurrentUser()
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "CurrentUser", in: viewContex) else { return }
         let currentUser = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! CurrentUser
         currentUser.user = user
         saveContext()
+    }
+    
+    private func cleanCurrentUser() {
+        let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()
+        do {
+            let currentUsers = try viewContex.fetch(fetchReguest)
+            for user in currentUsers {
+                viewContex.delete(user)
+            }
+        } catch let error {
+            print("Failed to fetch data", error)
+        }
     }
     
     func getCurrentUser() -> CurrentUser? {
