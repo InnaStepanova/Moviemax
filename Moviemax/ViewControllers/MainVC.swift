@@ -12,6 +12,8 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     let boxDS = BoxCollectionDataSource()
     
+    private lazy var currentUser = StorageManader.shared.getCurrentUser()
+    
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.bounds.width, height: 80)
@@ -41,7 +43,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, Mike"
+        label.text = "Hi, \(currentUser?.user?.firstName ?? "")"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
         return label

@@ -12,7 +12,7 @@ final class StorageManader {
     private init() {}
     static let shared = StorageManader()
     
-    private lazy var persistentContainer: NSPersistentContainer = {
+    private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Moviemax")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -26,8 +26,29 @@ final class StorageManader {
         return persistentContainer.viewContext
     }
     
-    func saveUser() {
-        
+    func saveUser(completion: (User) -> Void) {
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
+        let user = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
+        completion(user)
+        saveContext()
+    }
+    
+    func saveCurrentUser(user: User) {
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "CurrentUser", in: viewContex) else { return }
+        let currentUser = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! CurrentUser
+        currentUser.user = user
+        saveContext()
+    }
+    
+    func getCurrentUser() -> CurrentUser? {
+        let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()
+        do {
+            let currentUsers = try viewContex.fetch(fetchReguest)
+            return currentUsers[0]
+        } catch let error {
+            print("Failed to fetch data", error)
+            return nil
+        }
     }
 
     func saveContext () {
