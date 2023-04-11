@@ -68,6 +68,11 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as? MovieLargeCell else { return UICollectionViewCell() }
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
 }
 
 private extension FavoritesViewController {

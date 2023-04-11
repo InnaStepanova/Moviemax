@@ -251,7 +251,7 @@ class MovieDetail: UIViewController {
     
     //фунция для перехода в другой VC
     @objc func backButtonPressed () {
-        
+        navigationController?.popViewController(animated: true)
     }
     
     //функция для показа полного описания фильма

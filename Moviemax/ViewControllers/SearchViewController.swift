@@ -39,6 +39,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraints()
@@ -88,5 +89,9 @@ extension SearchViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
     
 }

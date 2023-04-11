@@ -3,6 +3,13 @@
     <entity name="CurrentUser" representedClassName="CurrentUser" syncable="YES" codeGenerationType="class">
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User"/>
     </entity>
+    <entity name="MovieData" representedClassName="MovieData" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="long" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="dateOfBrith" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="email" attributeType="String"/>
