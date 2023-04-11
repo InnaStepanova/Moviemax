@@ -85,6 +85,29 @@ final class StorageManader {
             return nil
         }
     }
+    
+    func addMovie(completion: (MovieData) -> Void) {
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "MovieData", in: viewContex) else { return }
+        let movie = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! MovieData
+        completion(movie)
+        saveContext()
+    }
+    
+    func getMovies() -> [MovieData] {
+        let fetchReguest: NSFetchRequest<MovieData> = MovieData.fetchRequest()
+        do {
+            let movies = try viewContex.fetch(fetchReguest)
+            return movies
+        } catch let error {
+            print("Failed to fetch data", error)
+            return []
+        }
+    }
+    
+    func deleteMovie(_ movie: MovieData) {
+        viewContex.delete(movie)
+        saveContext()
+    }
 
     func saveContext () {
         let context = persistentContainer.viewContext
