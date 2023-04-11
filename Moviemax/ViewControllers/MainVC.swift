@@ -75,6 +75,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         setupView()
 
     }
@@ -153,7 +154,10 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
 
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
 }
 
 
@@ -163,6 +167,9 @@ class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     
+        let movieDetailVC = MovieDetail()
+//        navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
     }
 
