@@ -25,7 +25,7 @@ class StartViewController: UIViewController {
     private lazy var roundView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 44
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(named: "")
         return view
     }()
     

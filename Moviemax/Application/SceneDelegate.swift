@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         let tabBarController = StartViewController()
 //        tabBarController.selectedIndex = 2 
-        window?.rootViewController = ProfileSettingsVC()
+        window?.rootViewController = tabBarController
 
     }
 
