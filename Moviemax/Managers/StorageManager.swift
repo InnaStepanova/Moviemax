@@ -49,6 +49,12 @@ final class StorageManader {
         return nil
     }
     
+    func editCurrentUser(user: User, completion:(User) -> Void) {
+        completion(user)
+        saveCurrentUser(user: user)
+        saveContext()
+    }
+    
     func saveCurrentUser(user: User) {
         cleanCurrentUser()
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "CurrentUser", in: viewContex) else { return }

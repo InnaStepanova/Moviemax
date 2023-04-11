@@ -37,7 +37,7 @@ class SettingsViewController: UIViewController {
     }
     
     // MARK: - Properties
-    let currentUser = StorageManader.shared.getCurrentUser()
+    var currentUser = StorageManader.shared.getCurrentUser()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -61,6 +61,12 @@ class SettingsViewController: UIViewController {
         configureView()
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentUser = StorageManader.shared.getCurrentUser()
+        tableView.reloadData()
     }
     
     // MARK: - Private methods
@@ -162,6 +168,7 @@ extension SettingsViewController: UITableViewDataSource {
         
         if sections[indexPath.section] == .personalInfo {
             let profileSettingsVS = ProfileSettingsVC()
+            profileSettingsVS.currentUser = currentUser
             navigationController?.pushViewController(profileSettingsVS, animated: true)
         }
     }
