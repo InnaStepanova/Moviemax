@@ -62,7 +62,6 @@ final class MovieLittleCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "4,4"
         label.textColor = UIColor(red: 250.0/255.0, green: 204.0/255.0, blue: 21.0/255.0, alpha: 1)
-
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 12)
         return label
     }()
@@ -112,9 +111,9 @@ final class MovieLittleCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             movieImage.heightAnchor.constraint(equalToConstant: 80),
             movieImage.widthAnchor.constraint(equalToConstant: 80),
-            movieImage.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            movieImage.topAnchor.constraint(equalTo: topAnchor),
             movieImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 23),
-            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             categoryLabel.topAnchor.constraint(equalTo: movieImage.topAnchor, constant: 5),
             categoryLabel.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 12),

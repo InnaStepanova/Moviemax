@@ -16,9 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
+<<<<<<< HEAD
         let tabBarController = StartViewController()
 //        tabBarController.selectedIndex = 2 
         window?.rootViewController = tabBarController
+=======
+    
+        let tabBarController = TabBarController()
+        tabBarController.selectedIndex = 2
+        window?.rootViewController = CreateAccountVC()
+>>>>>>> dev
 
     }
 
@@ -45,12 +52,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-
-        // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+      
+        StorageManader.shared.saveContext()
     }
 
 

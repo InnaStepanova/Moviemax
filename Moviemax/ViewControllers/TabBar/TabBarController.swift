@@ -17,7 +17,7 @@ enum Tabs: Int {
 }
 
 final class TabBarController: UITabBarController {
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -27,13 +27,10 @@ final class TabBarController: UITabBarController {
         super.viewDidLayoutSubviews()
         tabBar.frame.size.height = 75
         tabBar.frame.origin.y = view.frame.height - 75
-        
-
     }
     
-        private func configure() {
-            tabBar.backgroundColor = .white
-        
+    private func configure() {
+        tabBar.backgroundColor = UIColor(named: "TabBarBGColor")
             
             let homeItem = UITabBarItem(title: nil, image: UIImage(named: "home"), selectedImage: UIImage(named: "home"))
             homeItem.imageInsets = UIEdgeInsets(top: 15, left: 0, bottom: -15, right: 0)
@@ -50,11 +47,11 @@ final class TabBarController: UITabBarController {
             let profileItem = UITabBarItem(title: nil, image: UIImage(named: "profile"), selectedImage: UIImage(named: "profile_fill"))
             profileItem.imageInsets = UIEdgeInsets(top: 19, left: 0, bottom: -19, right: 0)
           
-            let searchViewController = UIViewController()
-            let videoViewController = UIViewController()
-            let mainViewController = UIViewController()
-            let favoritesViewController = UIViewController()
-            let profileViewController = UIViewController()
+            let searchViewController = SearchViewController()
+            let videoViewController = RecentWatchViewController()
+            let mainViewController = MainVC()
+            let favoritesViewController = FavoritesViewController()
+            let profileViewController = SettingsViewController()
             
             let searchNavigation = UINavigationController(rootViewController: searchViewController)
             let videoNavigation = UINavigationController(rootViewController: videoViewController)

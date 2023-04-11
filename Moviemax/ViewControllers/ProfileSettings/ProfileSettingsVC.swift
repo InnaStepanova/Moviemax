@@ -9,6 +9,8 @@ import UIKit
 
 final class ProfileSettingsVC: UIViewController {
     
+    var currentUser: CurrentUser?
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "BackButton"), for: .normal)
@@ -35,7 +37,11 @@ final class ProfileSettingsVC: UIViewController {
 
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "avatar.pdf")
+        if let photoData = currentUser?.user?.photo {
+            imageView.image = UIImage(data: photoData)
+        } else {
+            imageView.image = #imageLiteral(resourceName: "avatar.pdf")
+        }
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -80,6 +86,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var lastNameTextField: UITextField = {
         let textField = UITextField()
+        textField.text = currentUser?.user?.lastName
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -101,6 +108,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
+        textField.text = currentUser?.user?.email
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -149,10 +157,18 @@ final class ProfileSettingsVC: UIViewController {
     }()
     
     private lazy var maleButton = GenderCustomButton(type: .male) {
+        guard let editUser = self.currentUser?.user else { return }
+        StorageManader.shared.editCurrentUser(user: editUser) { user in
+            user.gender = "male"
+        }
         print("maleButtonTapped")
     }
     
     private lazy var femaleButton = GenderCustomButton(type: .female) {
+        guard let editUser = self.currentUser?.user else { return }
+        StorageManader.shared.editCurrentUser(user: editUser) { user in
+            user.gender = "female"
+        }
         print("femaleButtonTapped")
     }
     
@@ -174,14 +190,14 @@ final class ProfileSettingsVC: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         textView.delegate = self
-        textView.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        textView.text = currentUser?.user?.location
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.isEnabled = false
+        button.isEnabled = true
         button.setTitle("Save Changes", for: .normal)
         button.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         button.setTitleColor(button.isEnabled ? .black : .lightGray, for: .normal)
@@ -192,9 +208,17 @@ final class ProfileSettingsVC: UIViewController {
         return button
     }()
     
+    private let customAlert = UserPhotoAlert()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        addTaps()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentUser()
     }
 
     @objc private func backButtonPressed() {
@@ -202,11 +226,30 @@ final class ProfileSettingsVC: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        print("saveButtonPressed")
+        guard let editUser = currentUser?.user else { return }
+        StorageManader.shared.editCurrentUser(user: editUser) { user in
+            user.firstName = firstNameTextField.text
+            user.lastName = lastNameTextField.text
+            user.email = emailTextField.text
+            user.location = locationTextView.text
+        }
+    }
+    
+    private func setCurrentUser() {
+        firstNameTextField.text = currentUser?.user?.firstName
+        lastNameTextField.text = currentUser?.user?.lastName
+        emailTextField.text = currentUser?.user?.email
+        locationTextView.text = currentUser?.user?.location
+        if currentUser?.user?.gender == "male" {
+            maleButton.isSelected = true
+        }
+        if currentUser?.user?.gender == "female" {
+            femaleButton.isSelected = true
+        }
     }
     
     private func setupUI() {
-        view.backgroundColor = #colorLiteral(red: 0.9960784314, green: 0.9960784314, blue: 0.9960784314, alpha: 1)
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(scrollView)
@@ -310,6 +353,16 @@ final class ProfileSettingsVC: UIViewController {
             saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: Constants.Spacing.saveButtonBottomSpacing.negative),
             saveButton.heightAnchor.constraint(equalToConstant: Constants.Size.saveButtonHeight),
         ])
+    }
+    
+    private func addTaps() {
+        let tapImage = UITapGestureRecognizer(target: self, action: #selector(editAvatarTapped))
+        editAvatar.isUserInteractionEnabled = true
+        editAvatar.addGestureRecognizer(tapImage)
+    }
+
+    @objc private func editAvatarTapped() {
+        customAlert.setupAlert(viewController: self)
     }
 }
 

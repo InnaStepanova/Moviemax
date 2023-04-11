@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class CategoryCollectionViewCell: UICollectionViewCell {
+final class CategoryCollectionViewCell: UICollectionViewCell {
 
     let categoryLabel: UILabel = {
         let label = UILabel()

@@ -7,56 +7,70 @@
 
 import UIKit
 
-class CreateAccountVC : UIViewController {
+final class CreateAccountVC : UIViewController {
     
     var topViewLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = Resources.Fonts.plusJakartaSansBold(with: 24)
         label.textColor = UIColor.white
+        label.text = "Create Account"
         return label
     }()
     
     private var topViewLowLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = Resources.Fonts.plusJakartaSans(with: 16)
         label.textColor = UIColor.white
+        label.text = "Lorem ipsum dolor sit amet"
         return label
     }()
     
     private lazy var emailLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = Resources.Fonts.plusJakartaSans(with: 16)
         label.textColor = UIColor.gray
+        label.text = "Email"
         return label
     }()
     
     private lazy var midleHint: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = UIColor.gray
+        label.font = Resources.Fonts.plusJakartaSans(with: 14)
+        label.textColor = UIColor(named: "GreyWhiteTextColor")
+        label.text = "———  Or continue with  ———"
         return label
     }()
     
     private lazy var lowHintLoginLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = UIColor.black
+        label.font = Resources.Fonts.plusJakartaSans(with: 16)
+        label.textColor = UIColor(named: "GreyWhiteTextColor")
+        label.text = "Already have an account?"
         return label
     }()
     
     private lazy var loginLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = Resources.Fonts.plusJakartaSans(with: 16)
         label.textColor = UIColor.systemBlue
+        label.text = "Login"
         return label
     }()
     
-    private lazy var emailTextField = UITextField()
+    private lazy var emailTextField : UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = UIColor(named: "LightBlueTextField")
+        textField.placeholder = "Enter your email address"
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(named: "BorderTextFieldColor")?.cgColor
+        textField.layer.cornerRadius = 28
+        return textField
+    }()
     
     private lazy var continueEmailButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        button.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         button.setTitle("Continue with Email", for: .normal)
         button.backgroundColor = UIColor(named: "BlueButtonColor")
         button.layer.cornerRadius = 28
@@ -66,11 +80,11 @@ class CreateAccountVC : UIViewController {
     
     private lazy var continueGmailButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        button.setTitleColor(UIColor(named: "BlackWhite"), for: .normal)
+        button.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         button.setTitle("Continue with Google", for: .normal)
-        button.backgroundColor = .white
-        button.layer.borderColor = UIColor.black.cgColor
+        button.backgroundColor = UIColor(named: "BackgroundColor")
+        button.layer.borderColor = UIColor(named: "BlackWhite")?.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 28
         button.addTarget(self, action: #selector(continueGmailButtonPressed), for: .touchUpInside)
@@ -79,12 +93,18 @@ class CreateAccountVC : UIViewController {
     
     var additionalView : UIView = {
         let newView = UIView(frame: CGRect(x: 0, y: 198, width: 200, height: 200))
-        newView.backgroundColor = .white
+        newView.backgroundColor = UIColor(named: "BackgroundColor")
         newView.layer.cornerRadius = 30
         return newView
     }()
-    let gmailButtomImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30 , height: 30))
+    let gmailButtomImageView : UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30 , height: 30))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "GmailImage")
+        return imageView
+    }()
     
+    let signUpVC = SignUpVC()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,32 +117,15 @@ class CreateAccountVC : UIViewController {
         
         emailTextField.paddingLeft(10)
         
-        topViewLabel.text = "Create Account"
-        topViewLowLabel.text = "Lorem ipsum dolor sit amet"
-        emailLabel.text = "Email"
-        midleHint.text = "———  Or continue with  ———"
-        lowHintLoginLabel.text = "Already have an account?"
-        loginLabel.text = "Login"
-        
         // задаём размер additionalView согласно размеру экрана
         let screenSize = UIScreen.main.bounds.size
         additionalView.frame.size.width = screenSize.width
         additionalView.frame.size.height = screenSize.height
         
-        emailTextField.backgroundColor = UIColor(named: "LightBlueTextField")
-        emailTextField.placeholder = "Enter your email address" // задаем подсказку для текстового поля
-        emailTextField.borderStyle = .none  // задаем стиль границы текстового поля
-        emailTextField.layer.cornerRadius = 28
-        emailTextField.isSecureTextEntry = true
-        
         //Тут вместо создания кнопки сделал, действие при нажатии на label
         let loginTapGesture = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
         loginLabel.isUserInteractionEnabled = true
         loginLabel.addGestureRecognizer(loginTapGesture)
-        
-        // Настраиваем изображение внутри кнопки
-        gmailButtomImageView.contentMode = .scaleAspectFit
-        gmailButtomImageView.image = UIImage(named: "GmailImage")
         
         view.addSubview(topViewLabel)
         view.addSubview(topViewLowLabel)
@@ -213,6 +216,12 @@ class CreateAccountVC : UIViewController {
     @objc
     private func continueEmailButtonPressed() {
         print("continueEmailButtonPressed")
+        if let email = emailTextField.text {
+            self.signUpVC.modalPresentationStyle = .fullScreen
+            present(signUpVC, animated: true){
+                self.signUpVC.emailRegister = email
+            }
+        }
     }
     
     @objc
@@ -221,8 +230,10 @@ class CreateAccountVC : UIViewController {
     }
     
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
-        // здесь можно добавить любое действие, которое должно происходить при нажатии на login
-        print("Loggin Pressed")
+        let loginVC = LoginVC()
+        loginVC.modalPresentationStyle = .fullScreen
+        loginVC.modalTransitionStyle = .crossDissolve
+        present(loginVC, animated: true)
     }
     
 }

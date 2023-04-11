@@ -16,7 +16,7 @@ final class MovieLargeCell: UICollectionViewCell {
     
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
         imageView.image = UIImage(named: "DriftingHome")
@@ -76,6 +76,7 @@ final class MovieLargeCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraint()
     }
@@ -110,9 +111,9 @@ final class MovieLargeCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             movieImage.heightAnchor.constraint(equalToConstant: 160),
             movieImage.widthAnchor.constraint(equalToConstant: 120),
-            movieImage.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            movieImage.topAnchor.constraint(equalTo: topAnchor),
             movieImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             movieName.topAnchor.constraint(equalTo: movieImage.topAnchor),
             movieName.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 15),
