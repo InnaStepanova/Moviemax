@@ -212,6 +212,7 @@ final class ProfileSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = true
         setupUI()
         addTaps()
     }
@@ -222,7 +223,7 @@ final class ProfileSettingsVC: UIViewController {
     }
 
     @objc private func backButtonPressed() {
-        print("backButtonPressed")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func saveButtonPressed() {
