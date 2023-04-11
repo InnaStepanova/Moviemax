@@ -209,10 +209,6 @@ class LoginVC : UIViewController {
                         tabBarController.modalPresentationStyle = .fullScreen
                         self!.present(tabBarController, animated: true)
                     }
-//                    let tabBarController = TabBarController()
-//                    tabBarController.selectedIndex = 2
-//                    tabBarController.modalPresentationStyle = .fullScreen
-//                    self!.present(tabBarController, animated: true)
                 }
             }
         }

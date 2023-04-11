@@ -200,7 +200,7 @@ final class ProfileSettingsVC: UIViewController {
         button.isEnabled = true
         button.setTitle("Save Changes", for: .normal)
         button.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        button.setTitleColor(button.isEnabled ? .black : .lightGray, for: .normal)
+        button.setTitleColor(button.isEnabled ? .white : .lightGray, for: .normal)
         button.layer.cornerRadius = 24
         button.backgroundColor = button.isEnabled ? #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1) : .gray
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
@@ -234,6 +234,8 @@ final class ProfileSettingsVC: UIViewController {
             user.email = emailTextField.text
             user.location = locationTextView.text
         }
+        print("Готово")
+        navigationController?.popViewController(animated: true)
     }
     
     private func setCurrentUser() {
