@@ -142,11 +142,50 @@ final class ProfileSettingsVC: UIViewController {
         calendarButton.setImage(#imageLiteral(resourceName: "calendar.pdf"), for: .normal)
         calendarButton.tintColor = #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1)
         calendarButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -15.5, bottom: 0, right: 0)
+        calendarButton.addTarget(self, action: #selector(textFieldShouldBeginEditing), for: .touchUpInside)
         textField.rightView = calendarButton
         textField.rightViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+    
+    @objc func textFieldShouldBeginEditing (){
+      
+            // Создание объекта DatePicker
+            let datePicker = UIDatePicker()
+            datePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+            // Добавление метода для обработки выбора даты
+            datePicker.addTarget(self, action: #selector(dateSelected), for: .valueChanged)
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+
+            // Создание объекта AlertController
+            let alertController = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: nil, preferredStyle: .alert)
+            alertController.view.addSubview(datePicker)
+            // Добавление кнопок "Cancel" и "OK"
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            // Отображение AlertController
+            present(alertController, animated: true, completion: nil)
+            datePicker.centerXAnchor.constraint(equalTo: alertController.view.centerXAnchor).isActive = true
+            datePicker.centerYAnchor.constraint(equalTo: alertController.view.centerYAnchor).isActive = true
+        
+    }
+        
+    @objc func dateSelected(sender: UIDatePicker) {
+            // Форматирование выбранной даты в нужный формат
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            let dateString = formatter.string(from: sender.date)
+            // Установка выбранной даты в текстовое поле
+            dateOfBirthTextField.text = dateString
+        }
     
     private lazy var genderLabel: UILabel = {
         let label = UILabel.signLowLabel
@@ -214,6 +253,7 @@ final class ProfileSettingsVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         addTaps()
+        dateOfBirthTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -352,6 +392,8 @@ final class ProfileSettingsVC: UIViewController {
             saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants.Spacing.trailingStandartSpacing.negative),
             saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: Constants.Spacing.saveButtonBottomSpacing.negative),
             saveButton.heightAnchor.constraint(equalToConstant: Constants.Size.saveButtonHeight),
+            
+            
         ])
     }
     
@@ -404,4 +446,9 @@ extension ProfileSettingsVC: UITextViewDelegate {
             textView.textColor = .lightGray
         }
     }
+}
+
+extension ProfileSettingsVC: UITextFieldDelegate {
+
+
 }
