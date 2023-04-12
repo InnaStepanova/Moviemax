@@ -358,13 +358,10 @@
 				604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */,
 				020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
-<<<<<<< HEAD
 				E7D6A12B29E05FF60068C9EE /* SecondStartViewController.swift in Sources */,
-=======
 				5F3B5DBA29E3231500479268 /* UserPhotoAlert.swift in Sources */,
 				5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */,
 				CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */,
->>>>>>> dev
 				95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */,
 				0271B25729E40946002C955D /* StorageManager.swift in Sources */,
 			);

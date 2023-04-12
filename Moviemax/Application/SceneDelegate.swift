@@ -16,17 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-<<<<<<< HEAD
-        let tabBarController = StartViewController()
-//        tabBarController.selectedIndex = 2 
-        window?.rootViewController = tabBarController
-=======
-    
-        let tabBarController = TabBarController()
-        tabBarController.selectedIndex = 2
         window?.rootViewController = CreateAccountVC()
->>>>>>> dev
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
