@@ -42,7 +42,9 @@ final class ProfileSettingsVC: UIViewController {
         } else {
             imageView.image = #imageLiteral(resourceName: "avatar.pdf")
         }
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = Constants.Size.avatarSize.half
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -247,7 +249,7 @@ final class ProfileSettingsVC: UIViewController {
         return button
     }()
     
-    private let customAlert = UserPhotoAlert()
+    private lazy var customAlert = UserPhotoAlert(vc: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -404,7 +406,7 @@ final class ProfileSettingsVC: UIViewController {
     }
 
     @objc private func editAvatarTapped() {
-        customAlert.setupAlert(viewController: self)
+        customAlert.setupAlert()
     }
 }
 
@@ -449,6 +451,18 @@ extension ProfileSettingsVC: UITextViewDelegate {
 }
 
 extension ProfileSettingsVC: UITextFieldDelegate {
+    
+}
 
-
+extension ProfileSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.avatarImageView.image = image
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }

@@ -5,9 +5,12 @@
 //  Created by Эдгар Исаев on 09.04.2023.
 //
 
+import AVFoundation
 import UIKit
 
 class UserPhotoAlert {
+    
+    let viewController: UIViewController
     
     let blurBackground: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .dark)
@@ -79,9 +82,13 @@ class UserPhotoAlert {
     
     var mainView: UIView?
     
-    func setupAlert(viewController: UIViewController) {
+    init(vc: UIViewController) {
+        self.viewController = vc
+    }
+    
+    func setupAlert() {
         
-        guard let parentView = viewController.view else { return }
+        guard let parentView = self.viewController.view else { return }
         blurBackground.frame = parentView.frame
         mainView = parentView
         
@@ -170,11 +177,34 @@ class UserPhotoAlert {
     }
     
     @objc func takePhotoButtonTapped() {
-        print("takePhotoButtonTapped")
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            DispatchQueue.main.async {
+                if granted {
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.sourceType = .camera
+                    imagePicker.delegate = self.viewController as? any UIImagePickerControllerDelegate & UINavigationControllerDelegate
+                    self.viewController.present(imagePicker, animated: true, completion: nil)
+                } else {
+                    let alertController = UIAlertController(title: "Доступ к камере запрещен",
+                                                            message: "Чтобы использовать камеру, разрешите доступ к ней в настройках устройства",
+                                                            preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.viewController.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+        self.alertView.removeFromSuperview()
+        self.blurBackground.removeFromSuperview()
     }
     
     @objc func chooseFromFileButtonTapped() {
-        print("chooseFromFileButtonTapped")
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self.viewController as? any UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        self.viewController.present(imagePicker, animated: true, completion: nil)
+        self.alertView.removeFromSuperview()
+        self.blurBackground.removeFromSuperview()
     }
     
     @objc func deleteButtonTapped() {
