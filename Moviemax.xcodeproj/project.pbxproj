@@ -49,6 +49,7 @@
 		CE141F5829E1E8BA00658CA8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */; };
 		CE141F5A29E1F74800658CA8 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5929E1F74800658CA8 /* LoginVC.swift */; };
 		E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12829DD9C000068C9EE /* StartViewController.swift */; };
+		E7D6A12B29E05FF60068C9EE /* SecondStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		CE141F5229E1E5E900658CA8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE141F5929E1F74800658CA8 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E7D6A12829DD9C000068C9EE /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondStartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 				E7D6A12829DD9C000068C9EE /* StartViewController.swift */,
+				E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */,
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
 				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
 				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
@@ -370,6 +373,7 @@
 				604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */,
 				020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
+				E7D6A12B29E05FF60068C9EE /* SecondStartViewController.swift in Sources */,
 				5F3B5DBA29E3231500479268 /* UserPhotoAlert.swift in Sources */,
 				5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */,
 				CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */,
