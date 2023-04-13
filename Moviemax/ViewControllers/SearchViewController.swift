@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     private lazy var categoryView = CategoryCollectionView()
     
-    private lazy var moviesCollection: UICollectionView = {
+    lazy var moviesCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.bounds.width, height: 160)
         layout.minimumLineSpacing = 24
@@ -43,6 +43,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraints()
+        
     }
     
     private func addViews() {
