@@ -9,12 +9,8 @@ import UIKit
 
 final class SearchView: UIView {
     
-//    let cat: [UIImageView] = [UIImageView.star1, UIImageView.stars2, UIImageView.stars3, UIImageView.stars4, UIImageView.star5]
-    var categories = CategoryArray()
-
-    
     let categoryCollection = CategoryCollectionView()
-    let categoryImage = CategoryCollectionView()
+    let categoryImage = CategoryImageViewController()
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -41,8 +37,6 @@ final class SearchView: UIView {
     @objc func buttonTapped() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.message = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        let okAction = UIAlertAction(title: "save", style: .default, handler: nil)
-        alert.addAction(okAction)
         
         let buttonClose = UIButton(frame: CGRect(x: 20, y: 20, width: 12, height: 12))
         buttonClose.setImage(UIImage(named: "close"), for: .normal)
@@ -56,38 +50,61 @@ final class SearchView: UIView {
         
         let buttonRecent = UIButton(frame: CGRect(x: 256, y: 14, width: 104, height: 24))
         buttonRecent.setTitle("Recent Filter", for: .normal)
-        buttonRecent.setTitleColor(UIColor.blue, for: .normal)
-        //            buttonRecent.setImage(UIImage(named: "close"), for: .normal)
+        buttonRecent.setTitleColor(UIColor(named: "BlueButtonColor"), for: .normal)
         buttonRecent.addTarget(self, action: #selector(recentFilter), for: .touchUpInside)
         buttonRecent.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 14)
         
-        let labelCategoies = UILabel(frame: CGRect(x: 20, y: 64, width: 105, height: 26))
+        let labelCategoies = UILabel(frame: CGRect(x: 20, y: 44, width: 105, height: 26))
         labelCategoies.text = "Categories"
         labelCategoies.textAlignment = .center
         labelCategoies.textColor = .black
         labelCategoies.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         
+        let labelStarRaiting = UILabel(frame: CGRect(x: 20, y: 180, width: 105, height: 26))
+        labelStarRaiting.text = "Star Raiting"
+        labelStarRaiting.textAlignment = .center
+        labelStarRaiting.textColor = .black
+        labelStarRaiting.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
+        
+        let buttonApplyFilter: UIButton = {
+            let button = UIButton(frame: CGRect(x: 30, y: 320, width: 300, height: 50))
+            button.layer.cornerRadius = 17
+            button.setTitle("Apply Filters", for: .normal)
+            button.titleLabel?.font = UIFont(name: "PlusJakartaSansRoman-SemiBold", size: 16)
+            button.backgroundColor = UIColor(named: "BlueButtonColor")
+            button.setTitleColor(UIColor.white, for: .normal)
+            button.addTarget(self, action: #selector(applyFilter), for: .touchUpInside)
+            return button
+        }()
+        alert.view.backgroundColor = .white
         alert.view.addSubview(labelFilter)
         alert.view.addSubview(buttonClose)
         alert.view.addSubview(buttonRecent)
         alert.view.addSubview(labelCategoies)
         alert.view.addSubview(categoryCollection)
         alert.view.addSubview(categoryImage)
+        alert.view.addSubview(labelStarRaiting)
+        alert.view.addSubview(buttonApplyFilter)
                 
         categoryCollection.translatesAutoresizingMaskIntoConstraints = false
         categoryCollection.backgroundColor = UIColor.clear
+
+        categoryCollection.collectionLayout.scrollDirection = .vertical
+        categoryCollection.collectionLayout.minimumInteritemSpacing = 10
+        categoryCollection.collectionLayout.minimumLineSpacing = 10
+        categoryCollection.collectionLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
         categoryCollection.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 25).isActive = true
         categoryCollection.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -10).isActive = true
-        categoryCollection.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 100).isActive = true
-        categoryCollection.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -270).isActive = true
+        categoryCollection.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 80).isActive = true
+        categoryCollection.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -220).isActive = true
         
-        categoryImage.index = 1
         categoryImage.translatesAutoresizingMaskIntoConstraints = false
         categoryImage.backgroundColor = UIColor.clear
-        categoryImage.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 25).isActive = true
-        categoryImage.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -10).isActive = true
-        categoryImage.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 200).isActive = true
-        categoryImage.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -170).isActive = true
+        categoryImage.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 30).isActive = true
+        categoryImage.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -30).isActive = true
+        categoryImage.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 210).isActive = true
+        categoryImage.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -90).isActive = true
 
 
         UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
@@ -99,6 +116,10 @@ final class SearchView: UIView {
     
     @objc func recentFilter () {
         print("2")
+    }
+    
+    @objc func applyFilter () {
+        print("3")
     }
     
     

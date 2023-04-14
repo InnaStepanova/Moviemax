@@ -33,7 +33,7 @@ extension UIImageView {
     
     static var star1: UIImageView {
         let image = UIImageView()
-        image.image = UIImage(named: "star1")
+        image.image = UIImage(named: "1star")
         return image
     }
     

@@ -36,6 +36,8 @@
 		601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */; };
 		604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */; };
 		955DB6E629E8794F0023AF96 /* ModelCategoryArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB6E529E8794F0023AF96 /* ModelCategoryArray.swift */; };
+		95B7050B29E8A9C3003638CD /* CategoryImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B7050A29E8A9C3003638CD /* CategoryImageViewController.swift */; };
+		95B7050D29E8A9EC003638CD /* CategoryImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B7050C29E8A9EC003638CD /* CategoryImageViewCell.swift */; };
 		95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */; };
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
@@ -83,6 +85,8 @@
 		601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		955DB6E529E8794F0023AF96 /* ModelCategoryArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCategoryArray.swift; sourceTree = "<group>"; };
+		95B7050A29E8A9C3003638CD /* CategoryImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryImageViewController.swift; sourceTree = "<group>"; };
+		95B7050C29E8A9EC003638CD /* CategoryImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryImageViewCell.swift; sourceTree = "<group>"; };
 		95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
@@ -202,8 +206,10 @@
 				E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */,
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
 				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
-				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
 				020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */,
+				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
+				95B7050A29E8A9C3003638CD /* CategoryImageViewController.swift */,
+				95B7050C29E8A9EC003638CD /* CategoryImageViewCell.swift */,
 				CE141F4E29E0970D00658CA8 /* FilmCell.swift */,
 				02CBB3B429E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift */,
 				CE141F5029E0975B00658CA8 /* FilmCellView.swift */,
@@ -349,10 +355,12 @@
 				02357A8929DC752B008CE17A /* MovieLargeCell.swift in Sources */,
 				601C944929DDD9AC005F22DC /* CGFloat+Extension.swift in Sources */,
 				CE141F5129E0975B00658CA8 /* FilmCellView.swift in Sources */,
+				95B7050D29E8A9EC003638CD /* CategoryImageViewCell.swift in Sources */,
 				02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */,
 				5C6FB5CF29DCA1B400B7D459 /* SettingsTableViewCell.swift in Sources */,
 				02A0D40B29E1433B00CE58A1 /* RecentWatchViewController.swift in Sources */,
 				601C944629DDD23D005F22DC /* GenderCustomButton.swift in Sources */,
+				95B7050B29E8A9C3003638CD /* CategoryImageViewController.swift in Sources */,
 				02357A9229DD5F36008CE17A /* Resources.swift in Sources */,
 				CE141F4B29DC22D300658CA8 /* CreateAccountVC.swift in Sources */,
 				E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */,
