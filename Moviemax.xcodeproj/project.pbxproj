@@ -48,6 +48,7 @@
 		CE141F5629E1E8BA00658CA8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5529E1E8BA00658CA8 /* FirebaseAuth */; };
 		CE141F5829E1E8BA00658CA8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */; };
 		CE141F5A29E1F74800658CA8 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5929E1F74800658CA8 /* LoginVC.swift */; };
+		CE699B3129E9DB98008E9DE0 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE699B3029E9DB98008E9DE0 /* ChangePasswordVC.swift */; };
 		E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12829DD9C000068C9EE /* StartViewController.swift */; };
 		E7D6A12B29E05FF60068C9EE /* SecondStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,7 @@
 		CE141F5029E0975B00658CA8 /* FilmCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCellView.swift; sourceTree = "<group>"; };
 		CE141F5229E1E5E900658CA8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE141F5929E1F74800658CA8 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		CE699B3029E9DB98008E9DE0 /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E7D6A12829DD9C000068C9EE /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondStartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +217,7 @@
 				0262086829DF28E400BA1664 /* SearchViewController.swift */,
 				0262086A29DF2C5300BA1664 /* SearchView.swift */,
 				02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */,
+				CE699B3029E9DB98008E9DE0 /* ChangePasswordVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				02357A9429DDF2C6008CE17A /* LikeButton.swift in Sources */,
 				CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */,
 				0223665729E1F3CA00D41ADE /* Image.swift in Sources */,
+				CE699B3129E9DB98008E9DE0 /* ChangePasswordVC.swift in Sources */,
 				020677D129DEAEDD007F1BE2 /* MovieLittleCell.swift in Sources */,
 				0262086929DF28E400BA1664 /* SearchViewController.swift in Sources */,
 				601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */,
