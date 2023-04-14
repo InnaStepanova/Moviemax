@@ -15,6 +15,8 @@ final class ProfileSettingsVC: UIViewController {
     
     var currentUser: CurrentUser?
     
+    private var currentUserPhoto: UIImage?
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "BackButton"), for: .normal)
@@ -46,7 +48,9 @@ final class ProfileSettingsVC: UIViewController {
         } else {
             imageView.image = #imageLiteral(resourceName: "User-photo")
         }
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = Constants.Size.avatarSize.half
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -246,7 +250,7 @@ final class ProfileSettingsVC: UIViewController {
         return button
     }()
     
-    private let customAlert = UserPhotoAlert()
+    private lazy var customAlert = UserPhotoAlert(vc: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -279,6 +283,11 @@ final class ProfileSettingsVC: UIViewController {
             if maleButton.isSelected {
                 saveCurrentUser.gender = "male"
             }
+        
+        if currentUserPhoto == nil {
+            saveCurrentUser.photo = nil
+        }
+        
         StorageManader.shared.saveCurrentUser(user: saveCurrentUser)
         navigationController?.popViewController(animated: true)
     }
@@ -417,7 +426,7 @@ final class ProfileSettingsVC: UIViewController {
     }
 
     @objc private func editAvatarTapped() {
-        customAlert.setupAlert(viewController: self)
+        customAlert.setupAlert()
     }
 }
 
@@ -467,11 +476,25 @@ extension ProfileSettingsVC: UITextFieldDelegate {
 extension ProfileSettingsVC: UserPhotoAlertDelegate {
     func deletePhoto() {
         DispatchQueue.main.async {
-            print("delegate")
             self.avatarImageView.image = #imageLiteral(resourceName: "avatar.pdf")
-            self.currentUser?.user?.photo = nil
         }
+        currentUserPhoto = nil
+    }
+}
+
+extension ProfileSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.currentUserPhoto = image
+            self.avatarImageView.image = image
+            if let data = image.pngData() {
+                currentUser?.user?.photo = data
+            }
+        }
+        dismiss(animated: true, completion: nil)
     }
     
-    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }
