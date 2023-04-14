@@ -216,13 +216,13 @@ final class CreateAccountVC : UIViewController {
     @objc
     private func continueEmailButtonPressed() {
         print("continueEmailButtonPressed")
+        print("continueEmailButtonPressed")
         if let email = emailTextField.text {
-            self.signUpVC.modalPresentationStyle = .fullScreen
-            present(signUpVC, animated: true){
                 self.signUpVC.emailRegister = email
+                navigationController?.pushViewController(signUpVC, animated: true)
             }
         }
-    }
+    
     
     @objc
     private func continueGmailButtonPressed() {
@@ -231,9 +231,7 @@ final class CreateAccountVC : UIViewController {
     
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
         let loginVC = LoginVC()
-        loginVC.modalPresentationStyle = .fullScreen
-        loginVC.modalTransitionStyle = .crossDissolve
-        present(loginVC, animated: true)
+        navigationController?.pushViewController(loginVC, animated: true)
     }
     
 }
