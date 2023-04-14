@@ -10,6 +10,8 @@ import UIKit
 
 class UserPhotoAlert {
     
+    var delegate: UserPhotoAlertDelegate?
+    
     let viewController: UIViewController
     
     let blurBackground: UIVisualEffectView = {
@@ -79,6 +81,8 @@ class UserPhotoAlert {
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -160, bottom: 0, right: 0)
         return button
     }()
+    
+    
     
     var mainView: UIView?
     
@@ -208,6 +212,9 @@ class UserPhotoAlert {
     }
     
     @objc func deleteButtonTapped() {
-        print("deleteButtonTapped")
+        delegate?.deletePhoto()
+        print("delete button")
+        self.alertView.removeFromSuperview()
+        self.blurBackground.removeFromSuperview()
     }
 }

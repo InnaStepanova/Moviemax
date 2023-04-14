@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol UserPhotoAlertDelegate {
+    func deletePhoto()
+}
+
 final class ProfileSettingsVC: UIViewController {
     
     var currentUser: CurrentUser?
+    
+    private var currentUserPhoto: UIImage?
     
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
@@ -35,12 +41,12 @@ final class ProfileSettingsVC: UIViewController {
         return scrollView
     }()
 
-    private lazy var avatarImageView: UIImageView = {
+        lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         if let photoData = currentUser?.user?.photo {
             imageView.image = UIImage(data: photoData)
         } else {
-            imageView.image = #imageLiteral(resourceName: "avatar.pdf")
+            imageView.image = #imageLiteral(resourceName: "User-photo")
         }
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -170,7 +176,10 @@ final class ProfileSettingsVC: UIViewController {
             alertController.view.addSubview(datePicker)
             // Добавление кнопок "Cancel" и "OK"
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.currentUser?.user?.dateOfBrith = datePicker.date
+        }
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
             // Отображение AlertController
@@ -198,18 +207,10 @@ final class ProfileSettingsVC: UIViewController {
     }()
     
     private lazy var maleButton = GenderCustomButton(type: .male) {
-        guard let editUser = self.currentUser?.user else { return }
-        StorageManader.shared.editCurrentUser(user: editUser) { user in
-            user.gender = "male"
-        }
         print("maleButtonTapped")
     }
     
     private lazy var femaleButton = GenderCustomButton(type: .female) {
-        guard let editUser = self.currentUser?.user else { return }
-        StorageManader.shared.editCurrentUser(user: editUser) { user in
-            user.gender = "female"
-        }
         print("femaleButtonTapped")
     }
     
@@ -241,7 +242,7 @@ final class ProfileSettingsVC: UIViewController {
         button.isEnabled = true
         button.setTitle("Save Changes", for: .normal)
         button.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        button.setTitleColor(button.isEnabled ? .black : .lightGray, for: .normal)
+        button.setTitleColor(button.isEnabled ? .white : .lightGray, for: .normal)
         button.layer.cornerRadius = 24
         button.backgroundColor = button.isEnabled ? #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1) : .gray
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
@@ -253,6 +254,8 @@ final class ProfileSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customAlert.delegate = self
+        navigationController?.navigationBar.isHidden = true
         setupUI()
         addTaps()
         dateOfBirthTextField.delegate = self
@@ -264,17 +267,29 @@ final class ProfileSettingsVC: UIViewController {
     }
 
     @objc private func backButtonPressed() {
-        print("backButtonPressed")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func saveButtonPressed() {
-        guard let editUser = currentUser?.user else { return }
-        StorageManader.shared.editCurrentUser(user: editUser) { user in
-            user.firstName = firstNameTextField.text
-            user.lastName = lastNameTextField.text
-            user.email = emailTextField.text
-            user.location = locationTextView.text
+        guard let user = currentUser else {return}
+        guard let saveCurrentUser = user.user else {return}
+        saveCurrentUser.firstName = firstNameTextField.text
+        saveCurrentUser.lastName = lastNameTextField.text
+        saveCurrentUser.email = emailTextField.text
+        saveCurrentUser.location = locationTextView.text
+            if femaleButton.isSelected {
+                saveCurrentUser.gender = "female"
+            }
+            if maleButton.isSelected {
+                saveCurrentUser.gender = "male"
+            }
+        
+        if currentUserPhoto == nil {
+            saveCurrentUser.photo = nil
         }
+        
+        StorageManader.shared.saveCurrentUser(user: saveCurrentUser)
+        navigationController?.popViewController(animated: true)
     }
     
     private func setCurrentUser() {
@@ -282,6 +297,11 @@ final class ProfileSettingsVC: UIViewController {
         lastNameTextField.text = currentUser?.user?.lastName
         emailTextField.text = currentUser?.user?.email
         locationTextView.text = currentUser?.user?.location
+        if let dateOfBrith = currentUser?.user?.dateOfBrith {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            dateOfBirthTextField.text = formatter.string(from: dateOfBrith)
+        }
         if currentUser?.user?.gender == "male" {
             maleButton.isSelected = true
         }
@@ -451,13 +471,25 @@ extension ProfileSettingsVC: UITextViewDelegate {
 }
 
 extension ProfileSettingsVC: UITextFieldDelegate {
-    
+}
+
+extension ProfileSettingsVC: UserPhotoAlertDelegate {
+    func deletePhoto() {
+        DispatchQueue.main.async {
+            self.avatarImageView.image = #imageLiteral(resourceName: "avatar.pdf")
+        }
+        currentUserPhoto = nil
+    }
 }
 
 extension ProfileSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.currentUserPhoto = image
             self.avatarImageView.image = image
+            if let data = image.pngData() {
+                currentUser?.user?.photo = data
+            }
         }
         dismiss(animated: true, completion: nil)
     }

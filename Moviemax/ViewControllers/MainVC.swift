@@ -37,7 +37,8 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let imageView = UIImageView()
         imageView.image = UIImage(named: "avatar")
         imageView.layer.cornerRadius = 20
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -77,7 +78,12 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupView()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentUser = StorageManader.shared.getCurrentUser()
+        setCurrentUser()
     }
     
     func setupView(){
@@ -92,6 +98,17 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         view.addSubview(boxCollectionView)
        
         setConstraints()
+    }
+    
+    private func setCurrentUser() {
+        guard let user = currentUser else { return }
+        guard let currentUser = user.user else { return }
+        nameLabel.text = "Hi, \(currentUser.firstName ?? "")"
+        if let photo = currentUser.photo {
+            self.avatarImageView.image = UIImage(data: photo)
+        } else {
+            self.avatarImageView.image = UIImage(named: "avatar")
+        }
     }
     
     private func setConstraints() {

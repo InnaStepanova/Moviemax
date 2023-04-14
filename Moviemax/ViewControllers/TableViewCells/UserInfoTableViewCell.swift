@@ -13,6 +13,9 @@ final class UserInfoTableViewCell: UITableViewCell {
     
     private let userIconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 28
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
