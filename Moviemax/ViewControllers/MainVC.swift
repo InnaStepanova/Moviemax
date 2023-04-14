@@ -77,7 +77,13 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupView()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentUser = StorageManader.shared.getCurrentUser()
+        setCurrentUser()
+        
     }
     
     func setupView(){
@@ -92,6 +98,13 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         view.addSubview(boxCollectionView)
        
         setConstraints()
+    }
+    
+    private func setCurrentUser() {
+        guard let user = currentUser else { return }
+        guard let currentUser = user.user else { return }
+        nameLabel.text = "Hi, \(currentUser.firstName ?? "")"
+        
     }
     
     private func setConstraints() {

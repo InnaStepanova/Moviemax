@@ -42,7 +42,7 @@ final class StartViewController: UIViewController {
         view.backgroundColor = UIColor(named: "PurpleBackGroundColor")
         addViews()
         setConstraints()
-        
+        guard let currentUser = S
     }
     
     private func addViews() {

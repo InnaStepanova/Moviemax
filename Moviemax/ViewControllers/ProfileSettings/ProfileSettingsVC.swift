@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol UserPhotoAlertDelegate {
+    func deletePhoto()
+}
+
 final class ProfileSettingsVC: UIViewController {
     
     var currentUser: CurrentUser?
@@ -35,12 +39,12 @@ final class ProfileSettingsVC: UIViewController {
         return scrollView
     }()
 
-    private lazy var avatarImageView: UIImageView = {
+        lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         if let photoData = currentUser?.user?.photo {
             imageView.image = UIImage(data: photoData)
         } else {
-            imageView.image = #imageLiteral(resourceName: "avatar.pdf")
+            imageView.image = #imageLiteral(resourceName: "User-photo")
         }
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -142,11 +146,53 @@ final class ProfileSettingsVC: UIViewController {
         calendarButton.setImage(#imageLiteral(resourceName: "calendar.pdf"), for: .normal)
         calendarButton.tintColor = #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1)
         calendarButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -15.5, bottom: 0, right: 0)
+        calendarButton.addTarget(self, action: #selector(textFieldShouldBeginEditing), for: .touchUpInside)
         textField.rightView = calendarButton
         textField.rightViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+    
+    @objc func textFieldShouldBeginEditing (){
+      
+            // Создание объекта DatePicker
+            let datePicker = UIDatePicker()
+            datePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+            // Добавление метода для обработки выбора даты
+            datePicker.addTarget(self, action: #selector(dateSelected), for: .valueChanged)
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+
+            // Создание объекта AlertController
+            let alertController = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: nil, preferredStyle: .alert)
+            alertController.view.addSubview(datePicker)
+            // Добавление кнопок "Cancel" и "OK"
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.currentUser?.user?.dateOfBrith = datePicker.date
+        }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            // Отображение AlertController
+            present(alertController, animated: true, completion: nil)
+            datePicker.centerXAnchor.constraint(equalTo: alertController.view.centerXAnchor).isActive = true
+            datePicker.centerYAnchor.constraint(equalTo: alertController.view.centerYAnchor).isActive = true
+        
+    }
+        
+    @objc func dateSelected(sender: UIDatePicker) {
+            // Форматирование выбранной даты в нужный формат
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            let dateString = formatter.string(from: sender.date)
+            // Установка выбранной даты в текстовое поле
+            dateOfBirthTextField.text = dateString
+        }
     
     private lazy var genderLabel: UILabel = {
         let label = UILabel.signLowLabel
@@ -157,18 +203,10 @@ final class ProfileSettingsVC: UIViewController {
     }()
     
     private lazy var maleButton = GenderCustomButton(type: .male) {
-        guard let editUser = self.currentUser?.user else { return }
-        StorageManader.shared.editCurrentUser(user: editUser) { user in
-            user.gender = "male"
-        }
         print("maleButtonTapped")
     }
     
     private lazy var femaleButton = GenderCustomButton(type: .female) {
-        guard let editUser = self.currentUser?.user else { return }
-        StorageManader.shared.editCurrentUser(user: editUser) { user in
-            user.gender = "female"
-        }
         print("femaleButtonTapped")
     }
     
@@ -212,9 +250,11 @@ final class ProfileSettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customAlert.delegate = self
         navigationController?.navigationBar.isHidden = true
         setupUI()
         addTaps()
+        dateOfBirthTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -227,14 +267,19 @@ final class ProfileSettingsVC: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        guard let editUser = currentUser?.user else { return }
-        StorageManader.shared.editCurrentUser(user: editUser) { user in
-            user.firstName = firstNameTextField.text
-            user.lastName = lastNameTextField.text
-            user.email = emailTextField.text
-            user.location = locationTextView.text
-        }
-        print("Готово")
+        guard let user = currentUser else {return}
+        guard let saveCurrentUser = user.user else {return}
+        saveCurrentUser.firstName = firstNameTextField.text
+        saveCurrentUser.lastName = lastNameTextField.text
+        saveCurrentUser.email = emailTextField.text
+        saveCurrentUser.location = locationTextView.text
+            if femaleButton.isSelected {
+                saveCurrentUser.gender = "female"
+            }
+            if maleButton.isSelected {
+                saveCurrentUser.gender = "male"
+            }
+        StorageManader.shared.saveCurrentUser(user: saveCurrentUser)
         navigationController?.popViewController(animated: true)
     }
     
@@ -243,6 +288,11 @@ final class ProfileSettingsVC: UIViewController {
         lastNameTextField.text = currentUser?.user?.lastName
         emailTextField.text = currentUser?.user?.email
         locationTextView.text = currentUser?.user?.location
+        if let dateOfBrith = currentUser?.user?.dateOfBrith {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            dateOfBirthTextField.text = formatter.string(from: dateOfBrith)
+        }
         if currentUser?.user?.gender == "male" {
             maleButton.isSelected = true
         }
@@ -355,6 +405,8 @@ final class ProfileSettingsVC: UIViewController {
             saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants.Spacing.trailingStandartSpacing.negative),
             saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: Constants.Spacing.saveButtonBottomSpacing.negative),
             saveButton.heightAnchor.constraint(equalToConstant: Constants.Size.saveButtonHeight),
+            
+            
         ])
     }
     
@@ -407,4 +459,19 @@ extension ProfileSettingsVC: UITextViewDelegate {
             textView.textColor = .lightGray
         }
     }
+}
+
+extension ProfileSettingsVC: UITextFieldDelegate {
+}
+
+extension ProfileSettingsVC: UserPhotoAlertDelegate {
+    func deletePhoto() {
+        DispatchQueue.main.async {
+            print("delegate")
+            self.avatarImageView.image = #imageLiteral(resourceName: "avatar.pdf")
+            self.currentUser?.user?.photo = nil
+        }
+    }
+    
+    
 }
