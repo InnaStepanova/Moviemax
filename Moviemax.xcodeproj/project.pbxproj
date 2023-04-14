@@ -212,12 +212,12 @@
 				02CBB3B429E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift */,
 				CE141F5029E0975B00658CA8 /* FilmCellView.swift */,
 				CE141F5929E1F74800658CA8 /* LoginVC.swift */,
+				CE699B3029E9DB98008E9DE0 /* ChangePasswordVC.swift */,
 				604DCF1729E0CE3B0015B350 /* FavoritesScreen */,
 				601C944429DDD214005F22DC /* ProfileSettings */,
 				0262086829DF28E400BA1664 /* SearchViewController.swift */,
 				0262086A29DF2C5300BA1664 /* SearchView.swift */,
 				02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */,
-				CE699B3029E9DB98008E9DE0 /* ChangePasswordVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
