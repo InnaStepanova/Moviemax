@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
-        window?.rootViewController = TabBarController()
+        window?.rootViewController = SignUpVC()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

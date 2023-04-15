@@ -9,7 +9,10 @@ import Foundation
 import UIKit
 
 class CategoryImageViewController: UICollectionView {
-  
+    
+    static var stars: Int?
+//    static var currentRow = 0
+    
     var imageCategories = [UIImageView.star1, UIImageView.stars2, UIImageView.stars3, UIImageView.stars4,UIImageView.star5]
     let collectionLayout = UICollectionViewFlowLayout()
     
@@ -51,11 +54,13 @@ extension CategoryImageViewController: UICollectionViewDataSource {
         
         let category = imageCategories[indexPath.item]
         cell.set(buttonImage: category)
+        let indexPath = IndexPath(arrayLiteral: 0)
+        collectionView.reloadItems(at: [indexPath])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //           что будет при нажатии на ячейку
+        CategoryImageViewController.stars = indexPath.row
     }
 }
 

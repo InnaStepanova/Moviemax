@@ -21,7 +21,7 @@ final class SearchView: UIView {
         return searchBar
     }()
     
-    private lazy var closeButton: UIButton = {
+    @objc private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "close"), for: .normal)
         return button
@@ -33,10 +33,15 @@ final class SearchView: UIView {
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var alert: UIAlertController = {
+        let alertContr = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertContr.message = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        return alertContr
+    }()
 
+    
     @objc func buttonTapped() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.message = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
         
         let buttonClose = UIButton(frame: CGRect(x: 20, y: 20, width: 12, height: 12))
         buttonClose.setImage(UIImage(named: "close"), for: .normal)
@@ -106,20 +111,36 @@ final class SearchView: UIView {
         categoryImage.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 210).isActive = true
         categoryImage.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -90).isActive = true
 
+        if let topController = UIApplication.shared.windows.last?.rootViewController?.presentedViewController ?? UIApplication.shared.windows.last?.rootViewController {
 
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
-
+            topController.present(alert, animated: true)
+        }
     }
+    
     @objc func closeFilter () {
-        print("1")
+        self.alert.dismiss(animated: true)
     }
     
     @objc func recentFilter () {
-        print("2")
+        CategoryImageViewController.stars = 0
+        CategoryCollectionView.films = "pusto"
+ 
+        let indexPath = IndexPath(arrayLiteral: 0)
+        categoryImage.reloadItems(at: [indexPath])
+        categoryCollection.reloadItems(at: [indexPath])
+//        print(CategoryImageViewController.stars ?? 0)
+//        print(CategoryCollectionView.films ?? "nil")
     }
     
     @objc func applyFilter () {
-        print("3")
+        print(CategoryImageViewController.stars ?? 0)
+        print(CategoryCollectionView.films ?? 0)
+        self.alert.dismiss(animated: true)
+        let indexPath = IndexPath(arrayLiteral: 0)
+        categoryCollection.reloadItems(at: [indexPath])
+        categoryImage.reloadItems(at: [indexPath])
+
+
     }
     
     
