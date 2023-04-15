@@ -114,7 +114,7 @@ extension SettingsViewController: UITableViewDelegate {
         }
         
         headerLabel.textLabel?.font = .systemFont(ofSize: 12, weight: .regular)
-        headerLabel.textLabel?.textColor = .black
+        headerLabel.textLabel?.textColor = UIColor(named: "TextTitleColor")
     }
 }
 
@@ -192,11 +192,11 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: SettingsTableViewCellDelegate {
     
     func changeAppearance(isDarkModeEnabled: Bool) {
-        
-        if isDarkModeEnabled {
-            print("активирована темная тема")
-        } else {
-            print("активирована светлая тема")
+        let currentTheme: UIUserInterfaceStyle = isDarkModeEnabled ? .dark : .light
+        UserDefaults.standard.set(currentTheme.rawValue, forKey: "theme")
+        DispatchQueue.main.async {
+            self.tabBarController?.overrideUserInterfaceStyle = currentTheme
+            self.view.layoutIfNeeded()
         }
     }
 }

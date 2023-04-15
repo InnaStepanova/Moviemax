@@ -43,36 +43,45 @@ final class SettingsTableViewCell: UITableViewCell {
             }
         }
     }
-
+    
     // MARK: - Properties
     
-    private let iconImageView: UIImageView = {
+    private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
+        let tintColor = UIColor(named: "TextTitleColor") ?? .black
+        if let type = self.type {
+            let image = UIImage(named: type.iconName)?.withRenderingMode(.alwaysTemplate)
+            imageView.image = image
+        }
+        imageView.tintColor = tintColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
-
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
-        label.textColor = .black
+        label.textColor = UIColor(named: "TextTitleColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
     private lazy var nextButtonImageView: UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = UIImage(named: "Icon - Next")
+        let imageView = UIImageView()
+        let image = UIImage(named: "Icon - Next")?.withRenderingMode(.alwaysTemplate)
+        let tintColor = UIColor(named: "MCDescriptionColor") ?? .black
+        imageView.image = image
+        imageView.tintColor = tintColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
     
     private lazy var appearanceSwitcher: UISwitch = {
-       let switcher = UISwitch()
-        switcher.isUserInteractionEnabled = true
+        let switcher = UISwitch()
+        switcher.isOn = UserDefaults.standard.value(forKey: "theme") as? Int == 2
         switcher.addTarget(self, action: #selector(didTapOnAppearanceSwitcher), for: .valueChanged)
         switcher.translatesAutoresizingMaskIntoConstraints = false
         
@@ -81,7 +90,7 @@ final class SettingsTableViewCell: UITableViewCell {
     
     private var type: CellType?
     private var delegate: SettingsTableViewCellDelegate?
-        
+    
     // MARK: - Public methods
     
     func configureCell(type: CellType, delegate: SettingsTableViewCellDelegate) {
@@ -89,7 +98,6 @@ final class SettingsTableViewCell: UITableViewCell {
         self.delegate = delegate
         backgroundColor = UIColor(named: "BackgroundScreenColor")
         titleLabel.text = type.title
-        iconImageView.image = UIImage(named: type.iconName)
         selectionStyle = .none
         configureConstraints()
     }
@@ -99,7 +107,7 @@ final class SettingsTableViewCell: UITableViewCell {
     @objc func didTapOnAppearanceSwitcher(sender: UISwitch) {
         delegate?.changeAppearance(isDarkModeEnabled: sender.isOn)
     }
-
+    
     // MARK: - Private methods
     
     private func configureConstraints() {
