@@ -37,11 +37,13 @@ class SettingsViewController: UIViewController {
     }
     
     // MARK: - Properties
+    var currentUser = StorageManader.shared.getCurrentUser()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.bounces = false
+        tableView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         tableView.register(UserInfoTableViewCell.self, forCellReuseIdentifier: "UserInfoCell")
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "SettingsCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,11 +63,18 @@ class SettingsViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        currentUser = StorageManader.shared.getCurrentUser()
+        tableView.reloadData()
+    }
+    
     // MARK: - Private methods
     
     private func configureView() {
         configureConstraints()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         navigationItem.title = "Settings"
     }
     
@@ -75,7 +84,7 @@ class SettingsViewController: UIViewController {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 38),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -125,7 +134,7 @@ extension SettingsViewController: UITableViewDataSource {
                 fatalError("Can't find cell with reuse identifier: UserInfoCell")
             }
             
-            cell.configureCell(fullName: "Test Test", nickName: "@test")
+            cell.configureCell(currentUser: StorageManader.shared.getCurrentUser())
             
             return cell
         case .personalInfo:
@@ -153,6 +162,15 @@ extension SettingsViewController: UITableViewDataSource {
             }
             
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if sections[indexPath.section] == .personalInfo {
+            let profileSettingsVS = ProfileSettingsVC()
+            profileSettingsVS.currentUser = currentUser
+            navigationController?.pushViewController(profileSettingsVS, animated: true)
         }
     }
 }

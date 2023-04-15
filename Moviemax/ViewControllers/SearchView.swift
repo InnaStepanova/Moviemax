@@ -13,20 +13,23 @@ final class SearchView: UIView {
         let searchBar = UISearchBar()
         searchBar.backgroundImage = UIImage()
         searchBar.setImage(UIImage(named: "Search"), for: .search, state: .normal)
-        searchBar.searchTextField.backgroundColor = .white
+        searchBar.searchTextField.backgroundColor = UIColor(named: "BackgroundScreenColor")
         searchBar.placeholder = "Search Movies and TV shows"
+        searchBar.searchTextField.clearButtonMode = .never
         return searchBar
     }()
     
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "close"), for: .normal)
+        button.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
         return button
     }()
     
     private lazy var filterButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "filter"), for: .normal)
+        button.addTarget(self, action: #selector(filterButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -45,7 +48,7 @@ final class SearchView: UIView {
     }
     
     private func addViews() {
-        backgroundColor = .white
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         addSubview(searchBar)
         addSubview(closeButton)
         addSubview(filterButton)
@@ -68,5 +71,12 @@ final class SearchView: UIView {
             filterButton.leadingAnchor.constraint(equalTo: closeButton.trailingAnchor, constant: 22),
             filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
+    }
+    
+    @objc private func closeButtonPressed() {
+        searchBar.searchTextField.text = ""
+    }
+    
+    @objc private func filterButtonPressed() {
     }
 }

@@ -5,12 +5,14 @@
 //  Created by user on 7.04.23.
 //
 
-import Foundation
 import UIKit
 
-class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+
+class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let boxDS = BoxCollectionDataSource()
+    
+    private lazy var currentUser = StorageManader.shared.getCurrentUser()
     
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,11 +23,13 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = boxDS
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(MovieLittleCell.self, forCellWithReuseIdentifier: "boxCollection")
         return collectionView
     }()
+    
     private lazy var filmCollectionView = FilmCellView()
     private lazy var categoryCollectionView = CategoryCollectionView()
 
@@ -33,13 +37,14 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let imageView = UIImageView()
         imageView.image = UIImage(named: "avatar")
         imageView.layer.cornerRadius = 20
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, Mike"
+        label.text = "Hi, \(currentUser?.user?.firstName ?? "")"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
         return label
@@ -69,15 +74,20 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         return label
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         setupView()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentUser = StorageManader.shared.getCurrentUser()
+        setCurrentUser()
     }
     
     func setupView(){
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         view.addSubview(nameLabel)
         view.addSubview(statusLabel)
         view.addSubview(avatarImageView)
@@ -88,6 +98,17 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         view.addSubview(boxCollectionView)
        
         setConstraints()
+    }
+    
+    private func setCurrentUser() {
+        guard let user = currentUser else { return }
+        guard let currentUser = user.user else { return }
+        nameLabel.text = "Hi, \(currentUser.firstName ?? "")"
+        if let photo = currentUser.photo {
+            self.avatarImageView.image = UIImage(data: photo)
+        } else {
+            self.avatarImageView.image = UIImage(named: "avatar")
+        }
     }
     
     private func setConstraints() {
@@ -150,7 +171,10 @@ class TestVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
 
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
 }
 
 
@@ -160,6 +184,9 @@ class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     
+        let movieDetailVC = MovieDetail()
+//        navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
     }
 

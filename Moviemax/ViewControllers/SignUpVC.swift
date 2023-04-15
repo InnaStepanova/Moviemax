@@ -1,8 +1,7 @@
-
-import Foundation
 import UIKit
+import FirebaseAuth
 
-class SignUpVC: UIViewController {
+final class SignUpVC: UIViewController {
 
     //MARK: - Create UI
     private lazy var topStackView = UIStackView()
@@ -72,7 +71,7 @@ class SignUpVC: UIViewController {
         textField.layer.cornerRadius = 20
          return textField
     }()
-    private var emailTextField : UITextField = {
+     var emailTextField : UITextField = {
         let textField = UITextField()
         textField.backgroundColor = UIColor(named: "LightBlueTextField")
         textField.placeholder = "Enter your email address" // задаем подсказку для текстового поля
@@ -105,9 +104,14 @@ class SignUpVC: UIViewController {
     let passwordButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     let confPasswordButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
+    let mainVC = MainVC()
+    var emailRegister = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        emailTextField.text = emailRegister
+        
     }
     
     private func setupViews() {
@@ -167,7 +171,7 @@ class SignUpVC: UIViewController {
     private func setConstraints() {
         topStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 31),
+            topStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             backButton.heightAnchor.constraint(equalToConstant: 40),
@@ -238,7 +242,7 @@ class SignUpVC: UIViewController {
 
     @objc
     private func backButtonPressed() {
-        print("backButtonPressed")
+        navigationController?.pushViewController(CreateAccountVC(), animated: true)
     }
 
     @objc func showPasswordToggled(sender:UIButton) {
@@ -253,23 +257,44 @@ class SignUpVC: UIViewController {
     
     @objc
     private func signUpButtonPressed() {
-        print("Sign Up button Press")
+        if passwordTextField.text == confPasswordTextField.text{
+            if let email = emailTextField.text, let password = passwordTextField.text{
+                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                    if let e = error {
+                        print(e)
+                    }else {
+                        let tabBarController = TabBarController()
+                        tabBarController.selectedIndex = 2
+                        tabBarController.modalPresentationStyle = .fullScreen
+                        self.present(tabBarController, animated: true)
+                    }
+                }
+            }
+        }
+        guard let firstName = firstNameTextField.text else { return }
+        guard let lastName = lastNameTextField.text else { return }
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        StorageManader.shared.saveUser { user in
+            user.firstName = firstName
+            user.lastName = lastName
+            user.email = email
+            user.password = password
+            StorageManader.shared.saveCurrentUser(user: user)
+        }
     }
     
     
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
-        // здесь можно добавить любое действие, которое должно происходить при нажатии на login
-        print("Loggin Pressed")
+        let loginVC = LoginVC()
+        navigationController?.pushViewController(loginVC, animated: true)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
 }
 
-    //MARK: Добавлям метод для создания отступа слева от текстового поля
-extension UITextField {
-    func paddingLeft(_ padding: CGFloat) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: padding, height: self.frame.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
-    }
-}
 

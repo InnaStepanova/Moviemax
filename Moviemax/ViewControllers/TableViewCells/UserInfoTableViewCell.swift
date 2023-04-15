@@ -13,6 +13,9 @@ final class UserInfoTableViewCell: UITableViewCell {
     
     private let userIconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 28
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -38,11 +41,16 @@ final class UserInfoTableViewCell: UITableViewCell {
         
     // MARK: - Public methods
     
-    func configureCell(fullName: String, nickName: String) {
+    func configureCell(currentUser: CurrentUser?) {
         configureConstraints()
-        userFullNameLabel.text = fullName
-        userNickNameLabel.text = nickName
-        userIconImageView.image = UIImage(named: "User-photo")
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
+        userFullNameLabel.text = "\(currentUser?.user?.firstName ?? "") \(currentUser?.user?.lastName ?? "")"
+        userNickNameLabel.text = currentUser?.user?.email
+        if let photoData = currentUser?.user?.photo {
+            userIconImageView.image = UIImage(data: photoData)
+        } else {
+            userIconImageView.image = UIImage(named: "User-photo")
+        }
         selectionStyle = .none
     }
 

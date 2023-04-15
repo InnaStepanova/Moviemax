@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol UserPhotoAlertDelegate {
+    func deletePhoto()
+}
+
 final class ProfileSettingsVC: UIViewController {
+    
+    var currentUser: CurrentUser?
+    
+    private var currentUserPhoto: UIImage?
     
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
@@ -33,10 +41,16 @@ final class ProfileSettingsVC: UIViewController {
         return scrollView
     }()
 
-    private lazy var avatarImageView: UIImageView = {
+        lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "avatar.pdf")
-        imageView.contentMode = .scaleAspectFit
+        if let photoData = currentUser?.user?.photo {
+            imageView.image = UIImage(data: photoData)
+        } else {
+            imageView.image = #imageLiteral(resourceName: "User-photo")
+        }
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = Constants.Size.avatarSize.half
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -80,6 +94,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var lastNameTextField: UITextField = {
         let textField = UITextField()
+        textField.text = currentUser?.user?.lastName
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -101,6 +116,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
+        textField.text = currentUser?.user?.email
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -134,11 +150,53 @@ final class ProfileSettingsVC: UIViewController {
         calendarButton.setImage(#imageLiteral(resourceName: "calendar.pdf"), for: .normal)
         calendarButton.tintColor = #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1)
         calendarButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -15.5, bottom: 0, right: 0)
+        calendarButton.addTarget(self, action: #selector(textFieldShouldBeginEditing), for: .touchUpInside)
         textField.rightView = calendarButton
         textField.rightViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+    
+    @objc func textFieldShouldBeginEditing (){
+      
+            // Создание объекта DatePicker
+            let datePicker = UIDatePicker()
+            datePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
+            // Добавление метода для обработки выбора даты
+            datePicker.addTarget(self, action: #selector(dateSelected), for: .valueChanged)
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+
+            // Создание объекта AlertController
+            let alertController = UIAlertController(title: "\n\n\n\n\n\n\n\n\n", message: nil, preferredStyle: .alert)
+            alertController.view.addSubview(datePicker)
+            // Добавление кнопок "Cancel" и "OK"
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.currentUser?.user?.dateOfBrith = datePicker.date
+        }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            // Отображение AlertController
+            present(alertController, animated: true, completion: nil)
+            datePicker.centerXAnchor.constraint(equalTo: alertController.view.centerXAnchor).isActive = true
+            datePicker.centerYAnchor.constraint(equalTo: alertController.view.centerYAnchor).isActive = true
+        
+    }
+        
+    @objc func dateSelected(sender: UIDatePicker) {
+            // Форматирование выбранной даты в нужный формат
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            let dateString = formatter.string(from: sender.date)
+            // Установка выбранной даты в текстовое поле
+            dateOfBirthTextField.text = dateString
+        }
     
     private lazy var genderLabel: UILabel = {
         let label = UILabel.signLowLabel
@@ -174,17 +232,17 @@ final class ProfileSettingsVC: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         textView.delegate = self
-        textView.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        textView.text = currentUser?.user?.location
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.isEnabled = false
+        button.isEnabled = true
         button.setTitle("Save Changes", for: .normal)
         button.titleLabel?.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        button.setTitleColor(button.isEnabled ? .black : .lightGray, for: .normal)
+        button.setTitleColor(button.isEnabled ? .white : .lightGray, for: .normal)
         button.layer.cornerRadius = 24
         button.backgroundColor = button.isEnabled ? #colorLiteral(red: 0.3179999888, green: 0.3059999943, blue: 0.7139999866, alpha: 1) : .gray
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
@@ -192,21 +250,68 @@ final class ProfileSettingsVC: UIViewController {
         return button
     }()
     
+    private lazy var customAlert = UserPhotoAlert(vc: self)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        customAlert.delegate = self
+        navigationController?.navigationBar.isHidden = true
         setupUI()
+        addTaps()
+        dateOfBirthTextField.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setCurrentUser()
     }
 
     @objc private func backButtonPressed() {
-        print("backButtonPressed")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func saveButtonPressed() {
-        print("saveButtonPressed")
+        guard let user = currentUser else {return}
+        guard let saveCurrentUser = user.user else {return}
+        saveCurrentUser.firstName = firstNameTextField.text
+        saveCurrentUser.lastName = lastNameTextField.text
+        saveCurrentUser.email = emailTextField.text
+        saveCurrentUser.location = locationTextView.text
+            if femaleButton.isSelected {
+                saveCurrentUser.gender = "female"
+            }
+            if maleButton.isSelected {
+                saveCurrentUser.gender = "male"
+            }
+        
+        if currentUserPhoto == nil {
+            saveCurrentUser.photo = nil
+        }
+        
+        StorageManader.shared.saveCurrentUser(user: saveCurrentUser)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func setCurrentUser() {
+        firstNameTextField.text = currentUser?.user?.firstName
+        lastNameTextField.text = currentUser?.user?.lastName
+        emailTextField.text = currentUser?.user?.email
+        locationTextView.text = currentUser?.user?.location
+        if let dateOfBrith = currentUser?.user?.dateOfBrith {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            dateOfBirthTextField.text = formatter.string(from: dateOfBrith)
+        }
+        if currentUser?.user?.gender == "male" {
+            maleButton.isSelected = true
+        }
+        if currentUser?.user?.gender == "female" {
+            femaleButton.isSelected = true
+        }
     }
     
     private func setupUI() {
-        view.backgroundColor = #colorLiteral(red: 0.9960784314, green: 0.9960784314, blue: 0.9960784314, alpha: 1)
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(scrollView)
@@ -309,7 +414,19 @@ final class ProfileSettingsVC: UIViewController {
             saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants.Spacing.trailingStandartSpacing.negative),
             saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: Constants.Spacing.saveButtonBottomSpacing.negative),
             saveButton.heightAnchor.constraint(equalToConstant: Constants.Size.saveButtonHeight),
+            
+            
         ])
+    }
+    
+    private func addTaps() {
+        let tapImage = UITapGestureRecognizer(target: self, action: #selector(editAvatarTapped))
+        editAvatar.isUserInteractionEnabled = true
+        editAvatar.addGestureRecognizer(tapImage)
+    }
+
+    @objc private func editAvatarTapped() {
+        customAlert.setupAlert()
     }
 }
 
@@ -350,5 +467,34 @@ extension ProfileSettingsVC: UITextViewDelegate {
             textView.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
             textView.textColor = .lightGray
         }
+    }
+}
+
+extension ProfileSettingsVC: UITextFieldDelegate {
+}
+
+extension ProfileSettingsVC: UserPhotoAlertDelegate {
+    func deletePhoto() {
+        DispatchQueue.main.async {
+            self.avatarImageView.image = #imageLiteral(resourceName: "avatar.pdf")
+        }
+        currentUserPhoto = nil
+    }
+}
+
+extension ProfileSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.currentUserPhoto = image
+            self.avatarImageView.image = image
+            if let data = image.pngData() {
+                currentUser?.user?.photo = data
+            }
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -79,6 +79,7 @@ final class SettingsTableViewCell: UITableViewCell {
     
     func configureCell(type: CellType) {
         self.type = type
+        backgroundColor = UIColor(named: "BackgroundScreenColor")
         titleLabel.text = type.title
         iconImageView.image = UIImage(named: type.iconName)
         selectionStyle = .none

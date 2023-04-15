@@ -28,6 +28,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
@@ -38,7 +39,9 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        self.navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
+        setupGradient()
         addViews()
         setConstraints()
     }
@@ -49,7 +52,15 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(categoryView)
         view.addSubview(moviesCollection)
     }
-    
+    func setupGradient() {
+        let colorTop = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
+        let colorBot = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [colorTop, colorBot]
+        gradientLayer.locations = [0.5, 1]
+        view.layer.addSublayer(gradientLayer)
+    }
     private func setConstraints() {
         searchLabel.translatesAutoresizingMaskIntoConstraints = false
         searchView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,5 +98,9 @@ extension SearchViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
     
 }

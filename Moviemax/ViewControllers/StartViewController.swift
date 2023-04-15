@@ -7,7 +7,9 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+final class StartViewController: UIViewController {
+    
+    private let currentUser = StorageManader.shared.getCurrentUser()
     
     private lazy var movieIcon: UIImageView = {
         let imageView = UIImageView()
@@ -42,8 +44,23 @@ class StartViewController: UIViewController {
         view.backgroundColor = UIColor(named: "PurpleBackGroundColor")
         addViews()
         setConstraints()
-        
+        showSecondVC()
     }
+
+    
+    private func showSecondVC() {
+        if currentUser != nil {
+            let tabBarController = TabBarController()
+            tabBarController.selectedIndex = 2
+            tabBarController.modalPresentationStyle = .fullScreen
+            present(tabBarController, animated: true)
+        } else {
+            let onbordingVC = SecondStartViewController()
+            onbordingVC.modalPresentationStyle = .fullScreen
+            present(onbordingVC, animated: true)
+        }
+    }
+
     
     private func addViews() {
         roundView.addSubview(movieIcon)

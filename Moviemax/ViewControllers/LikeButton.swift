@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class  LikeButton: UIButton {
+final class LikeButton: UIButton {
     
     var isFavorite: Bool = false
     
