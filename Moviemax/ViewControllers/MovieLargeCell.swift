@@ -85,6 +85,19 @@ final class MovieLargeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(with model: MovieViewModel) {
+        let url = model.posterURL
+        NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+           DispatchQueue.main.async {
+               self?.movieImage.image = image
+           }
+        }
+        self.movieName.text = model.title
+        self.dateLabel.text = model.reliseDate
+        self.timeLabel.text = model.runtime
+        self.watchNowButton.setTitle(model.genre, for: .normal)
+        }
+    
     private func addViews() {
         addSubview(movieImage)
         addSubview(movieName)
