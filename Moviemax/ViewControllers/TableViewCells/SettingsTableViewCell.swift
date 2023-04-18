@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SettingsTableViewCellDelegate: AnyObject {
+    func changeAppearance(isDarkModeEnabled: Bool)
+}
+
 final class SettingsTableViewCell: UITableViewCell {
     
     // MARK: - Types
@@ -39,92 +43,109 @@ final class SettingsTableViewCell: UITableViewCell {
             }
         }
     }
-
+    
     // MARK: - Properties
     
-    private let iconImageView: UIImageView = {
+    private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
+        let tintColor = UIColor(named: "TextTitleColor") ?? .black
+        if let type = self.type {
+            let image = UIImage(named: type.iconName)?.withRenderingMode(.alwaysTemplate)
+            imageView.image = image
+        }
+        imageView.tintColor = tintColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
-
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
-        label.textColor = .black
+        label.textColor = UIColor(named: "TextTitleColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
     private lazy var nextButtonImageView: UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = UIImage(named: "Icon - Next")
+        let imageView = UIImageView()
+        let image = UIImage(named: "Icon - Next")?.withRenderingMode(.alwaysTemplate)
+        let tintColor = UIColor(named: "MCDescriptionColor") ?? .black
+        imageView.image = image
+        imageView.tintColor = tintColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
     
     private lazy var appearanceSwitcher: UISwitch = {
-       let switcher = UISwitch()
+        let switcher = UISwitch()
+        switcher.isOn = UserDefaults.standard.value(forKey: "theme") as? Int == 2
+        switcher.addTarget(self, action: #selector(didTapOnAppearanceSwitcher), for: .valueChanged)
         switcher.translatesAutoresizingMaskIntoConstraints = false
         
         return switcher
     }()
     
     private var type: CellType?
-        
+    private var delegate: SettingsTableViewCellDelegate?
+    
     // MARK: - Public methods
     
-    func configureCell(type: CellType) {
+    func configureCell(type: CellType, delegate: SettingsTableViewCellDelegate) {
         self.type = type
+        self.delegate = delegate
         backgroundColor = UIColor(named: "BackgroundScreenColor")
         titleLabel.text = type.title
-        iconImageView.image = UIImage(named: type.iconName)
         selectionStyle = .none
         configureConstraints()
     }
-
+    
+    // MARK: - Objc methods
+    
+    @objc func didTapOnAppearanceSwitcher(sender: UISwitch) {
+        delegate?.changeAppearance(isDarkModeEnabled: sender.isOn)
+    }
+    
     // MARK: - Private methods
     
     private func configureConstraints() {
-        addSubview(iconImageView)
-        addSubview(titleLabel)
+        contentView.addSubview(iconImageView)
+        contentView.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            iconImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            iconImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             iconImageView.heightAnchor.constraint(equalToConstant: 24),
             iconImageView.widthAnchor.constraint(equalToConstant: 24)
         ])
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
         
         guard let type = type else { return }
         
         switch type {
         case .profile:
-            addSubview(nextButtonImageView)
+            contentView.addSubview(nextButtonImageView)
             
             NSLayoutConstraint.activate([
-                nextButtonImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22),
-                nextButtonImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                nextButtonImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
+                nextButtonImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
                 nextButtonImageView.widthAnchor.constraint(equalToConstant: 24),
                 nextButtonImageView.heightAnchor.constraint(equalToConstant: 24)
             ])
         case .darkMode:
-            addSubview(appearanceSwitcher)
+            contentView.addSubview(appearanceSwitcher)
             
             NSLayoutConstraint.activate([
-                appearanceSwitcher.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22),
-                appearanceSwitcher.centerYAnchor.constraint(equalTo: centerYAnchor),
+                appearanceSwitcher.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
+                appearanceSwitcher.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
                 appearanceSwitcher.heightAnchor.constraint(equalToConstant: 24),
                 appearanceSwitcher.widthAnchor.constraint(equalToConstant: 44)
             ])

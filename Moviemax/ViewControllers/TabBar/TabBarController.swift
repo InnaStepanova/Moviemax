@@ -72,5 +72,8 @@ final class TabBarController: UITabBarController {
                 favoritesNavigation,
                 profileNavigation
             ], animated: true)
+        
+        let currentTheme = UserDefaults.standard.value(forKey: "theme") as? Int
+        overrideUserInterfaceStyle = currentTheme == 1 ? .light : .dark
         }
 }

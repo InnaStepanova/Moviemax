@@ -24,7 +24,7 @@ final class UserInfoTableViewCell: UITableViewCell {
     private let userFullNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = .black
+        label.textColor = UIColor(named: "TextTitleColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -41,12 +41,12 @@ final class UserInfoTableViewCell: UITableViewCell {
         
     // MARK: - Public methods
     
-    func configureCell(currentUser: CurrentUser?) {
+    func configureCell(currentUser: User?) {
         configureConstraints()
         backgroundColor = UIColor(named: "BackgroundScreenColor")
-        userFullNameLabel.text = "\(currentUser?.user?.firstName ?? "") \(currentUser?.user?.lastName ?? "")"
-        userNickNameLabel.text = currentUser?.user?.email
-        if let photoData = currentUser?.user?.photo {
+        userFullNameLabel.text = "\(currentUser?.firstName ?? "") \(currentUser?.lastName ?? "")"
+        userNickNameLabel.text = currentUser?.email
+        if let photoData = currentUser?.photo {
             userIconImageView.image = UIImage(data: photoData)
         } else {
             userIconImageView.image = UIImage(named: "User-photo")

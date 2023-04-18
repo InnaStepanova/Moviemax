@@ -9,6 +9,8 @@ import UIKit
 
 class CategoryCollectionView: UICollectionView {
     
+    static var films: String?
+    
     var categories  = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
     
     let collectionLayout = UICollectionViewFlowLayout()
@@ -47,11 +49,13 @@ extension CategoryCollectionView: UICollectionViewDataSource {
         
         let category = categories[indexPath.item]
         cell.set(buttonTitle: category)
+        let indexPath = IndexPath(arrayLiteral: 0)
+        collectionView.reloadItems(at: [indexPath])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //           что будет при нажатии на ячейку
+        CategoryCollectionView.films = categories[indexPath.row]
     }
 }
 

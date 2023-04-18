@@ -17,8 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
+
         window?.rootViewController = navController
-      //  window?.rootViewController = ChangePasswordVC()
+        if let currentScheme = UserDefaults.standard.value(forKey: "theme") as? Int {
+            window?.rootViewController?.overrideUserInterfaceStyle = currentScheme == 1 ? .light : .dark
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

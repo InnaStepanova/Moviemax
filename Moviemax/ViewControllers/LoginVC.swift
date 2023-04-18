@@ -198,18 +198,17 @@ class LoginVC : UIViewController {
     private func loginButtonPressed() {
         if let email = emailTextField.text, let password = passwordTextField.text {
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                guard let strongSelf = self else { return }
                 if let e = error {
                     print(e)
                 }else {
-                    if let user = StorageManader.shared.findUser(email: self?.emailTextField.text, password: self?.passwordTextField.text) {
-                        StorageManader.shared.saveCurrentUser(user: user)
+                    if let _ = StorageManader.shared.getCurrentUser() {
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
                         tabBarController.modalPresentationStyle = .fullScreen
                         self!.present(tabBarController, animated: true)
                     }
-                        // self!.present(ChangePasswordVC(), animated: true)
+                        let secondStart = SecondStartViewController()
+                        self!.present(secondStart, animated: true)
                 }
             }
         }
