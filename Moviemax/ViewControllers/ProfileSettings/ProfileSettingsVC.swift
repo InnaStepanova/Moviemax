@@ -13,7 +13,7 @@ protocol UserPhotoAlertDelegate {
 
 final class ProfileSettingsVC: UIViewController {
     
-    var currentUser: CurrentUser?
+    var currentUser: User?
     
     private var currentUserPhoto: UIImage?
     
@@ -43,7 +43,7 @@ final class ProfileSettingsVC: UIViewController {
 
         lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        if let photoData = currentUser?.user?.photo {
+        if let photoData = currentUser?.photo {
             imageView.image = UIImage(data: photoData)
         } else {
             imageView.image = #imageLiteral(resourceName: "User-photo")
@@ -94,7 +94,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var lastNameTextField: UITextField = {
         let textField = UITextField()
-        textField.text = currentUser?.user?.lastName
+        textField.text = currentUser?.lastName
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -116,7 +116,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
-        textField.text = currentUser?.user?.email
+        textField.text = currentUser?.email
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -178,7 +178,7 @@ final class ProfileSettingsVC: UIViewController {
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
             guard let strongSelf = self else { return }
-            strongSelf.currentUser?.user?.dateOfBrith = datePicker.date
+            strongSelf.currentUser?.dateOfBrith = datePicker.date
         }
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
@@ -232,7 +232,7 @@ final class ProfileSettingsVC: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         textView.delegate = self
-        textView.text = currentUser?.user?.location
+        textView.text = currentUser?.location
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -271,41 +271,55 @@ final class ProfileSettingsVC: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        guard let user = currentUser else {return}
-        guard let saveCurrentUser = user.user else {return}
-        saveCurrentUser.firstName = firstNameTextField.text
-        saveCurrentUser.lastName = lastNameTextField.text
-        saveCurrentUser.email = emailTextField.text
-        saveCurrentUser.location = locationTextView.text
-            if femaleButton.isSelected {
-                saveCurrentUser.gender = "female"
+        StorageManader.shared.editUser(user: currentUser) { user in
+            user?.firstName = firstNameTextField.text
+            user?.lastName = lastNameTextField.text
+            user?.email = emailTextField.text
+            user?.location = locationTextView.text
+                if femaleButton.isSelected {
+                    user?.gender = "female"
+                }
+                if maleButton.isSelected {
+                    user?.gender = "male"
+                }
+            
+            if currentUserPhoto == nil {
+                user?.photo = nil
             }
-            if maleButton.isSelected {
-                saveCurrentUser.gender = "male"
-            }
-        
-        if currentUserPhoto == nil {
-            saveCurrentUser.photo = nil
         }
-        
-        StorageManader.shared.saveCurrentUser(user: saveCurrentUser)
+//        currentUser?.firstName = firstNameTextField.text
+//        currentUser?.lastName = lastNameTextField.text
+//        currentUser?.email = emailTextField.text
+//        currentUser?.location = locationTextView.text
+//            if femaleButton.isSelected {
+//                currentUser?.gender = "female"
+//            }
+//            if maleButton.isSelected {
+//                currentUser?.gender = "male"
+//            }
+//        
+//        if currentUserPhoto == nil {
+//            currentUser?.photo = nil
+//        }
+//        
+//        StorageManader.shared.saveCurrentUser(user: currentUser!)
         navigationController?.popViewController(animated: true)
     }
     
     private func setCurrentUser() {
-        firstNameTextField.text = currentUser?.user?.firstName
-        lastNameTextField.text = currentUser?.user?.lastName
-        emailTextField.text = currentUser?.user?.email
-        locationTextView.text = currentUser?.user?.location
-        if let dateOfBrith = currentUser?.user?.dateOfBrith {
+        firstNameTextField.text = currentUser?.firstName
+        lastNameTextField.text = currentUser?.lastName
+        emailTextField.text = currentUser?.email
+        locationTextView.text = currentUser?.location
+        if let dateOfBrith = currentUser?.dateOfBrith {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd.MM.yyyy"
             dateOfBirthTextField.text = formatter.string(from: dateOfBrith)
         }
-        if currentUser?.user?.gender == "male" {
+        if currentUser?.gender == "male" {
             maleButton.isSelected = true
         }
-        if currentUser?.user?.gender == "female" {
+        if currentUser?.gender == "female" {
             femaleButton.isSelected = true
         }
     }
@@ -488,7 +502,7 @@ extension ProfileSettingsVC: UIImagePickerControllerDelegate, UINavigationContro
             self.currentUserPhoto = image
             self.avatarImageView.image = image
             if let data = image.pngData() {
-                currentUser?.user?.photo = data
+                currentUser?.photo = data
             }
         }
         dismiss(animated: true, completion: nil)
