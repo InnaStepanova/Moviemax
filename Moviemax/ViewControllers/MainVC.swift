@@ -44,7 +44,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, \(currentUser?.user?.firstName ?? "")"
+        label.text = "Hi, \(currentUser?.firstName ?? "")"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
         return label
@@ -101,8 +101,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     private func setCurrentUser() {
-        guard let user = currentUser else { return }
-        guard let currentUser = user.user else { return }
+        guard let currentUser = currentUser else { return }
         nameLabel.text = "Hi, \(currentUser.firstName ?? "")"
         if let photo = currentUser.photo {
             self.avatarImageView.image = UIImage(data: photo)

@@ -26,6 +26,8 @@ final class StorageManader {
         return persistentContainer.viewContext
     }
     
+    
+    
     func saveUser(completion: (User) -> Void) {
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
         let user = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
@@ -49,49 +51,51 @@ final class StorageManader {
         return nil
     }
     
-    func editCurrentUser(user: User, completion:(User) -> Void) {
+    func editUser(user: User?, completion:(User?) -> Void) {
         completion(user)
-        saveCurrentUser(user: user)
         saveContext()
     }
     
     func saveCurrentUser(user: User) {
-        cleanCurrentUser()
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "CurrentUser", in: viewContex) else { return }
-        let currentUser = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! CurrentUser
-        currentUser.user = user
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
+        var currentUser = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
+        currentUser = user
         saveContext()
     }
     
-    func addDateOfBrith(user: CurrentUser?, date: Date) {
-        if let user = user?.user {
+    func addDateOfBrith(user: User?, date: Date) {
+        if let user = user {
             user.dateOfBrith = date
             saveCurrentUser(user: user)
             saveContext()
         }
     }
     
-    private func cleanCurrentUser() {
-        let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()
+//    private func cleanCurrentUser() {
+//        let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()
+//        do {
+//            let currentUsers = try viewContex.fetch(fetchReguest)
+//            for user in currentUsers {
+//                viewContex.delete(user)
+//            }
+//        } catch let error {
+//            print("Failed to fetch data", error)
+//        }
+//    }
+    
+    func getCurrentUser() -> User? {
+        let fetchReguest: NSFetchRequest<User> = User.fetchRequest()
         do {
-            let currentUsers = try viewContex.fetch(fetchReguest)
-            for user in currentUsers {
-                viewContex.delete(user)
+            let users = try viewContex.fetch(fetchReguest)
+            for user in users {
+                if user.currentUser {
+                    return user
+                }
             }
         } catch let error {
             print("Failed to fetch data", error)
         }
-    }
-    
-    func getCurrentUser() -> CurrentUser? {
-        let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()
-        do {
-            let currentUsers = try viewContex.fetch(fetchReguest)
-            return currentUsers[0]
-        } catch let error {
-            print("Failed to fetch data", error)
-            return nil
-        }
+        return nil
     }
     
     func addMovie(completion: (MovieData) -> Void) {
