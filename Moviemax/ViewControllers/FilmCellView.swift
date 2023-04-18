@@ -9,6 +9,14 @@ import UIKit
 
 class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var navigationController: UINavigationController?
+
+
+    func presentVC() {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
+    
     private lazy var collectionView: WheelCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 200, height: 400)
@@ -51,6 +59,10 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieDetailVC = MovieDetail()
+        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
     
 }
 

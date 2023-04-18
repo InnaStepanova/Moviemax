@@ -18,6 +18,7 @@ final class SearchView: UIView {
         searchBar.setImage(UIImage(named: "Search"), for: .search, state: .normal)
         searchBar.searchTextField.backgroundColor = UIColor(named: "BackgroundScreenColor")
         searchBar.placeholder = "Search Movies and TV shows"
+        searchBar.searchTextField.clearButtonMode = .never
         return searchBar
     }()
     

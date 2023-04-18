@@ -110,7 +110,7 @@ final class SignUpVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        print(emailRegister)
+        emailTextField.text = emailRegister
         
     }
     
@@ -171,7 +171,7 @@ final class SignUpVC: UIViewController {
     private func setConstraints() {
         topStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 31),
+            topStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             backButton.heightAnchor.constraint(equalToConstant: 40),
@@ -242,7 +242,7 @@ final class SignUpVC: UIViewController {
 
     @objc
     private func backButtonPressed() {
-        print("backButtonPressed")
+        navigationController?.pushViewController(CreateAccountVC(), animated: true)
     }
 
     @objc func showPasswordToggled(sender:UIButton) {
@@ -288,20 +288,13 @@ final class SignUpVC: UIViewController {
     
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
         let loginVC = LoginVC()
-        loginVC.modalPresentationStyle = .fullScreen
-        loginVC.modalTransitionStyle = .crossDissolve 
-        present(loginVC, animated: true)
+        navigationController?.pushViewController(loginVC, animated: true)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
     
 }
 
-    //MARK: Добавлям метод для создания отступа слева от текстового поля
-extension UITextField {
-    func paddingLeft(_ padding: CGFloat) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: padding, height: self.frame.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
-    }
-}
 

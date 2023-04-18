@@ -63,6 +63,14 @@ final class StorageManader {
         saveContext()
     }
     
+    func addDateOfBrith(user: CurrentUser?, date: Date) {
+        if let user = user?.user {
+            user.dateOfBrith = date
+            saveCurrentUser(user: user)
+            saveContext()
+        }
+    }
+    
     private func cleanCurrentUser() {
         let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()
         do {

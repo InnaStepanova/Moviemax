@@ -41,6 +41,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
+        setupGradient()
         addViews()
         setConstraints()
         
@@ -52,7 +53,15 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(categoryView)
         view.addSubview(moviesCollection)
     }
-    
+    func setupGradient() {
+        let colorTop = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
+        let colorBot = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [colorTop, colorBot]
+        gradientLayer.locations = [0.5, 1]
+        view.layer.addSublayer(gradientLayer)
+    }
     private func setConstraints() {
         searchLabel.translatesAutoresizingMaskIntoConstraints = false
         searchView.translatesAutoresizingMaskIntoConstraints = false

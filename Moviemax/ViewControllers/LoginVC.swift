@@ -209,21 +209,19 @@ class LoginVC : UIViewController {
                         tabBarController.modalPresentationStyle = .fullScreen
                         self!.present(tabBarController, animated: true)
                     }
-//                    let tabBarController = TabBarController()
-//                    tabBarController.selectedIndex = 2
-//                    tabBarController.modalPresentationStyle = .fullScreen
-//                    self!.present(tabBarController, animated: true)
+                        // self!.present(ChangePasswordVC(), animated: true)
                 }
             }
         }
     }
     
     @objc func registerTapped(_ sender: UITapGestureRecognizer) {
-        // здесь можно добавить любое действие, которое должно происходить при нажатии на login
         let createVC = CreateAccountVC()
-        createVC.modalPresentationStyle = .fullScreen
-        createVC.modalTransitionStyle = .crossDissolve
-        present(createVC, animated: true)
+        navigationController?.pushViewController(createVC, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
     }
     
 }

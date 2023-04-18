@@ -13,6 +13,9 @@ final class UserInfoTableViewCell: UITableViewCell {
     
     private let userIconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 28
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -21,7 +24,7 @@ final class UserInfoTableViewCell: UITableViewCell {
     private let userFullNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = .black
+        label.textColor = UIColor(named: "TextTitleColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
