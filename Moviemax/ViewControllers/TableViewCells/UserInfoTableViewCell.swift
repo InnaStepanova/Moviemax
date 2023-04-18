@@ -24,7 +24,7 @@ final class UserInfoTableViewCell: UITableViewCell {
     private let userFullNameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = .black
+        label.textColor = UIColor(named: "TextTitleColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label

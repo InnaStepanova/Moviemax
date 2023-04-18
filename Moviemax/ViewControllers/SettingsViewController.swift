@@ -65,9 +65,10 @@ class SettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.navigationBar.isHidden = false
         currentUser = StorageManader.shared.getCurrentUser()
-        tableView.reloadData()
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
     // MARK: - Private methods
@@ -113,7 +114,7 @@ extension SettingsViewController: UITableViewDelegate {
         }
         
         headerLabel.textLabel?.font = .systemFont(ofSize: 12, weight: .regular)
-        headerLabel.textLabel?.textColor = .black
+        headerLabel.textLabel?.textColor = UIColor(named: "TextTitleColor")
     }
 }
 
@@ -142,7 +143,7 @@ extension SettingsViewController: UITableViewDataSource {
                 fatalError("Can't find cell with reuse identifier: SettingsCell")
             }
             
-            cell.configureCell(type: .profile)
+            cell.configureCell(type: .profile, delegate: self)
             
             return cell
         case .security:
@@ -152,11 +153,11 @@ extension SettingsViewController: UITableViewDataSource {
             
             switch indexPath.row {
             case 0:
-                cell.configureCell(type: .changePassword)
+                cell.configureCell(type: .changePassword, delegate: self)
             case 1:
-                cell.configureCell(type: .forgotPassword)
+                cell.configureCell(type: .forgotPassword, delegate: self)
             case 2:
-                cell.configureCell(type: .darkMode)
+                cell.configureCell(type: .darkMode, delegate: self)
             default:
                 break
             }
@@ -167,10 +168,35 @@ extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if sections[indexPath.section] == .personalInfo {
+        switch sections[indexPath.section] {
+        case .personalInfo:
             let profileSettingsVS = ProfileSettingsVC()
             profileSettingsVS.currentUser = currentUser
             navigationController?.pushViewController(profileSettingsVS, animated: true)
+        case .security:
+            switch indexPath.row {
+            case 1:
+                let alert = UIAlertController(title: "", message: "A message about password change has been sent to your email", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                navigationController?.present(alert, animated: true)
+            default:
+                break
+            }
+            
+        default:
+            break
+        }
+    }
+}
+
+extension SettingsViewController: SettingsTableViewCellDelegate {
+    
+    func changeAppearance(isDarkModeEnabled: Bool) {
+        let currentTheme: UIUserInterfaceStyle = isDarkModeEnabled ? .dark : .light
+        UserDefaults.standard.set(currentTheme.rawValue, forKey: "theme")
+        DispatchQueue.main.async {
+            self.tabBarController?.overrideUserInterfaceStyle = currentTheme
+            self.view.layoutIfNeeded()
         }
     }
 }
