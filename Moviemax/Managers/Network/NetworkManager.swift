@@ -19,10 +19,10 @@ final class NetworkManager {
         getAndDecodeData(url: url, completion: completion)
     }
     
-    func getMovieDetail(id: Int, completion: @escaping (Result<[MovieDetailData], Error>) -> Void) {
+    func getMovieDetail(id: Int, completion: @escaping (Result<MovieDetailData, Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)/3/movie/\(id)?api_key=\(Constants.apiKey)&language=en-US") else { return }
         
-        getAndDetailData(url: url, completion: completion)
+        getAndDecodeDetailData(url: url, completion: completion)
     }
     
     func getPopularTV(completion: @escaping (Result<[Movie], Error>) -> Void) {
@@ -31,10 +31,10 @@ final class NetworkManager {
         getAndDecodeData(url: url, completion: completion)
     }
     
-    func getTVDetail(id: Int, completion: @escaping (Result<[MovieDetailData], Error>) -> Void) {
+    func getTVDetail(id: Int, completion: @escaping (Result<MovieDetailData, Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseURL)/3/tv/\(id)?api_key=\(Constants.apiKey)&language=en-US") else { return }
         
-        getAndDetailData(url: url, completion: completion)
+        getAndDecodeDetailData(url: url, completion: completion)
     }
     
     func getSearchResults(query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
@@ -86,13 +86,12 @@ final class NetworkManager {
         } .resume()
     }
     
-    private func getAndDetailData(url: URL, completion: @escaping (Result<[MovieDetailData], Error>) -> Void) {
+    private func getAndDecodeDetailData(url: URL, completion: @escaping (Result<MovieDetailData, Error>) -> Void) {
         let _ = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
             guard let data = data, error == nil else { return }
-
             do {
-                let results = try JSONDecoder().decode(Movies.self, from: data)
-                completion(.success(results.results))
+                let result = try JSONDecoder().decode(MovieDetailData.self, from: data)
+                completion(.success(result))
             } catch {
                 completion(.failure(ApiError.failedToGetData))
             }

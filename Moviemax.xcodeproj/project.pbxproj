@@ -42,9 +42,7 @@
 		604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */; };
 		604DCF1F29E4E34A0015B350 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF1E29E4E34A0015B350 /* NetworkManager.swift */; };
 		604DCF2229E76A250015B350 /* NetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF2129E76A250015B350 /* NetworkModel.swift */; };
-		955DB6E629E8794F0023AF96 /* ModelCategoryArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB6E529E8794F0023AF96 /* ModelCategoryArray.swift */; };
-		95B7050B29E8A9C3003638CD /* CategoryImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B7050A29E8A9C3003638CD /* CategoryImageViewController.swift */; };
-		95B7050D29E8A9EC003638CD /* CategoryImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B7050C29E8A9EC003638CD /* CategoryImageViewCell.swift */; };
+		607CA68629EEBD2200C44564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607CA68529EEBD2200C44564 /* ViewModel.swift */; };
 		95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */; };
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
@@ -92,9 +90,7 @@
 		604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		604DCF1E29E4E34A0015B350 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		604DCF2129E76A250015B350 /* NetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModel.swift; sourceTree = "<group>"; };
-		955DB6E529E8794F0023AF96 /* ModelCategoryArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCategoryArray.swift; sourceTree = "<group>"; };
-		95B7050A29E8A9C3003638CD /* CategoryImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryImageViewController.swift; sourceTree = "<group>"; };
-		95B7050C29E8A9EC003638CD /* CategoryImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryImageViewCell.swift; sourceTree = "<group>"; };
+		607CA68529EEBD2200C44564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
@@ -278,6 +274,7 @@
 			children = (
 				604DCF1E29E4E34A0015B350 /* NetworkManager.swift */,
 				604DCF2129E76A250015B350 /* NetworkModel.swift */,
+				607CA68529EEBD2200C44564 /* ViewModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -405,7 +402,7 @@
 				604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */,
 				020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */,
 				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
-				955DB6E629E8794F0023AF96 /* ModelCategoryArray.swift in Sources */,
+				607CA68629EEBD2200C44564 /* ViewModel.swift in Sources */,
 				E7D6A12B29E05FF60068C9EE /* SecondStartViewController.swift in Sources */,
 				5F3B5DBA29E3231500479268 /* UserPhotoAlert.swift in Sources */,
 				5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */,

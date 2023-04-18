@@ -79,7 +79,7 @@ class MovieDetail: UIViewController {
         image.image = UIImage(named: "DriftingHome")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
-    } ()
+    }()
     
     private lazy var filmLabel: UILabel = {
         let label = UILabel.signBigLabel
@@ -143,10 +143,8 @@ class MovieDetail: UIViewController {
     private lazy var starImage: UIImageView = {
         let image = UIImageView.starImage
         image.translatesAutoresizingMaskIntoConstraints = false
-        
         return image
     }()
-    
     
     private lazy var starStackView: UIStackView = {
         let stackView = UIStackView()
@@ -184,7 +182,6 @@ class MovieDetail: UIViewController {
         button.addTarget(self, action: #selector(showText), for: .touchUpInside)
         return button
     }()
-    
     
     private lazy var castLabel: UILabel = {
         let label = UILabel.signTopLabel
@@ -237,6 +234,16 @@ class MovieDetail: UIViewController {
         collectionViewAuthor.dataSource = self
         setContraints()
     }
+    
+//    init(movieID: Int) {
+//        super.init(nibName: nil, bundle: nil)
+//        let id = movieID
+//         нужно из CoreData достать информацию по id
+//    }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     //функция для добавления в избранное
     @objc func likeButtonPressed () {
