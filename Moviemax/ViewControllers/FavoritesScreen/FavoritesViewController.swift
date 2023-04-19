@@ -9,6 +9,8 @@ import UIKit
 
 final class FavoritesViewController: UIViewController {
     
+    private var likeMovies = StorageManader.shared.getCurrentUser()!.likeMovies
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = Resources.Fonts.plusJakartaSansBold(with: Constants.Size.titleLabelSize)
@@ -37,6 +39,7 @@ final class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupUI()
+        print("LikeMovies - \(likeMovies)")
     }
     
     private func setupUI() {
@@ -61,15 +64,18 @@ final class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        likeMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as? MovieLargeCell else { return UICollectionViewCell() }
+        let movie = likeMovies[indexPath.item]
+        cell.set(movie: movie)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = likeMovies[indexPath.item]
         let movieDetailVC = MovieDetail()
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }

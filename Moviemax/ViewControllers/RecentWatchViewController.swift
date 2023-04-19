@@ -9,7 +9,8 @@ import UIKit
 
 final class RecentWatchViewController: UIViewController, UICollectionViewDelegate {
     
-    private var movieViewModels = [MovieViewModel]()
+    private var movie = StorageManader.shared.getCurrentUser()!.recentMovies
+    
     
     private lazy var recentWatchLabel: UILabel = {
         let label = UILabel()
@@ -38,9 +39,16 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
+        let recentVath = StorageManader.shared.getCurrentUser()?.recentMovies
+        print("It is \(recentVath)")
         addViews()
         setConstraints()
         fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        movie = StorageManader.shared.getCurrentUser()!.recentMovies
     }
     
     private func fetchData() {
@@ -50,7 +58,7 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
                 var movieIDsArray = [Int]()
                 let ids = movies.map { $0.id }
                 movieIDsArray.append(contentsOf: ids)
-                print(movieIDsArray)
+//                print(movieIDsArray)
                 
                 for id in movieIDsArray {
                     self?.fetchMovieDetail(movieID: id)
@@ -105,8 +113,8 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
         fetchCrew { [weak self] crew in
             movieViewModel.crew = crew
             DispatchQueue.main.async {
-                self?.movieViewModels.append(movieViewModel)
-                print(self?.movieViewModels)
+//                self?.movieViewModels.append(movieViewModel)
+//                print(self?.movieViewModels)
             }
         }
     }
@@ -141,18 +149,20 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
 
 extension RecentWatchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movieViewModels.count
+        movie.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
-        let model = movieViewModels[indexPath.row]
-        cell.configure(with: model)
+        let model = movie[indexPath.row]
+        cell.set(movie: model)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = movie[indexPath.row]
         let movieDetailVC = MovieDetail()
+//        movieDetailVC.movie =
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

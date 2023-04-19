@@ -9,10 +9,9 @@ import UIKit
 
 final class MovieLargeCell: UICollectionViewCell {
     
-    private lazy var likeButton: LikeButton = {
-        let button = LikeButton()
-        return button
-    }()
+    var movie: MovieData?
+    
+    private lazy var likeButton = LikeButton(movie: movie)
     
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
@@ -25,6 +24,7 @@ final class MovieLargeCell: UICollectionViewCell {
     
     private lazy var movieName: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 3
         label.text = "Drifting Home"
         label.font = Resources.Fonts.plusJakartaSansBold(with: 18)
         return label
@@ -86,6 +86,17 @@ final class MovieLargeCell: UICollectionViewCell {
     }
     
     public func configure(with model: MovieViewModel) {
+        
+        let movie = MovieData(context: StorageManader.shared.viewContex)
+        movie.id = Double(model.id)
+        movie.name = model.title
+        movie.imageUrl = model.posterURL
+        movie.date = model.reliseDate
+        movie.long = model.runtime
+        movie.category = model.genre
+        
+        self.movie = movie
+        
         let url = model.posterURL
         NetworkManager.shared.downloadImage(path: url) { [weak self] image in
            DispatchQueue.main.async {
@@ -97,6 +108,20 @@ final class MovieLargeCell: UICollectionViewCell {
         self.timeLabel.text = model.runtime
         self.watchNowButton.setTitle(model.genre, for: .normal)
         }
+    
+    func set(movie: MovieData) {
+        self.movie = movie
+        guard let url = movie.imageUrl else {return}
+        NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+           DispatchQueue.main.async {
+               self?.movieImage.image = image
+           }
+        }
+        self.movieName.text = movie.name
+        self.dateLabel.text = movie.date
+        self.timeLabel.text = movie.long
+        self.watchNowButton.setTitle(movie.category, for: .normal)
+    }
     
     private func addViews() {
         addSubview(movieImage)
@@ -130,6 +155,7 @@ final class MovieLargeCell: UICollectionViewCell {
             
             movieName.topAnchor.constraint(equalTo: movieImage.topAnchor),
             movieName.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 15),
+            movieName.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -10),
             
             timeIcon.topAnchor.constraint(equalTo: movieName.bottomAnchor, constant: 12),
             timeIcon.leadingAnchor.constraint(equalTo: movieName.leadingAnchor),

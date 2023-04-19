@@ -22,7 +22,7 @@ final class StorageManader {
         return container
     }()
     
-    private var viewContex: NSManagedObjectContext {
+     var viewContex: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
@@ -98,11 +98,10 @@ final class StorageManader {
         return nil
     }
     
-    func addMovie(completion: (MovieData) -> Void) {
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "MovieData", in: viewContex) else { return }
-        let movie = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! MovieData
-        completion(movie)
-        saveContext()
+    func likeMovie() {
+        guard let currentUser = getCurrentUser() else {return}
+        
+        
     }
     
     func getMovies() -> [MovieData] {

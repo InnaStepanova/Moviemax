@@ -10,6 +10,13 @@ import UIKit
 
 class MovieDetail: UIViewController {
     
+    var id: Int!
+    var movie: MovieViewModel! {
+        didSet{
+            set()
+        }
+    }
+    
     var buttonTapped = true
     var heatButton = true
 
@@ -230,6 +237,8 @@ class MovieDetail: UIViewController {
         super.viewDidLoad()
         view.addSubview(scrollView)
         view.backgroundColor = .white
+        addInRecentwatch()
+        
         collectionViewAuthor.delegate = self
         collectionViewAuthor.dataSource = self
         setContraints()
@@ -254,6 +263,40 @@ class MovieDetail: UIViewController {
         }
             heatButton = !heatButton
     }
+    
+    private func addInRecentwatch() {
+        guard let currentUser = StorageManader.shared.getCurrentUser() else {return}
+        let movies = currentUser.recentMovies
+        for movie in movies {
+            if movie.id == Double(self.movie.id) {
+                return
+            }
+        }
+        let movie = MovieData(context: StorageManader.shared.viewContex)
+        guard let id = self.movie?.id else {return}
+        movie.id = Double(id)
+        movie.isRecent = true
+        movie.name = self.movie?.title
+        movie.imageUrl = self.movie?.posterURL
+        movie.date = self.movie?.reliseDate
+        movie.long = self.movie?.runtime
+        movie.category = self.movie?.genre
+        
+        currentUser.addToMovies(movie)
+        StorageManader.shared.saveContext()
+    }
+    
+    private func set() {
+        titleLabel.text = movie.title
+        let url = movie.posterURL
+        NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+           DispatchQueue.main.async {
+               self?.image.image = image
+           }
+        }
+    }
+    
+    
 
     
     //фунция для перехода в другой VC
