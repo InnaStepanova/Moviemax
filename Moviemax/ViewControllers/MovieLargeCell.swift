@@ -9,9 +9,7 @@ import UIKit
 
 final class MovieLargeCell: UICollectionViewCell {
     
-    var movie: MovieData?
-    
-    private lazy var likeButton = LikeButton(movie: movie)
+    private lazy var likeButton = LikeButton()
     
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
@@ -86,17 +84,6 @@ final class MovieLargeCell: UICollectionViewCell {
     }
     
     public func configure(with model: MovieViewModel) {
-        
-        let movie = MovieData(context: StorageManader.shared.viewContex)
-        movie.id = Double(model.id)
-        movie.name = model.title
-        movie.imageUrl = model.posterURL
-        movie.date = model.reliseDate
-        movie.long = model.runtime
-        movie.category = model.genre
-        
-        self.movie = movie
-        
         let url = model.posterURL
         NetworkManager.shared.downloadImage(path: url) { [weak self] image in
            DispatchQueue.main.async {
@@ -107,10 +94,11 @@ final class MovieLargeCell: UICollectionViewCell {
         self.dateLabel.text = model.reliseDate
         self.timeLabel.text = model.runtime
         self.watchNowButton.setTitle(model.genre, for: .normal)
+        self.likeButton.tag = model.id
+        self.likeButton.isLike(id: model.id)
         }
     
     func set(movie: MovieData) {
-        self.movie = movie
         guard let url = movie.imageUrl else {return}
         NetworkManager.shared.downloadImage(path: url) { [weak self] image in
            DispatchQueue.main.async {
@@ -121,6 +109,8 @@ final class MovieLargeCell: UICollectionViewCell {
         self.dateLabel.text = movie.date
         self.timeLabel.text = movie.long
         self.watchNowButton.setTitle(movie.category, for: .normal)
+        self.likeButton.tag = Int(movie.id)
+        self.likeButton.isLike(id: Int(movie.id))
     }
     
     private func addViews() {

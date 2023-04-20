@@ -266,24 +266,18 @@ class MovieDetail: UIViewController {
     
     private func addInRecentwatch() {
         guard let currentUser = StorageManader.shared.getCurrentUser() else {return}
-        let movies = currentUser.recentMovies
-        for movie in movies {
-            if movie.id == Double(self.movie.id) {
-                return
-            }
-        }
-        let movie = MovieData(context: StorageManader.shared.viewContex)
-        guard let id = self.movie?.id else {return}
-        movie.id = Double(id)
-        movie.isRecent = true
-        movie.name = self.movie?.title
-        movie.imageUrl = self.movie?.posterURL
-        movie.date = self.movie?.reliseDate
-        movie.long = self.movie?.runtime
-        movie.category = self.movie?.genre
-        
-        currentUser.addToMovies(movie)
-        StorageManader.shared.saveContext()
+                let movie = MovieData(context: StorageManader.shared.viewContex)
+                guard let id = self.movie?.id else {return}
+                movie.id = Double(id)
+                movie.isRecent = true
+                movie.name = self.movie?.title
+                movie.imageUrl = self.movie?.posterURL
+                movie.date = self.movie?.reliseDate
+                movie.long = self.movie?.runtime
+                movie.category = self.movie?.genre
+                
+                currentUser.addToMovies(movie)
+                StorageManader.shared.saveContext()
     }
     
     private func set() {

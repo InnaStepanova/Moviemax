@@ -49,6 +49,7 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         movie = StorageManader.shared.getCurrentUser()!.recentMovies
+        moviesCollection.reloadData()
     }
     
     private func fetchData() {

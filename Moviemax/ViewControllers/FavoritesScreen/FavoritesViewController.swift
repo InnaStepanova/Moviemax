@@ -39,7 +39,13 @@ final class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        likeMovies = StorageManader.shared.getCurrentUser()!.likeMovies
         print("LikeMovies - \(likeMovies)")
+        favoritesList.reloadData()
     }
     
     private func setupUI() {
