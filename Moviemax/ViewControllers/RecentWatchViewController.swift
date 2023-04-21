@@ -9,7 +9,7 @@ import UIKit
 
 final class RecentWatchViewController: UIViewController, UICollectionViewDelegate {
     
-    private var movie = RealmStorageManager.shared.getCurrentUser()!.recentMovies
+    private var movies = RealmStorageManager.shared.getCurrentUser()!.recentMovies
     
     
     private lazy var recentWatchLabel: UILabel = {
@@ -149,20 +149,20 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
 
 extension RecentWatchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movie.count
+        movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
-        let model = movie[indexPath.row]
+        let model = movies[indexPath.row]
         cell.set(movie: model)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = movie[indexPath.row]
+        let model = movies[indexPath.row]
         let movieDetailVC = MovieDetail()
-//        movieDetailVC.movie =
+        movieDetailVC.id = model.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

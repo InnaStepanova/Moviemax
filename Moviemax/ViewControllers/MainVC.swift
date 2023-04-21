@@ -13,7 +13,7 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     let networkManager = NetworkManager.shared
     var filmList: [Movie] = []
     
-//    private lazy var currentUser = StorageManader.shared.getCurrentUser()
+    private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
     
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -45,7 +45,7 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, \(currentUser.name) \(currentUser.secondName)"
+        label.text = "Hi, \(currentUser?.name) \(currentUser!.secondName)"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
         return label

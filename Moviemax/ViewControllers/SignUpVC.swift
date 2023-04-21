@@ -268,19 +268,7 @@ final class SignUpVC: UIViewController {
                         guard let lastName = self.lastNameTextField.text else { return }
                         guard let email = self.emailTextField.text else { return }
                         guard let password = self.passwordTextField.text else { return }
-                        
-                        let user = UserRealm()
-                        user.name = firstName
-                        user.secondName = lastName
-                        user.email = email
-                        user.password = password
-                        user.isCurrent = true
-                        RealmStorageManager.shared.saveUser(user: user)
-                        print("SignUpVC user = \(user)")
-                        
-                        let mainVC = MainVC()
-                        mainVC.currentUser = user
-                        
+                   
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
                         tabBarController.modalPresentationStyle = .fullScreen

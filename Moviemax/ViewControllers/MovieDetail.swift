@@ -10,9 +10,8 @@ import UIKit
 
 class MovieDetail: UIViewController {
     
-    var id: Int!
-    var movie: MovieViewModel! {
-        didSet{
+    var id: Int! {
+        didSet {
             set()
         }
     }
@@ -267,7 +266,6 @@ class MovieDetail: UIViewController {
     private func addInRecentwatch() {
         guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
                 let recentMovie = MovieRealm()
-                
                 recentMovie.id = self.movie.id
                 recentMovie.name = self.movie?.title ?? ""
                 recentMovie.imageUrl = self.movie?.posterURL ?? ""
@@ -280,13 +278,31 @@ class MovieDetail: UIViewController {
     }
     
     private func set() {
-        titleLabel.text = movie.title
-        let url = movie.posterURL
-        NetworkManager.shared.downloadImage(path: url) { [weak self] image in
-           DispatchQueue.main.async {
-               self?.image.image = image
-           }
+        NetworkManager.shared.getMovieDetail(id: id) { result in
+            switch result {
+            case .success(let movie):
+                guard let url = movie.posterPath else { return }
+                NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+                   DispatchQueue.main.async {
+                       self?.image.image = image
+                       self?.filmLabel.text = movie.originalTitle
+                       self?.timeLabel.text = "\(movie.runtime) min"
+                       self?.dateLabel.text = movie.releaseDate
+                       self?.genreLabel.text = movie.genres?[0].name
+                       self?.textLabel.text = movie.overview
+                   }
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
+//        titleLabel.text = movie.title
+//        let url = movie.posterURL
+//        NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+//           DispatchQueue.main.async {
+//               self?.image.image = image
+//           }
+//        }
     }
     
     

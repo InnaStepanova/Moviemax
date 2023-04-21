@@ -21,12 +21,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = StartViewController()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if let _ = UserDefaults.standard.object(forKey: "FirstRun") as? Int {
-                self.window?.rootViewController = navController
+            if let currentUser = RealmStorageManager.shared.getCurrentUser() {
+                let tabBar = TabBarController()
+                tabBar.selectedIndex = 2
+                self.window?.rootViewController = tabBar
             } else {
                 self.window?.rootViewController = navController1
             }
         }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//            if let currentUser = UserDefaults.standard.object(forKey: "FirstRun") as? Int {
+//                self.window?.rootViewController = navController
+//            } else {
+//                self.window?.rootViewController = navController1
+//            }
+//        }
 
         
         if let currentScheme = UserDefaults.standard.value(forKey: "theme") as? Int {
