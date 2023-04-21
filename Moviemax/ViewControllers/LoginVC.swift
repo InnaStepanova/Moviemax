@@ -212,8 +212,8 @@ class LoginVC : UIViewController {
                         tabBarController.modalPresentationStyle = .fullScreen
                         self!.present(tabBarController, animated: true)
                     }
-                        let createVC = CreateAccountVC()
-                        self!.present(createVC, animated: true)
+//                        let secondStart = SecondStartViewController()
+//                        self!.present(secondStart, animated: true)
                 }
             }
         }
