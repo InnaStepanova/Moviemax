@@ -8,9 +8,10 @@
 import UIKit
 
 
-class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    let boxDS = BoxCollectionDataSource()
+    let networkManager = NetworkManager.shared
+    var filmList: [Movie] = []
     
     private lazy var currentUser = StorageManader.shared.getCurrentUser()
     
@@ -22,7 +23,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
-        collectionView.dataSource = boxDS
+        collectionView.dataSource = self
         collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
@@ -78,12 +79,15 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupView()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         currentUser = StorageManader.shared.getCurrentUser()
         setCurrentUser()
+        getPopularFilm()
+        
     }
     
     func setupView(){
@@ -160,37 +164,20 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLarge", for: indexPath) as! MovieLargeCell
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movieDetailVC = MovieDetail()
-        navigationController?.pushViewController(movieDetailVC, animated: true)
-    }
-}
-
-
-class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return filmList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
-        let movieDetailVC = MovieDetail()
-//        navigationController?.pushViewController(movieDetailVC, animated: true)
+      //  let movieDetailVC = MovieDetail()
+      //  navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boxCollection", for: indexPath) as! MovieLittleCell
+        
         return cell
     }
     
@@ -201,7 +188,32 @@ class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
         }
     }
     
+    func getPopularFilm() {
+        networkManager.getPopularMovies { result in
+            switch result {
+            case .success(let film):
+                self.filmList = film
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
     
+    func getMovie() {
+        for i in filmList{
+            let x = i.id
+            networkManager.getMovieDetail(id: x) { result in
+                switch result {
+                case .success(let filmDetail):
+                    print(filmDetail)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+        }
+
     
 }
 
