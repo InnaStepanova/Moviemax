@@ -79,7 +79,6 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         setupView()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,7 +88,6 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         getPopularFilm()
         
         UserDefaults.standard.setValue(1, forKey: "FirstRun")
-        
     }
     
     func setupView(){
@@ -134,11 +132,9 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             
             nameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor , constant: 15),
-           // nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor , constant: 15),
-            
             
             filmCollectionView.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
             filmCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -100),
@@ -171,7 +167,6 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     
       //  let movieDetailVC = MovieDetail()
       //  navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
@@ -179,16 +174,9 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boxCollection", for: indexPath) as! MovieLittleCell
-        
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.transform = CGAffineTransform(translationX: 0, y: collectionView.bounds.height)
-        UIView.animate(withDuration: 0.5) {
-            cell.transform = CGAffineTransform.identity
-        }
-    }
+
     
     func getPopularFilm() {
         networkManager.getPopularMovies { result in
