@@ -28,48 +28,48 @@ final class StorageManader {
     
     
     
-    func saveUser(completion: (User) -> Void) {
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
-        let user = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
-        completion(user)
-        saveContext()
-    }
+//    func saveUser(completion: (User) -> Void) {
+//        guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
+//        let user = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
+//        completion(user)
+//        saveContext()
+//    }
+//
+//    func findUser(email: String?, password: String?) -> User? {
+//        let fetchReguest: NSFetchRequest<User> = User.fetchRequest()
+//        do {
+//            let users = try viewContex.fetch(fetchReguest)
+//            for user in users {
+//                if user.email == email && user.password == password {
+//                    return user
+//                }
+//            }
+//
+//        } catch let error {
+//            print("Failed to fetch data", error)
+//        }
+//        return nil
+//    }
     
-    func findUser(email: String?, password: String?) -> User? {
-        let fetchReguest: NSFetchRequest<User> = User.fetchRequest()
-        do {
-            let users = try viewContex.fetch(fetchReguest)
-            for user in users {
-                if user.email == email && user.password == password {
-                    return user
-                }
-            }
-            
-        } catch let error {
-            print("Failed to fetch data", error)
-        }
-        return nil
-    }
+//    func editUser(user: User?, completion:(User?) -> Void) {
+//        completion(user)
+//        saveContext()
+//    }
     
-    func editUser(user: User?, completion:(User?) -> Void) {
-        completion(user)
-        saveContext()
-    }
+//    func saveCurrentUser(user: User) {
+//        guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
+//        var currentUser = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
+//        currentUser = user
+//        saveContext()
+//    }
     
-    func saveCurrentUser(user: User) {
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "User", in: viewContex) else { return }
-        var currentUser = NSManagedObject(entity: entityDescription, insertInto: viewContex) as! User
-        currentUser = user
-        saveContext()
-    }
-    
-    func addDateOfBrith(user: User?, date: Date) {
-        if let user = user {
-            user.dateOfBrith = date
-            saveCurrentUser(user: user)
-            saveContext()
-        }
-    }
+//    func addDateOfBrith(user: User?, date: Date) {
+//        if let user = user {
+//            user.dateOfBrith = date
+//            saveCurrentUser(user: user)
+//            saveContext()
+//        }
+//    }
     
 //    private func cleanCurrentUser() {
 //        let fetchReguest: NSFetchRequest<CurrentUser> = CurrentUser.fetchRequest()

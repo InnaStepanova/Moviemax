@@ -9,7 +9,7 @@ import UIKit
 
 final class FavoritesViewController: UIViewController {
     
-    private var likeMovies = StorageManader.shared.getCurrentUser()!.likeMovies
+    private var likeMovies = RealmStorageManager.shared.getCurrentUser()!.likeMovies
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -43,8 +43,6 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        likeMovies = StorageManader.shared.getCurrentUser()!.likeMovies
-        print("LikeMovies - \(likeMovies)")
         favoritesList.reloadData()
     }
     

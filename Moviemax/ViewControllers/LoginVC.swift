@@ -201,14 +201,19 @@ class LoginVC : UIViewController {
                 if let e = error {
                     print(e)
                 }else {
-                    if let _ = StorageManader.shared.getCurrentUser() {
+                    
+                    if let user = RealmStorageManager.shared.findUser(email1: email, password1: password) {
+                        
+                        let mainVC = MainVC()
+                        mainVC.currentUser = user
+                        
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
                         tabBarController.modalPresentationStyle = .fullScreen
                         self!.present(tabBarController, animated: true)
                     }
-                        let secondStart = SecondStartViewController()
-                        self!.present(secondStart, animated: true)
+                        let createVC = CreateAccountVC()
+                        self!.present(createVC, animated: true)
                 }
             }
         }

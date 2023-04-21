@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseAuth
 
+
 final class SignUpVC: UIViewController {
 
     //MARK: - Create UI
@@ -268,13 +269,17 @@ final class SignUpVC: UIViewController {
                         guard let email = self.emailTextField.text else { return }
                         guard let password = self.passwordTextField.text else { return }
                         
-                        StorageManader.shared.saveUser { user in
-                            user.firstName = firstName
-                            user.lastName = lastName
-                            user.email = email
-                            user.password = password
-                            user.currentUser = true
-                        }
+                        let user = UserRealm()
+                        user.name = firstName
+                        user.secondName = lastName
+                        user.email = email
+                        user.password = password
+                        user.isCurrent = true
+                        RealmStorageManager.shared.saveUser(user: user)
+                        print("SignUpVC user = \(user)")
+                        
+                        let mainVC = MainVC()
+                        mainVC.currentUser = user
                         
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
@@ -284,18 +289,6 @@ final class SignUpVC: UIViewController {
                 }
             }
         }
-//        guard let firstName = firstNameTextField.text else { return }
-//        guard let lastName = lastNameTextField.text else { return }
-//        guard let email = emailTextField.text else { return }
-//        guard let password = passwordTextField.text else { return }
-//        
-//        StorageManader.shared.saveUser { user in
-//            user.firstName = firstName
-//            user.lastName = lastName
-//            user.email = email
-//            user.password = password
-//            StorageManader.shared.saveCurrentUser(user: user)
-//        }
     }
     
     

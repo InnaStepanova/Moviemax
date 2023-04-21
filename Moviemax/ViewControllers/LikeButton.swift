@@ -9,7 +9,8 @@ import UIKit
 
 final class LikeButton: UIButton {
     
-    private var likeMovies = StorageManader.shared.getCurrentUser()?.likeMovies
+    private var likeMoviesId = RealmStorageManager.shared.getCurrentUser()!.likeMovies.map { $0.id }
+
     
     var isFavorite: Bool = false
    
@@ -45,28 +46,22 @@ final class LikeButton: UIButton {
         if isFavorite {
             setImage(UIImage(named: "heart_fill"), for: .normal)
             
-            guard let currentUser = StorageManader.shared.getCurrentUser() else {return}
+            guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
             let movies = currentUser.likeMovies
-            for movie in movies {
-                if movie.id == Double(sender.tag) {
-                    return
-                }
-            }
             NetworkManager.shared.getMovieDetail(id: sender.tag) { result in
                 switch result {
                 case .success(let movieDetail):
                     DispatchQueue.main.async {
                         print("LIKEBUTTONPRESSED - \(movieDetail), tag - \(sender.tag)")
-                        let movie = MovieData(context: StorageManader.shared.viewContex)
-                        movie.id = Double(sender.tag)
-                        movie.isLike = true
-                        movie.name = movieDetail.originalTitle
-                        movie.imageUrl = movieDetail.posterPath
-                        movie.date = movieDetail.releaseDate
+                        let movie = MovieRealm()
+                        movie.id = sender.tag
+                        movie.name = movieDetail.originalTitle ?? ""
+                        movie.imageUrl = movieDetail.posterPath ?? ""
+                        movie.date = movieDetail.releaseDate ?? ""
                         movie.long = String(movieDetail.runtime ?? 0)
-                        movie.category = movieDetail.genres?.first?.name
-                        currentUser.addToMovies(movie)
-                        StorageManader.shared.saveContext()
+                        movie.category = movieDetail.genres?.first?.name ?? ""
+                        RealmStorageManager.shared.like(user: currentUser, movie: movie)
+    
                     }
                 case .failure(let error):
                     print(error)
@@ -76,24 +71,20 @@ final class LikeButton: UIButton {
             setImage(UIImage(named: "heart"), for: .normal)
             tintColor = .gray
             
-            guard let currentUser = StorageManader.shared.getCurrentUser() else {return}
+            guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
             let movies = currentUser.likeMovies
             for movie in movies {
-                if movie.id == Double(sender.tag) {
-                    movie.isLike = false
-                    StorageManader.shared.saveContext()
+                if movie.id == sender.tag {
+                    RealmStorageManager.shared.deleteLike(user: currentUser, movie: movie)
                 }
             }
         }
     }
     
     func isLike(id: Int) {
-        guard let likeMovies = StorageManader.shared.getCurrentUser()?.likeMovies else {return}
-        for movie in likeMovies {
-            if movie.id == Double(id) {
-                isFavorite = true
-                configure()
-            }
+        if likeMoviesId.contains(id) {
+            isFavorite = true
+            configure()
         }
     }
 }

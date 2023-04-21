@@ -98,8 +98,8 @@ final class MovieLargeCell: UICollectionViewCell {
         self.likeButton.isLike(id: model.id)
         }
     
-    func set(movie: MovieData) {
-        guard let url = movie.imageUrl else {return}
+    func set(movie: MovieRealm) {
+        let url = movie.imageUrl
         NetworkManager.shared.downloadImage(path: url) { [weak self] image in
            DispatchQueue.main.async {
                self?.movieImage.image = image

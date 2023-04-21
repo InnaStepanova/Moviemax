@@ -9,7 +9,7 @@ import UIKit
 
 final class RecentWatchViewController: UIViewController, UICollectionViewDelegate {
     
-    private var movie = StorageManader.shared.getCurrentUser()!.recentMovies
+    private var movie = RealmStorageManager.shared.getCurrentUser()!.recentMovies
     
     
     private lazy var recentWatchLabel: UILabel = {
@@ -48,7 +48,6 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        movie = StorageManader.shared.getCurrentUser()!.recentMovies
         moviesCollection.reloadData()
     }
     

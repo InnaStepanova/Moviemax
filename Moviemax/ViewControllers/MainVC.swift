@@ -10,9 +10,11 @@ import UIKit
 
 class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var currentUser: UserRealm!
+    
     let boxDS = BoxCollectionDataSource()
     
-    private lazy var currentUser = StorageManader.shared.getCurrentUser()
+//    private lazy var currentUser = StorageManader.shared.getCurrentUser()
     
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -44,7 +46,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, \(currentUser?.firstName ?? "")"
+        label.text = "Hi, \(currentUser.name) \(currentUser.secondName)"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
         return label
@@ -76,13 +78,16 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let currentUser = RealmStorageManager.shared.getCurrentUser() {
+            self.currentUser = currentUser
+        }
+        print("MAINVC currentUser - \(currentUser)")
         self.navigationController?.navigationBar.isHidden = true
         setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        currentUser = StorageManader.shared.getCurrentUser()
         setCurrentUser()
     }
     
@@ -102,7 +107,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     private func setCurrentUser() {
         guard let currentUser = currentUser else { return }
-        nameLabel.text = "Hi, \(currentUser.firstName ?? "")"
+        nameLabel.text = "Hi, \(currentUser.name) \(currentUser.secondName)"
         if let photo = currentUser.photo {
             self.avatarImageView.image = UIImage(data: photo)
         } else {
