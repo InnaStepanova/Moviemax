@@ -44,7 +44,7 @@ final class StartViewController: UIViewController {
         view.backgroundColor = UIColor(named: "PurpleBackGroundColor")
         addViews()
         setConstraints()
-        showSecondVC()
+        // showSecondVC()
     }
 
     
@@ -93,4 +93,20 @@ final class StartViewController: UIViewController {
             loadingIcon.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -74),
         ])
     }
+    
+    //MARK: Xlori
+    
+    private func startLoadingAnimation() {
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotationAnimation.toValue = NSNumber(value: Double.pi * 2.0)
+        rotationAnimation.duration = 1.0
+        rotationAnimation.repeatCount = .infinity
+        loadingIcon.layer.add(rotationAnimation, forKey: "rotationAnimation")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startLoadingAnimation()
+    }
+    
 }
