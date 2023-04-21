@@ -88,6 +88,8 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         setCurrentUser()
         getPopularFilm()
         
+        UserDefaults.standard.setValue(1, forKey: "FirstRun")
+        
     }
     
     func setupView(){
