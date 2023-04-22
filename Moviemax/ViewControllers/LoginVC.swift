@@ -198,19 +198,21 @@ class LoginVC : UIViewController {
     private func loginButtonPressed() {
         if let email = emailTextField.text, let password = passwordTextField.text {
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                if let e = error {
-                    print(e)
-                }else {
-                    
-                    if let user = RealmStorageManager.shared.findUser(email1: email, password1: password) {
-                        
-                        let tabBarController = TabBarController()
-                        tabBarController.selectedIndex = 2
-                        tabBarController.modalPresentationStyle = .fullScreen
-                        self!.present(tabBarController, animated: true)
-                    }
-//                        let secondStart = SecondStartViewController()
-//                        self!.present(secondStart, animated: true)
+                guard let self else { return }
+                
+                if let error {
+                    let alert = UIAlertController(title: "Error", message: "User not found", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                    print(error)
+                } else {
+                    let tabBarController = TabBarController()
+                    tabBarController.selectedIndex = 2
+                    tabBarController.modalPresentationStyle = .fullScreen
+                    self.present(tabBarController, animated: true)
+                    //                    }
+                    //                        let secondStart = SecondStartViewController()
+                    //                        self!.present(secondStart, animated: true)
                 }
             }
         }
