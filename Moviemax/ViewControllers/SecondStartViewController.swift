@@ -104,6 +104,12 @@ class SecondStartViewController: UIViewController {
         whiteView.addSubview(purpleView)
         purpleView.addSubview(continueLabel)
         
+        
+        //Тут вместо создания кнопки сделал, действие при нажатии на label   Xlori
+        let continueTapGesture = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
+        continueLabel.isUserInteractionEnabled = true
+        continueLabel.addGestureRecognizer(continueTapGesture)
+        
     }
     
     private func setConstraints() {
@@ -166,5 +172,17 @@ class SecondStartViewController: UIViewController {
             continueLabel.centerYAnchor.constraint(equalTo: purpleView.centerYAnchor),
             continueLabel.topAnchor.constraint(equalTo: purpleView.topAnchor, constant: 16),
         ])
+    }
+    
+    
+
+    // xlori
+    @objc func loginTapped(_ sender: UITapGestureRecognizer) {
+        let createVC = CreateAccountVC()
+        navigationController?.pushViewController(createVC, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
     }
 }

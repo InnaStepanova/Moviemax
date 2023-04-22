@@ -9,6 +9,8 @@ import UIKit
 
 final class FavoritesViewController: UIViewController {
     
+    private var likeMovies = RealmStorageManager.shared.getCurrentUser()!.likeMovies
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = Resources.Fonts.plusJakartaSansBold(with: Constants.Size.titleLabelSize)
@@ -39,6 +41,11 @@ final class FavoritesViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        favoritesList.reloadData()
+    }
+    
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(titleLabel)
@@ -61,16 +68,20 @@ final class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        likeMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as? MovieLargeCell else { return UICollectionViewCell() }
+        let movie = likeMovies[indexPath.item]
+        cell.set(movie: movie)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = likeMovies[indexPath.item]
         let movieDetailVC = MovieDetail()
+        movieDetailVC.id = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

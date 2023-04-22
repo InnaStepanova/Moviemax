@@ -41,12 +41,12 @@ final class UserInfoTableViewCell: UITableViewCell {
         
     // MARK: - Public methods
     
-    func configureCell(currentUser: CurrentUser?) {
+    func configureCell(currentUser: UserRealm?) {
         configureConstraints()
         backgroundColor = UIColor(named: "BackgroundScreenColor")
-        userFullNameLabel.text = "\(currentUser?.user?.firstName ?? "") \(currentUser?.user?.lastName ?? "")"
-        userNickNameLabel.text = currentUser?.user?.email
-        if let photoData = currentUser?.user?.photo {
+        userFullNameLabel.text = "\(currentUser?.name ?? "") \(currentUser?.secondName ?? "")"
+        userNickNameLabel.text = currentUser?.email
+        if let photoData = currentUser?.photo {
             userIconImageView.image = UIImage(data: photoData)
         } else {
             userIconImageView.image = UIImage(named: "User-photo")

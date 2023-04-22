@@ -13,7 +13,7 @@ protocol UserPhotoAlertDelegate {
 
 final class ProfileSettingsVC: UIViewController {
     
-    var currentUser: CurrentUser?
+    var currentUser: UserRealm?
     
     private var currentUserPhoto: UIImage?
     
@@ -43,7 +43,7 @@ final class ProfileSettingsVC: UIViewController {
 
         lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        if let photoData = currentUser?.user?.photo {
+        if let photoData = currentUser?.photo {
             imageView.image = UIImage(data: photoData)
         } else {
             imageView.image = #imageLiteral(resourceName: "User-photo")
@@ -94,7 +94,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var lastNameTextField: UITextField = {
         let textField = UITextField()
-        textField.text = currentUser?.user?.lastName
+        textField.text = currentUser?.secondName
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -116,7 +116,7 @@ final class ProfileSettingsVC: UIViewController {
     
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
-        textField.text = currentUser?.user?.email
+        textField.text = currentUser?.email
         textField.borderStyle = .none
         textField.layer.borderWidth = 1.0
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -176,10 +176,11 @@ final class ProfileSettingsVC: UIViewController {
             alertController.view.addSubview(datePicker)
             // Добавление кнопок "Cancel" и "OK"
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            strongSelf.currentUser?.user?.dateOfBrith = datePicker.date
-        }
+            let okAction = UIAlertAction(title: "Ok", style: .default) 
+//        let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
+//            guard let strongSelf = self else { return }
+//            strongSelf.currentUser?.dateOfBrith = datePicker.date
+//        }
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
             // Отображение AlertController
@@ -232,7 +233,7 @@ final class ProfileSettingsVC: UIViewController {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         textView.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         textView.delegate = self
-        textView.text = currentUser?.user?.location
+        textView.text = currentUser?.location
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -271,41 +272,40 @@ final class ProfileSettingsVC: UIViewController {
     }
     
     @objc private func saveButtonPressed() {
-        guard let user = currentUser else {return}
-        guard let saveCurrentUser = user.user else {return}
-        saveCurrentUser.firstName = firstNameTextField.text
-        saveCurrentUser.lastName = lastNameTextField.text
-        saveCurrentUser.email = emailTextField.text
-        saveCurrentUser.location = locationTextView.text
+        
+        guard let saveUser = currentUser else {return}
+        RealmStorageManager.shared.edit {
+            saveUser.name = firstNameTextField.text ?? ""
+            saveUser.secondName = lastNameTextField.text ?? ""
+            saveUser.email = emailTextField.text ?? ""
+            saveUser.location = locationTextView.text
+            saveUser.dateOfBrith = dateOfBirthTextField.text
+            
             if femaleButton.isSelected {
-                saveCurrentUser.gender = "female"
+                saveUser.gender = "female"
             }
             if maleButton.isSelected {
-                saveCurrentUser.gender = "male"
+                saveUser.gender = "male"
             }
-        
-        if currentUserPhoto == nil {
-            saveCurrentUser.photo = nil
+            
+            if currentUserPhoto == nil {
+                saveUser.photo = nil
+            }
         }
         
-        StorageManader.shared.saveCurrentUser(user: saveCurrentUser)
         navigationController?.popViewController(animated: true)
     }
     
     private func setCurrentUser() {
-        firstNameTextField.text = currentUser?.user?.firstName
-        lastNameTextField.text = currentUser?.user?.lastName
-        emailTextField.text = currentUser?.user?.email
-        locationTextView.text = currentUser?.user?.location
-        if let dateOfBrith = currentUser?.user?.dateOfBrith {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd.MM.yyyy"
-            dateOfBirthTextField.text = formatter.string(from: dateOfBrith)
-        }
-        if currentUser?.user?.gender == "male" {
+        firstNameTextField.text = currentUser?.name
+        lastNameTextField.text = currentUser?.secondName
+        emailTextField.text = currentUser?.email
+        locationTextView.text = currentUser?.location
+        dateOfBirthTextField.text = currentUser?.dateOfBrith
+        if currentUser?.gender == "male" {
             maleButton.isSelected = true
         }
-        if currentUser?.user?.gender == "female" {
+        if currentUser?.gender == "female" {
             femaleButton.isSelected = true
         }
     }
@@ -487,8 +487,12 @@ extension ProfileSettingsVC: UIImagePickerControllerDelegate, UINavigationContro
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.currentUserPhoto = image
             self.avatarImageView.image = image
-            if let data = image.pngData() {
-                currentUser?.user?.photo = data
+            if let data = image.jpegData(compressionQuality: 0.5) {
+                if let saveUser = currentUser {
+                    RealmStorageManager.shared.edit {
+                        saveUser.photo = data
+                    }
+                }
             }
         }
         dismiss(animated: true, completion: nil)

@@ -10,6 +10,8 @@
 		020677D129DEAEDD007F1BE2 /* MovieLittleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */; };
 		020677D329DECB2C007F1BE2 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */; };
 		020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */; };
+		0221DDA329F14EE000090378 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221DDA229F14EE000090378 /* User.swift */; };
+		0221DDA529F151FC00090378 /* RealmStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221DDA429F151FC00090378 /* RealmStorageManager.swift */; };
 		0223665729E1F3CA00D41ADE /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0223665629E1F3CA00D41ADE /* Image.swift */; };
 		02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A7D29DAD017008CE17A /* TabBarController.swift */; };
 		02357A8929DC752B008CE17A /* MovieLargeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A8829DC752B008CE17A /* MovieLargeCell.swift */; };
@@ -17,14 +19,19 @@
 		02357A9029DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02357A8F29DD5C39008CE17A /* Montserrat-VariableFont_wght.ttf */; };
 		02357A9229DD5F36008CE17A /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A9129DD5F36008CE17A /* Resources.swift */; };
 		02357A9429DDF2C6008CE17A /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02357A9329DDF2C6008CE17A /* LikeButton.swift */; };
+		024E017B29EEA5CA0023C1E7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 024E017A29EEA5CA0023C1E7 /* FirebaseAnalytics */; };
+		024E017D29EEA5CA0023C1E7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 024E017C29EEA5CA0023C1E7 /* FirebaseAuth */; };
+		024E017F29EEA5CA0023C1E7 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 024E017E29EEA5CA0023C1E7 /* FirebaseDatabase */; };
+		024E018129EEA5CA0023C1E7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 024E018029EEA5CA0023C1E7 /* FirebaseFirestore */; };
+		024E018329EEA5CA0023C1E7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 024E018229EEA5CA0023C1E7 /* FirebaseStorage */; };
 		0262086929DF28E400BA1664 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262086829DF28E400BA1664 /* SearchViewController.swift */; };
 		0262086B29DF2C5300BA1664 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262086A29DF2C5300BA1664 /* SearchView.swift */; };
-		0271B25729E40946002C955D /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0271B25629E40946002C955D /* StorageManager.swift */; };
+		0282B57129EF0C73003C9D2A /* CategoryImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282B57029EF0C73003C9D2A /* CategoryImageViewController.swift */; };
+		0282B57329EF0CAC003C9D2A /* CategoryImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282B57229EF0CAC003C9D2A /* CategoryImageViewCell.swift */; };
 		02A0D40B29E1433B00CE58A1 /* RecentWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */; };
 		02CBB3B529E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBB3B429E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift */; };
 		02E964B129DABF26001649E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B029DABF26001649E5 /* AppDelegate.swift */; };
 		02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B229DABF26001649E5 /* SceneDelegate.swift */; };
-		02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */; };
 		02E964BD29DABF2C001649E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BC29DABF2C001649E5 /* Assets.xcassets */; };
 		02E964C029DABF2C001649E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02E964BE29DABF2C001649E5 /* LaunchScreen.storyboard */; };
 		5C6EEC5229DCBE810057E23F /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6EEC5129DCBE810057E23F /* UserInfoTableViewCell.swift */; };
@@ -37,6 +44,8 @@
 		604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */; };
 		604DCF1F29E4E34A0015B350 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF1E29E4E34A0015B350 /* NetworkManager.swift */; };
 		604DCF2229E76A250015B350 /* NetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DCF2129E76A250015B350 /* NetworkModel.swift */; };
+		607CA68629EEBD2200C44564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607CA68529EEBD2200C44564 /* ViewModel.swift */; };
+		883035B9232BB7DF5C91C76F /* Pods_Moviemax.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD522981A5033B6DFD47292 /* Pods_Moviemax.framework */; };
 		95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */; };
 		CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4429DBF86E00658CA8 /* SignUpVC.swift */; };
 		CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4629DBF95100658CA8 /* UILabelText.swift */; };
@@ -45,8 +54,6 @@
 		CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F4E29E0970D00658CA8 /* FilmCell.swift */; };
 		CE141F5129E0975B00658CA8 /* FilmCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5029E0975B00658CA8 /* FilmCellView.swift */; };
 		CE141F5329E1E5E900658CA8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE141F5229E1E5E900658CA8 /* GoogleService-Info.plist */; };
-		CE141F5629E1E8BA00658CA8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5529E1E8BA00658CA8 /* FirebaseAuth */; };
-		CE141F5829E1E8BA00658CA8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */; };
 		CE141F5A29E1F74800658CA8 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE141F5929E1F74800658CA8 /* LoginVC.swift */; };
 		CE699B3129E9DB98008E9DE0 /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE699B3029E9DB98008E9DE0 /* ChangePasswordVC.swift */; };
 		E7D6A12929DD9C000068C9EE /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D6A12829DD9C000068C9EE /* StartViewController.swift */; };
@@ -57,6 +64,8 @@
 		020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLittleCell.swift; sourceTree = "<group>"; };
 		020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionView.swift; sourceTree = "<group>"; };
+		0221DDA229F14EE000090378 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0221DDA429F151FC00090378 /* RealmStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageManager.swift; sourceTree = "<group>"; };
 		0223665629E1F3CA00D41ADE /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		02357A7D29DAD017008CE17A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		02357A8829DC752B008CE17A /* MovieLargeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLargeCell.swift; sourceTree = "<group>"; };
@@ -66,13 +75,13 @@
 		02357A9329DDF2C6008CE17A /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		0262086829DF28E400BA1664 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		0262086A29DF2C5300BA1664 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		0271B25629E40946002C955D /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		0282B57029EF0C73003C9D2A /* CategoryImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryImageViewController.swift; sourceTree = "<group>"; };
+		0282B57229EF0CAC003C9D2A /* CategoryImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryImageViewCell.swift; sourceTree = "<group>"; };
 		02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentWatchViewController.swift; sourceTree = "<group>"; };
 		02CBB3B429E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		02E964AD29DABF26001649E5 /* Moviemax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moviemax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E964B029DABF26001649E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02E964B229DABF26001649E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		02E964BA29DABF26001649E5 /* Moviemax.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Moviemax.xcdatamodel; sourceTree = "<group>"; };
 		02E964BC29DABF2C001649E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02E964BF29DABF2C001649E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02E964C129DABF2C001649E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,12 +89,16 @@
 		5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5C6FB5CE29DCA1B400B7D459 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		5F3B5DB929E3231500479268 /* UserPhotoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotoAlert.swift; sourceTree = "<group>"; };
+		5FDE4BDB7B8067BC7D82D663 /* Pods-Moviemax.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moviemax.debug.xcconfig"; path = "Target Support Files/Pods-Moviemax/Pods-Moviemax.debug.xcconfig"; sourceTree = "<group>"; };
 		601C944229DDB766005F22DC /* ProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsVC.swift; sourceTree = "<group>"; };
 		601C944529DDD23D005F22DC /* GenderCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCustomButton.swift; sourceTree = "<group>"; };
 		601C944829DDD9AC005F22DC /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		604DCF1829E0CE6D0015B350 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		604DCF1E29E4E34A0015B350 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		604DCF2129E76A250015B350 /* NetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModel.swift; sourceTree = "<group>"; };
+		607CA68529EEBD2200C44564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		7FD522981A5033B6DFD47292 /* Pods_Moviemax.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Moviemax.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83ADDAC718C5B5E72F818008 /* Pods-Moviemax.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moviemax.release.xcconfig"; path = "Target Support Files/Pods-Moviemax/Pods-Moviemax.release.xcconfig"; sourceTree = "<group>"; };
 		95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		CE141F4429DBF86E00658CA8 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CE141F4629DBF95100658CA8 /* UILabelText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelText.swift; sourceTree = "<group>"; };
@@ -105,8 +118,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE141F5629E1E8BA00658CA8 /* FirebaseAuth in Frameworks */,
-				CE141F5829E1E8BA00658CA8 /* FirebaseFirestore in Frameworks */,
+				024E017F29EEA5CA0023C1E7 /* FirebaseDatabase in Frameworks */,
+				024E018129EEA5CA0023C1E7 /* FirebaseFirestore in Frameworks */,
+				024E017B29EEA5CA0023C1E7 /* FirebaseAnalytics in Frameworks */,
+				024E018329EEA5CA0023C1E7 /* FirebaseStorage in Frameworks */,
+				024E017D29EEA5CA0023C1E7 /* FirebaseAuth in Frameworks */,
+				883035B9232BB7DF5C91C76F /* Pods_Moviemax.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,10 +150,18 @@
 		0271B25529E408F8002C955D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				0271B25629E40946002C955D /* StorageManager.swift */,
+				029D421A29EFF43600E8C4B5 /* StorageManager */,
 				604DCF2029E769EF0015B350 /* Network */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		029D421A29EFF43600E8C4B5 /* StorageManager */ = {
+			isa = PBXGroup;
+			children = (
+				0221DDA429F151FC00090378 /* RealmStorageManager.swift */,
+			);
+			path = StorageManager;
 			sourceTree = "<group>";
 		};
 		02E964A429DABF26001649E5 = {
@@ -144,6 +169,8 @@
 			children = (
 				02E964AF29DABF26001649E5 /* Moviemax */,
 				02E964AE29DABF26001649E5 /* Products */,
+				9F45760FC788EC9527D9801D /* Pods */,
+				134D842A3B0376CE7EF64536 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -158,11 +185,11 @@
 		02E964AF29DABF26001649E5 /* Moviemax */ = {
 			isa = PBXGroup;
 			children = (
+				955DB6E429E8792C0023AF96 /* Model */,
 				02E964C829DAC333001649E5 /* Application */,
 				0271B25529E408F8002C955D /* Managers */,
 				02E964C929DAC34A001649E5 /* ViewControllers */,
 				02E964C729DAC2D6001649E5 /* SupportingFiles */,
-				02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */,
 			);
 			path = Moviemax;
 			sourceTree = "<group>";
@@ -197,17 +224,19 @@
 				5C6FB5CD29DCA18400B7D459 /* TableViewCells */,
 				02357A7C29DACFC6008CE17A /* TabBar */,
 				CE141F4429DBF86E00658CA8 /* SignUpVC.swift */,
+				0282B57029EF0C73003C9D2A /* CategoryImageViewController.swift */,
 				95CC70F529DC639E00CAA5F9 /* MovieDetail.swift */,
 				CE141F4C29E034EA00658CA8 /* MainVC.swift */,
 				CE141F4A29DC22D300658CA8 /* CreateAccountVC.swift */,
+				0282B57229EF0CAC003C9D2A /* CategoryImageViewCell.swift */,
 				5C6FB5CB29DC990B00B7D459 /* SettingsViewController.swift */,
 				02357A8829DC752B008CE17A /* MovieLargeCell.swift */,
 				E7D6A12829DD9C000068C9EE /* StartViewController.swift */,
 				E7D6A12A29E05FF60068C9EE /* SecondStartViewController.swift */,
 				02357A9329DDF2C6008CE17A /* LikeButton.swift */,
 				020677D029DEAEDD007F1BE2 /* MovieLittleCell.swift */,
-				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
 				020677D429DECE25007F1BE2 /* CategoryCollectionView.swift */,
+				020677D229DECB2C007F1BE2 /* CategoryCollectionViewCell.swift */,
 				CE141F4E29E0970D00658CA8 /* FilmCell.swift */,
 				02CBB3B429E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift */,
 				CE141F5029E0975B00658CA8 /* FilmCellView.swift */,
@@ -220,6 +249,14 @@
 				02A0D40A29E1433B00CE58A1 /* RecentWatchViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		134D842A3B0376CE7EF64536 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FD522981A5033B6DFD47292 /* Pods_Moviemax.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5C6FB5CD29DCA18400B7D459 /* TableViewCells */ = {
@@ -263,8 +300,26 @@
 			children = (
 				604DCF1E29E4E34A0015B350 /* NetworkManager.swift */,
 				604DCF2129E76A250015B350 /* NetworkModel.swift */,
+				607CA68529EEBD2200C44564 /* ViewModel.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		955DB6E429E8792C0023AF96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0221DDA229F14EE000090378 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9F45760FC788EC9527D9801D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5FDE4BDB7B8067BC7D82D663 /* Pods-Moviemax.debug.xcconfig */,
+				83ADDAC718C5B5E72F818008 /* Pods-Moviemax.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,9 +329,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 02E964C429DABF2C001649E5 /* Build configuration list for PBXNativeTarget "Moviemax" */;
 			buildPhases = (
+				292EBFD779B9EF371DFBA7F8 /* [CP] Check Pods Manifest.lock */,
 				02E964A929DABF26001649E5 /* Sources */,
 				02E964AA29DABF26001649E5 /* Frameworks */,
 				02E964AB29DABF26001649E5 /* Resources */,
+				C96522DCDB6FAA13442321AE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,8 +341,11 @@
 			);
 			name = Moviemax;
 			packageProductDependencies = (
-				CE141F5529E1E8BA00658CA8 /* FirebaseAuth */,
-				CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */,
+				024E017A29EEA5CA0023C1E7 /* FirebaseAnalytics */,
+				024E017C29EEA5CA0023C1E7 /* FirebaseAuth */,
+				024E017E29EEA5CA0023C1E7 /* FirebaseDatabase */,
+				024E018029EEA5CA0023C1E7 /* FirebaseFirestore */,
+				024E018229EEA5CA0023C1E7 /* FirebaseStorage */,
 			);
 			productName = Moviemax;
 			productReference = 02E964AD29DABF26001649E5 /* Moviemax.app */;
@@ -316,7 +376,7 @@
 			);
 			mainGroup = 02E964A429DABF26001649E5;
 			packageReferences = (
-				CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 02E964AE29DABF26001649E5 /* Products */;
 			projectDirPath = "";
@@ -342,6 +402,46 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		292EBFD779B9EF371DFBA7F8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Moviemax-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C96522DCDB6FAA13442321AE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Moviemax/Pods-Moviemax-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		02E964A929DABF26001649E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -349,6 +449,7 @@
 			files = (
 				5C6EEC5229DCBE810057E23F /* UserInfoTableViewCell.swift in Sources */,
 				CE141F4729DBF95100658CA8 /* UILabelText.swift in Sources */,
+				0282B57329EF0CAC003C9D2A /* CategoryImageViewCell.swift in Sources */,
 				0262086B29DF2C5300BA1664 /* SearchView.swift in Sources */,
 				CE141F4F29E0970D00658CA8 /* FilmCell.swift in Sources */,
 				02CBB3B529E44ACC005D15B9 /* MovieDetailCollectionViewCell.swift in Sources */,
@@ -366,24 +467,26 @@
 				02E964B329DABF26001649E5 /* SceneDelegate.swift in Sources */,
 				CE141F5A29E1F74800658CA8 /* LoginVC.swift in Sources */,
 				02357A7E29DAD017008CE17A /* TabBarController.swift in Sources */,
+				0221DDA529F151FC00090378 /* RealmStorageManager.swift in Sources */,
 				02357A9429DDF2C6008CE17A /* LikeButton.swift in Sources */,
 				CE141F4529DBF86E00658CA8 /* SignUpVC.swift in Sources */,
+				0221DDA329F14EE000090378 /* User.swift in Sources */,
 				0223665729E1F3CA00D41ADE /* Image.swift in Sources */,
 				CE699B3129E9DB98008E9DE0 /* ChangePasswordVC.swift in Sources */,
 				020677D129DEAEDD007F1BE2 /* MovieLittleCell.swift in Sources */,
 				0262086929DF28E400BA1664 /* SearchViewController.swift in Sources */,
 				601C944329DDB766005F22DC /* ProfileSettingsVC.swift in Sources */,
 				020677D329DECB2C007F1BE2 /* CategoryCollectionViewCell.swift in Sources */,
+				0282B57129EF0C73003C9D2A /* CategoryImageViewController.swift in Sources */,
 				604DCF1929E0CE6D0015B350 /* FavoritesViewController.swift in Sources */,
 				020677D529DECE25007F1BE2 /* CategoryCollectionView.swift in Sources */,
-				02E964BB29DABF26001649E5 /* Moviemax.xcdatamodeld in Sources */,
+				607CA68629EEBD2200C44564 /* ViewModel.swift in Sources */,
 				E7D6A12B29E05FF60068C9EE /* SecondStartViewController.swift in Sources */,
 				5F3B5DBA29E3231500479268 /* UserPhotoAlert.swift in Sources */,
 				5C6FB5CC29DC990B00B7D459 /* SettingsViewController.swift in Sources */,
 				CE141F4D29E034EA00658CA8 /* MainVC.swift in Sources */,
 				95CC70F629DC639E00CAA5F9 /* MovieDetail.swift in Sources */,
 				604DCF2229E76A250015B350 /* NetworkModel.swift in Sources */,
-				0271B25729E40946002C955D /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +620,7 @@
 		};
 		02E964C529DABF2C001649E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5FDE4BDB7B8067BC7D82D663 /* Pods-Moviemax.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -548,6 +652,7 @@
 		};
 		02E964C629DABF2C001649E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83ADDAC718C5B5E72F818008 /* Pods-Moviemax.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -601,9 +706,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 9.0.0;
@@ -612,30 +717,32 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CE141F5529E1E8BA00658CA8 /* FirebaseAuth */ = {
+		024E017A29EEA5CA0023C1E7 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		024E017C29EEA5CA0023C1E7 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		CE141F5729E1E8BA00658CA8 /* FirebaseFirestore */ = {
+		024E017E29EEA5CA0023C1E7 /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE141F5429E1E8BA00658CA8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		024E018029EEA5CA0023C1E7 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-/* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		02E964B929DABF26001649E5 /* Moviemax.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				02E964BA29DABF26001649E5 /* Moviemax.xcdatamodel */,
-			);
-			currentVersion = 02E964BA29DABF26001649E5 /* Moviemax.xcdatamodel */;
-			path = Moviemax.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+		024E018229EEA5CA0023C1E7 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
-/* End XCVersionGroup section */
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 02E964A529DABF26001649E5 /* Project object */;
 }

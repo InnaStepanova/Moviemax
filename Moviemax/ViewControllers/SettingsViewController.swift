@@ -37,7 +37,7 @@ class SettingsViewController: UIViewController {
     }
     
     // MARK: - Properties
-    var currentUser = StorageManader.shared.getCurrentUser()
+    var currentUser = RealmStorageManager.shared.getCurrentUser()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -67,7 +67,6 @@ class SettingsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.isHidden = false
-        currentUser = StorageManader.shared.getCurrentUser()
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
@@ -135,7 +134,7 @@ extension SettingsViewController: UITableViewDataSource {
                 fatalError("Can't find cell with reuse identifier: UserInfoCell")
             }
             
-            cell.configureCell(currentUser: StorageManader.shared.getCurrentUser())
+            cell.configureCell(currentUser: currentUser)
             
             return cell
         case .personalInfo:

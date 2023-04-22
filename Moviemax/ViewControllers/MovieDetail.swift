@@ -10,8 +10,13 @@ import UIKit
 
 class MovieDetail: UIViewController {
     
+    var id: Int! {
+        didSet {
+            set()
+        }
+    }
     var buttonTapped = true
-    var heatButton = true
+//    var heatButton = true
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
@@ -66,20 +71,24 @@ class MovieDetail: UIViewController {
         return label
     }()
     
-    private lazy var likeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "heart"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
-        return button
-    }()
+        var likeButton = LikeButton()
+//    private lazy var likeButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setImage(UIImage(named: "heart"), for: .normal)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
+//        return button
+//    }()
     
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "DriftingHome")
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 26
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
-    } ()
+    }()
     
     private lazy var filmLabel: UILabel = {
         let label = UILabel.signBigLabel
@@ -143,10 +152,8 @@ class MovieDetail: UIViewController {
     private lazy var starImage: UIImageView = {
         let image = UIImageView.starImage
         image.translatesAutoresizingMaskIntoConstraints = false
-        
         return image
     }()
-    
     
     private lazy var starStackView: UIStackView = {
         let stackView = UIStackView()
@@ -184,7 +191,6 @@ class MovieDetail: UIViewController {
         button.addTarget(self, action: #selector(showText), for: .touchUpInside)
         return button
     }()
-    
     
     private lazy var castLabel: UILabel = {
         let label = UILabel.signTopLabel
@@ -233,20 +239,75 @@ class MovieDetail: UIViewController {
         super.viewDidLoad()
         view.addSubview(scrollView)
         view.backgroundColor = .white
+        
         collectionViewAuthor.delegate = self
         collectionViewAuthor.dataSource = self
         setContraints()
     }
     
-    //функция для добавления в избранное
-    @objc func likeButtonPressed () {
-        if heatButton {
-            likeButton.setImage(UIImage(named: "heart_fill"), for: .normal)
-        } else {
-            likeButton.setImage(UIImage(named: "heart"), for: .normal)
+//    init(movieID: Int) {
+//        super.init(nibName: nil, bundle: nil)
+//        let id = movieID
+//         нужно из CoreData достать информацию по id
+//    }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
+//    //функция для добавления в избранное
+//    @objc func likeButtonPressed () {
+//        if heatButton {
+//            likeButton.setImage(UIImage(named: "heart_fill"), for: .normal)
+//        } else {
+//            likeButton.setImage(UIImage(named: "heart"), for: .normal)
+//        }
+//            heatButton = !heatButton
+//    }
+    
+    private func addInRecentwatch(movie: MovieDetailData) {
+        guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
+                let recentMovie = MovieRealm()
+        recentMovie.id = movie.id ?? 0
+        recentMovie.name = movie.originalTitle ?? ""
+        recentMovie.imageUrl = movie.posterPath ?? ""
+        recentMovie.date = movie.releaseDate ?? ""
+        recentMovie.long = "\(movie.runtime ?? 0)"
+        recentMovie.category = movie.genres?[0].name ?? ""
+        if !currentUser.recentMovies.contains(recentMovie) {
+            RealmStorageManager.shared.recent(user: currentUser, movie: recentMovie)
         }
-            heatButton = !heatButton
     }
+    
+    private func set() {
+        NetworkManager.shared.getMovieDetail(id: id) { result in
+            switch result {
+            case .success(let movie):
+                guard let url = movie.posterPath else { return }
+                NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+                   DispatchQueue.main.async {
+                       self?.addInRecentwatch(movie: movie)
+                       self?.image.image = image
+                       self?.filmLabel.text = movie.originalTitle
+                       if let time = movie.runtime {
+                           self?.timeLabel.text = "\(time) min"
+                       }
+                       self?.dateLabel.text = movie.releaseDate
+                       self?.genreLabel.text = movie.genres?[0].name
+                       self?.textLabel.text = movie.overview
+                       if let id = movie.id {
+                           self?.likeButton.tag = id
+                           self?.likeButton.isLike(id: id)
+                       }
+                   }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    
 
     
     //фунция для перехода в другой VC
@@ -271,6 +332,7 @@ class MovieDetail: UIViewController {
 }
     extension MovieDetail {
         func setContraints () {
+            likeButton.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 likeButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 31),
                 likeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),

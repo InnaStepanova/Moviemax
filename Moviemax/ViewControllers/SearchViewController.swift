@@ -9,6 +9,8 @@ import UIKit
 
 final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
+    private var movieViewModels = [MovieViewModel]()
+    
     private lazy var searchLabel: UILabel = {
         let label = UILabel()
         label.text = "Search"
@@ -20,7 +22,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
     private lazy var categoryView = CategoryCollectionView()
     
-    private lazy var moviesCollection: UICollectionView = {
+    lazy var moviesCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.bounds.width, height: 160)
         layout.minimumLineSpacing = 24
@@ -41,9 +43,81 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
-        setupGradient()
         addViews()
         setConstraints()
+        fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        moviesCollection.reloadData()
+    }
+    
+    private func fetchData() {
+        NetworkManager.shared.getPopularMovies { [weak self] result in
+            switch result {
+            case .success(let movies):
+                var movieIDsArray = [Int]()
+                let ids = movies.map { $0.id }
+                movieIDsArray.append(contentsOf: ids)
+//                print(movieIDsArray)
+                
+                for id in movieIDsArray {
+                    self?.fetchMovieDetail(movieID: id)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchMovieDetail(movieID: Int) {
+        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
+            switch result {
+            case .success(let movieDetail):
+                self?.createMovieViewModels(movie: movieDetail)
+                DispatchQueue.main.async {
+                    self?.moviesCollection.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func createMovieViewModels(movie: MovieDetailData) {
+        guard let movieID = movie.id else { return }
+        
+        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
+            NetworkManager.shared.getMovieCast(id: movieID) { result in
+                switch result {
+                case .success(let crew):
+                    completion(crew)
+                case .failure(let error):
+                    print(error)
+                    completion([])
+                }
+            }
+        }
+        
+        var movieViewModel = MovieViewModel(
+            id: movieID,
+            posterURL: movie.posterPath ?? "",
+            title: movie.originalTitle ?? "",
+            runtime: "\(movie.runtime ?? 0) Minutes",
+            reliseDate: movie.releaseDate ?? "",
+            genre: movie.genres?.first?.name ?? "",
+            overview: movie.overview ?? "",
+            voteAverage: movie.voteAverage ?? 0.0,
+            crew: nil)
+        
+        
+        fetchCrew { [weak self] crew in
+            movieViewModel.crew = crew
+            DispatchQueue.main.async {
+                self?.movieViewModels.append(movieViewModel)
+            }
+        }
     }
     
     private func addViews() {
@@ -52,15 +126,7 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(categoryView)
         view.addSubview(moviesCollection)
     }
-    func setupGradient() {
-        let colorTop = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
-        let colorBot = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = [colorTop, colorBot]
-        gradientLayer.locations = [0.5, 1]
-        view.layer.addSublayer(gradientLayer)
-    }
+  
     private func setConstraints() {
         searchLabel.translatesAutoresizingMaskIntoConstraints = false
         searchView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,16 +156,20 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
 }
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        movieViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
+        let model = movieViewModels[indexPath.row]
+        cell.configure(with: model)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = movieViewModels[indexPath.row]
         let movieDetailVC = MovieDetail()
+        movieDetailVC.id = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
     

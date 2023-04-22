@@ -9,8 +9,6 @@ import UIKit
 
 final class StartViewController: UIViewController {
     
-    private let currentUser = StorageManader.shared.getCurrentUser()
-    
     private lazy var movieIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "movieIcon")
@@ -44,21 +42,6 @@ final class StartViewController: UIViewController {
         view.backgroundColor = UIColor(named: "PurpleBackGroundColor")
         addViews()
         setConstraints()
-        showSecondVC()
-    }
-
-    
-    private func showSecondVC() {
-        if currentUser != nil {
-            let tabBarController = TabBarController()
-            tabBarController.selectedIndex = 2
-            tabBarController.modalPresentationStyle = .fullScreen
-            present(tabBarController, animated: true)
-        } else {
-            let onbordingVC = SecondStartViewController()
-            onbordingVC.modalPresentationStyle = .fullScreen
-            present(onbordingVC, animated: true)
-        }
     }
 
     
@@ -93,4 +76,20 @@ final class StartViewController: UIViewController {
             loadingIcon.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -74),
         ])
     }
+    
+    //MARK: Xlori
+    
+    private func startLoadingAnimation() {
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotationAnimation.toValue = NSNumber(value: Double.pi * 2.0)
+        rotationAnimation.duration = 1.0
+        rotationAnimation.repeatCount = .infinity
+        loadingIcon.layer.add(rotationAnimation, forKey: "rotationAnimation")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startLoadingAnimation()
+    }
+    
 }

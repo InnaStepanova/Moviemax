@@ -8,11 +8,13 @@
 import UIKit
 
 
-class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    let boxDS = BoxCollectionDataSource()
+    let networkManager = NetworkManager.shared
+    var popularMovies: [Movie] = []
+    var popularTV: [Movie] = []
     
-    private lazy var currentUser = StorageManader.shared.getCurrentUser()
+    private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
     
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -22,7 +24,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
-        collectionView.dataSource = boxDS
+        collectionView.dataSource = self
         collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
@@ -44,7 +46,7 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, \(currentUser?.user?.firstName ?? "")"
+        label.text = "Hi, \(currentUser?.name) \(currentUser!.secondName)"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
         return label
@@ -76,14 +78,21 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let currentUser = RealmStorageManager.shared.getCurrentUser() {
+            self.currentUser = currentUser
+        }
         self.navigationController?.navigationBar.isHidden = true
         setupView()
+        getPopularFilm()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        currentUser = StorageManader.shared.getCurrentUser()
         setCurrentUser()
+        getPopularFilm()
+        boxCollectionView.reloadData()
+        
+        UserDefaults.standard.setValue(1, forKey: "FirstRun")
     }
     
     func setupView(){
@@ -101,9 +110,8 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     private func setCurrentUser() {
-        guard let user = currentUser else { return }
-        guard let currentUser = user.user else { return }
-        nameLabel.text = "Hi, \(currentUser.firstName ?? "")"
+        guard let currentUser = currentUser else { return }
+        nameLabel.text = "Hi, \(currentUser.name) \(currentUser.secondName)"
         if let photo = currentUser.photo {
             self.avatarImageView.image = UIImage(data: photo)
         } else {
@@ -129,11 +137,9 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
             
             nameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor , constant: 15),
-           // nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor , constant: 15),
-            
             
             filmCollectionView.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 40),
             filmCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -100),
@@ -161,48 +167,46 @@ class MainVC : UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return popularMovies.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLarge", for: indexPath) as! MovieLargeCell
-        return cell
-    }
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = popularMovies[indexPath.item]
         let movieDetailVC = MovieDetail()
+        movieDetailVC.id = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
-    }
-}
-
-
-class BoxCollectionDataSource: NSObject, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     
-        let movieDetailVC = MovieDetail()
-//        navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boxCollection", for: indexPath) as! MovieLittleCell
+        let movie = popularMovies[indexPath.item]
+        cell.set(id: movie.id)
         return cell
     }
+
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.transform = CGAffineTransform(translationX: 0, y: collectionView.bounds.height)
-        UIView.animate(withDuration: 0.5) {
-            cell.transform = CGAffineTransform.identity
+    func getPopularFilm() {
+        networkManager.getPopularMovies { result in
+            switch result {
+            case .success(let films):
+                self.popularMovies = films
+            case .failure(let error):
+                print(error)
+            }
         }
     }
-    
-    
-    
+
+    func getPopularTV() {
+        networkManager.getPopularTV { result in
+            switch result {
+            case .success(let films):
+                self.popularTV = films
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 

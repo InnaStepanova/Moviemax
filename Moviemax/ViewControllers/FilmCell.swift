@@ -47,6 +47,25 @@ final class FilmCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func set(movieId: Int) {
+        NetworkManager.shared.getTVDetail(id: movieId) { result in
+            switch result {
+            case .success(let movie):
+                print("ЭТО TV \(movie)")
+//                guard let url = movie.posterPath else {return}
+//                NetworkManager.shared.downloadImage(path: url) { image in
+//                    DispatchQueue.main.async {
+//                        self.movieImage.image = image
+//                        self.movieName.text = movie.originalTitle
+//                        self.categoryLabel.text = movie.genres?[0].name
+//                    }
+//                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     private func setupViews() {
         addSubview(movieImage)
         addSubview(movieName)
