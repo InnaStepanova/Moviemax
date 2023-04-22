@@ -81,6 +81,7 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = likeMovies[indexPath.item]
         let movieDetailVC = MovieDetail()
+        movieDetailVC.id = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

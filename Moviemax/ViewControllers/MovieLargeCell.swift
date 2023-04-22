@@ -83,6 +83,11 @@ final class MovieLargeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        likeButton.isFavorite = false
+        likeButton.configure()
+    }
+    
     public func configure(with model: MovieViewModel) {
         let url = model.posterURL
         NetworkManager.shared.downloadImage(path: url) { [weak self] image in
@@ -109,8 +114,8 @@ final class MovieLargeCell: UICollectionViewCell {
         self.dateLabel.text = movie.date
         self.timeLabel.text = movie.long
         self.watchNowButton.setTitle(movie.category, for: .normal)
-        self.likeButton.tag = Int(movie.id)
-        self.likeButton.isLike(id: Int(movie.id))
+        self.likeButton.tag = movie.id
+        self.likeButton.isLike(id: movie.id)
     }
     
     private func addViews() {

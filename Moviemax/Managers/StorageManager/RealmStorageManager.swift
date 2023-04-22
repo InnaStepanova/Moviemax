@@ -19,13 +19,19 @@ class RealmStorageManager {
         }
     }
     
-    func deleteLike(user: UserRealm, movie: MovieRealm) {
-        try! realm.write {
-            if let index = user.likeMovies.firstIndex(of: movie) {
-                user.likeMovies.remove(at: index)
+    
+    func removeMovieFromLiked(id: Int, user: UserRealm) {
+        if let movie = user.likeMovies.filter("id == \(id)").first {
+            print(movie.name)
+            if let index = user.likeMovies.index(of: movie) {
+                try! realm.write {
+                    user.likeMovies.remove(at: index)
+                }
             }
         }
     }
+
+
     
     func recent(user: UserRealm, movie: MovieRealm) {
         try! realm.write {

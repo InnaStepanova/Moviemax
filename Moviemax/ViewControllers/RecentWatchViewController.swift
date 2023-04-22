@@ -39,11 +39,8 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
-        let recentVath = StorageManader.shared.getCurrentUser()?.recentMovies
-        print("It is \(recentVath)")
         addViews()
         setConstraints()
-        fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,73 +48,55 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
         moviesCollection.reloadData()
     }
     
-    private func fetchData() {
-        NetworkManager.shared.getPopularMovies { [weak self] result in
-            switch result {
-            case .success(let movies):
-                var movieIDsArray = [Int]()
-                let ids = movies.map { $0.id }
-                movieIDsArray.append(contentsOf: ids)
-//                print(movieIDsArray)
-                
-                for id in movieIDsArray {
-                    self?.fetchMovieDetail(movieID: id)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    private func fetchMovieDetail(movieID: Int) {
+//        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
+//            switch result {
+//            case .success(let movieDetail):
+//                self?.createMovieViewModels(movie: movieDetail)
+//                DispatchQueue.main.async {
+//                    self?.moviesCollection.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
-    private func fetchMovieDetail(movieID: Int) {
-        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
-            switch result {
-            case .success(let movieDetail):
-                self?.createMovieViewModels(movie: movieDetail)
-                DispatchQueue.main.async {
-                    self?.moviesCollection.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func createMovieViewModels(movie: MovieDetailData) {
-        guard let movieID = movie.id else { return }
-        
-        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
-            NetworkManager.shared.getMovieCast(id: movieID) { result in
-                switch result {
-                case .success(let crew):
-                    completion(crew)
-                case .failure(let error):
-                    print(error)
-                    completion([])
-                }
-            }
-        }
-        
-        var movieViewModel = MovieViewModel(
-            id: movieID,
-            posterURL: movie.posterPath ?? "",
-            title: movie.originalTitle ?? "",
-            runtime: "\(movie.runtime ?? 0) Minutes",
-            reliseDate: movie.releaseDate ?? "",
-            genre: movie.genres?.first?.name ?? "",
-            overview: movie.overview ?? "",
-            voteAverage: movie.voteAverage ?? 0.0,
-            crew: nil)
-        
-        
-        fetchCrew { [weak self] crew in
-            movieViewModel.crew = crew
-            DispatchQueue.main.async {
-//                self?.movieViewModels.append(movieViewModel)
-//                print(self?.movieViewModels)
-            }
-        }
-    }
+//    private func createMovieViewModels(movie: MovieDetailData) {
+//        guard let movieID = movie.id else { return }
+//
+//        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
+//            NetworkManager.shared.getMovieCast(id: movieID) { result in
+//                switch result {
+//                case .success(let crew):
+//                    completion(crew)
+//                case .failure(let error):
+//                    print(error)
+//                    completion([])
+//                }
+//            }
+//        }
+//
+//        var movieViewModel = MovieViewModel(
+//            id: movieID,
+//            posterURL: movie.posterPath ?? "",
+//            title: movie.originalTitle ?? "",
+//            runtime: "\(movie.runtime ?? 0) Minutes",
+//            reliseDate: movie.releaseDate ?? "",
+//            genre: movie.genres?.first?.name ?? "",
+//            overview: movie.overview ?? "",
+//            voteAverage: movie.voteAverage ?? 0.0,
+//            crew: nil)
+//
+//
+//        fetchCrew { [weak self] crew in
+//            movieViewModel.crew = crew
+//            DispatchQueue.main.async {
+////                self?.movieViewModels.append(movieViewModel)
+////                print(self?.movieViewModels)
+//            }
+//        }
+//    }
     
     private func addViews() {
         view.addSubview(recentWatchLabel)

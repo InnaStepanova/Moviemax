@@ -11,7 +11,8 @@ import UIKit
 class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     let networkManager = NetworkManager.shared
-    var filmList: [Movie] = []
+    var popularMovies: [Movie] = []
+    var popularTV: [Movie] = []
     
     private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
     
@@ -80,15 +81,16 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         if let currentUser = RealmStorageManager.shared.getCurrentUser() {
             self.currentUser = currentUser
         }
-        print("MAINVC currentUser - \(currentUser)")
         self.navigationController?.navigationBar.isHidden = true
         setupView()
+        getPopularFilm()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setCurrentUser()
         getPopularFilm()
+        boxCollectionView.reloadData()
         
         UserDefaults.standard.setValue(1, forKey: "FirstRun")
     }
@@ -166,17 +168,21 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filmList.count
+        return popularMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      //  let movieDetailVC = MovieDetail()
-      //  navigationController?.pushViewController(movieDetailVC, animated: true)
+        let movie = popularMovies[indexPath.item]
+        let movieDetailVC = MovieDetail()
+        movieDetailVC.id = movie.id
+        navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "boxCollection", for: indexPath) as! MovieLittleCell
+        let movie = popularMovies[indexPath.item]
+        cell.set(id: movie.id)
         return cell
     }
 
@@ -184,29 +190,23 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     func getPopularFilm() {
         networkManager.getPopularMovies { result in
             switch result {
-            case .success(let film):
-                self.filmList = film
+            case .success(let films):
+                self.popularMovies = films
             case .failure(let error):
                 print(error)
             }
         }
     }
 
-    
-    func getMovie() {
-        for i in filmList{
-            let x = i.id
-            networkManager.getMovieDetail(id: x) { result in
-                switch result {
-                case .success(let filmDetail):
-                    print(filmDetail)
-                case .failure(let error):
-                    print(error)
-                }
+    func getPopularTV() {
+        networkManager.getPopularTV { result in
+            switch result {
+            case .success(let films):
+                self.popularTV = films
+            case .failure(let error):
+                print(error)
             }
         }
-        }
-
-    
+    }
 }
 

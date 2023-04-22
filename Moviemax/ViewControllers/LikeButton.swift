@@ -60,8 +60,9 @@ final class LikeButton: UIButton {
                         movie.date = movieDetail.releaseDate ?? ""
                         movie.long = String(movieDetail.runtime ?? 0)
                         movie.category = movieDetail.genres?.first?.name ?? ""
-                        RealmStorageManager.shared.like(user: currentUser, movie: movie)
-    
+                        if !movies.contains(movie) {
+                            RealmStorageManager.shared.like(user: currentUser, movie: movie)
+                        }
                     }
                 case .failure(let error):
                     print(error)
@@ -72,12 +73,7 @@ final class LikeButton: UIButton {
             tintColor = .gray
             
             guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
-            let movies = currentUser.likeMovies
-            for movie in movies {
-                if movie.id == sender.tag {
-                    RealmStorageManager.shared.deleteLike(user: currentUser, movie: movie)
-                }
-            }
+            RealmStorageManager.shared.removeMovieFromLiked(id: sender.tag, user: currentUser)
         }
     }
     
