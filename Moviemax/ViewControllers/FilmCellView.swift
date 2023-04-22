@@ -9,16 +9,9 @@ import UIKit
 
 class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var navigationController: UINavigationController?
-    
     var popularTV: [Movie] = []
+    var delegate: FilmCellViewDelegate!
 
-
-    func presentVC() {
-        let movieDetailVC = MovieDetail()
-        navigationController?.pushViewController(movieDetailVC, animated: true)
-    }
-    
     private lazy var collectionView: WheelCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 200, height: 400)
@@ -60,17 +53,21 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilmCell", for: indexPath) as! FilmCell
         let movie = popularTV[indexPath.item]
-        print("Это ТВ \(movie)")
         cell.set(movieId: movie.id)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = popularTV[indexPath.item]
-        let movieDetailVC = MovieDetail()
-        movieDetailVC.id = movie.id
-        movieDetailVC.likeButton.tag = movie.id
-        navigationController?.pushViewController(movieDetailVC, animated: true)
+        print("CELL TAPPED")
+        let movieDetail = MovieDetail()
+
+        let movieId = popularTV[indexPath.item].id
+        
+        if let window = UIApplication.shared.windows.first(where: {$0.isKeyWindow}) {
+            if let navigationController = window.rootViewController as? UINavigationController {
+                navigationController.pushViewController(movieDetail, animated: true)
+            }
+        }
     }
     
     func getPopularTV() {

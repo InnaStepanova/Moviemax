@@ -12,7 +12,9 @@ final class SearchView: UIView {
     let categoryCollection = CategoryCollectionView()
     let categoryImage = CategoryImageViewController()
     
-    private lazy var searchBar: UISearchBar = {
+    weak var delegate: SearchViewDelegate?
+    
+    var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundImage = UIImage()
         searchBar.setImage(UIImage(named: "Search"), for: .search, state: .normal)
@@ -25,6 +27,7 @@ final class SearchView: UIView {
     @objc private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "close"), for: .normal)
+        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -41,6 +44,19 @@ final class SearchView: UIView {
         return alertContr
     }()
 
+    @objc func closeButtonTapped() {
+        searchBar.searchTextField.text = ""
+        NetworkManager.shared.getPopularMovies { [weak self] result in
+            switch result {
+            case .success(let movies):
+                print(movies)
+                self?.delegate?.getSearchMovies(movies: movies)
+                return
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     
     @objc func buttonTapped() {
         
@@ -140,9 +156,9 @@ final class SearchView: UIView {
         let indexPath = IndexPath(arrayLiteral: 0)
         categoryCollection.reloadItems(at: [indexPath])
         categoryImage.reloadItems(at: [indexPath])
-
-
     }
+    
+    
     
     
     override init(frame: CGRect) {
@@ -150,6 +166,7 @@ final class SearchView: UIView {
         layer.cornerRadius = 24
         layer.borderWidth = 1
         layer.borderColor = UIColor(named: "BlueButtonColor")?.cgColor
+        searchBar.delegate = self
         addViews()
         setConstraints()
 
@@ -187,3 +204,32 @@ final class SearchView: UIView {
     }
 }
 
+extension SearchView: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText.count)
+        if searchText.count == 0 {
+            print("COUNT = \(searchText.count)")
+            NetworkManager.shared.getPopularMovies { [weak self] result in
+                switch result {
+                case .success(let movies):
+                    print(movies)
+                    self?.delegate?.getSearchMovies(movies: movies)
+                    return
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            return
+        }
+        NetworkManager.shared.getSearchResults(query: searchText) { [weak self] result in
+                switch result {
+                case .success(let films):
+                print("Это \(films)")
+                self?.delegate?.getSearchMovies(movies: films)
+                case .failure(let error):
+                    print(error)
+            }
+        }
+    }
+}

@@ -7,11 +7,20 @@
 
 import UIKit
 
+protocol CategoryCollectionViewDelegate: AnyObject {
+    func sortOfCategory(categories: String)
+    
+    
+}
+
 class CategoryCollectionView: UICollectionView {
+    
+    weak var myDelegate: CategoryCollectionViewDelegate?
+
     
     static var films: String?
     
-    var categories  = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
+    var categories  = ["All", "Action", "Animation", "Adventure", "Comedy", "Drama", "Mystery", "Fantasy", "Others"]
     
     let collectionLayout = UICollectionViewFlowLayout()
     
@@ -48,6 +57,10 @@ extension CategoryCollectionView: UICollectionViewDataSource {
         }
         
         let category = categories[indexPath.item]
+        if category == "All" {
+            print("YES")
+            cell.isSelected = true
+        }
         cell.set(buttonTitle: category)
         let indexPath = IndexPath(arrayLiteral: 0)
         collectionView.reloadItems(at: [indexPath])
@@ -55,7 +68,8 @@ extension CategoryCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        CategoryCollectionView.films = categories[indexPath.row]
+        let category = categories[indexPath.item]
+        myDelegate?.sortOfCategory(categories: category)
     }
 }
 

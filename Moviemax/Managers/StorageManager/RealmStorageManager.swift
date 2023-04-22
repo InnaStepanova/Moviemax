@@ -22,7 +22,6 @@ class RealmStorageManager {
     
     func removeMovieFromLiked(id: Int, user: UserRealm) {
         if let movie = user.likeMovies.filter("id == \(id)").first {
-            print(movie.name)
             if let index = user.likeMovies.index(of: movie) {
                 try! realm.write {
                     user.likeMovies.remove(at: index)
@@ -30,6 +29,32 @@ class RealmStorageManager {
             }
         }
     }
+    
+    
+    func moveRecentMovieToTop(user: UserRealm, movieId: Int) {
+        guard let movieIndex = user.recentMovies.firstIndex(where: { $0.id == movieId }) else { return }
+        let movie = user.recentMovies[movieIndex]
+        user.recentMovies.remove(at: movieIndex)
+        user.recentMovies.insert(movie, at: 0)
+    }
+
+    func hasRecentMovie(withId movieId: Int, in user: UserRealm) -> Bool {
+        for movie in user.recentMovies {
+            if movie.id == movieId {
+                return true
+            }
+        }
+        return false
+    }
+
+    func categoryMovieFilter(category: String, movies: [MovieRealm]) -> [MovieRealm] {
+        let filteredMovies = movies.filter { $0.category == category }
+        return filteredMovies
+    }
+
+
+    
+    
 
 
     

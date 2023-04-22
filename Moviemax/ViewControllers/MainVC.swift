@@ -7,12 +7,15 @@
 
 import UIKit
 
-
+protocol FilmCellViewDelegate {
+    func precentMovieDetail(id: Int)
+    
+}
 class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     let networkManager = NetworkManager.shared
     var popularMovies: [Movie] = []
-    var popularTV: [Movie] = []
+    var startMovies: [Movie] = []
     
     private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
     
@@ -81,7 +84,10 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         if let currentUser = RealmStorageManager.shared.getCurrentUser() {
             self.currentUser = currentUser
         }
+        categoryCollectionView.myDelegate = self
         self.navigationController?.navigationBar.isHidden = true
+        let filmCellView = FilmCellView()
+        filmCellView.delegate = self
         setupView()
         getPopularFilm()
     }
@@ -192,17 +198,7 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             switch result {
             case .success(let films):
                 self.popularMovies = films
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-
-    func getPopularTV() {
-        networkManager.getPopularTV { result in
-            switch result {
-            case .success(let films):
-                self.popularTV = films
+                self.startMovies = films
             case .failure(let error):
                 print(error)
             }
@@ -210,3 +206,45 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     }
 }
 
+extension MainVC: FilmCellViewDelegate {
+    func precentMovieDetail(id: Int) {
+        print(id)
+//        let movieDetailVC = MovieDetail()
+//        movieDetailVC.id = id
+//        navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
+}
+
+extension MainVC: CategoryCollectionViewDelegate {
+    func sortOfCategory(categories: String) {
+        if categories == "All" {
+            self.popularMovies = self.startMovies
+            DispatchQueue.main.async {
+                self.boxCollectionView.reloadData()
+            }
+            return
+        }
+        var sortMovie: [Movie] = []
+        for movie in startMovies {
+            let id = movie.id
+            NetworkManager.shared.getMovieDetail(id: id) { result in
+                    switch result {
+                    case .success(let film):
+                        if let genres = film.genres {
+                            if  genres.count > 0 {
+                                if genres[0].name == categories {
+                                    sortMovie.append(movie)
+                                }
+                            }
+                        }
+                        self.popularMovies = sortMovie
+                        DispatchQueue.main.async {
+                            self.boxCollectionView.reloadData()
+                        }
+                    case .failure(let error):
+                        print(error)
+                }
+            }
+        }
+    }
+}

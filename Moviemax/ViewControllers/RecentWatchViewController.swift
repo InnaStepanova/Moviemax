@@ -9,7 +9,7 @@ import UIKit
 
 final class RecentWatchViewController: UIViewController, UICollectionViewDelegate {
     
-    private var movies = RealmStorageManager.shared.getCurrentUser()!.recentMovies
+    private var movies = Array(RealmStorageManager.shared.getCurrentUser()!.recentMovies)
     
     
     private lazy var recentWatchLabel: UILabel = {
@@ -37,6 +37,7 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        categoryView.myDelegate = self
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
@@ -45,58 +46,9 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        movies = Array(RealmStorageManager.shared.getCurrentUser()!.recentMovies)
         moviesCollection.reloadData()
     }
-    
-//    private func fetchMovieDetail(movieID: Int) {
-//        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
-//            switch result {
-//            case .success(let movieDetail):
-//                self?.createMovieViewModels(movie: movieDetail)
-//                DispatchQueue.main.async {
-//                    self?.moviesCollection.reloadData()
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
-    
-//    private func createMovieViewModels(movie: MovieDetailData) {
-//        guard let movieID = movie.id else { return }
-//
-//        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
-//            NetworkManager.shared.getMovieCast(id: movieID) { result in
-//                switch result {
-//                case .success(let crew):
-//                    completion(crew)
-//                case .failure(let error):
-//                    print(error)
-//                    completion([])
-//                }
-//            }
-//        }
-//
-//        var movieViewModel = MovieViewModel(
-//            id: movieID,
-//            posterURL: movie.posterPath ?? "",
-//            title: movie.originalTitle ?? "",
-//            runtime: "\(movie.runtime ?? 0) Minutes",
-//            reliseDate: movie.releaseDate ?? "",
-//            genre: movie.genres?.first?.name ?? "",
-//            overview: movie.overview ?? "",
-//            voteAverage: movie.voteAverage ?? 0.0,
-//            crew: nil)
-//
-//
-//        fetchCrew { [weak self] crew in
-//            movieViewModel.crew = crew
-//            DispatchQueue.main.async {
-////                self?.movieViewModels.append(movieViewModel)
-////                print(self?.movieViewModels)
-//            }
-//        }
-//    }
     
     private func addViews() {
         view.addSubview(recentWatchLabel)
@@ -143,6 +95,26 @@ extension RecentWatchViewController: UICollectionViewDataSource {
         let movieDetailVC = MovieDetail()
         movieDetailVC.id = model.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
+}
+
+extension RecentWatchViewController: CategoryCollectionViewDelegate {
+    func sortOfCategory(categories: String) {
+        
+        if categories == "All" {
+            self.movies = Array(RealmStorageManager.shared.getCurrentUser()!.recentMovies)
+            DispatchQueue.main.async {
+                self.moviesCollection.reloadData()
+            }
+            return
+        }
+    
+        let filtredMovies = RealmStorageManager.shared.categoryMovieFilter(category: categories, movies: Array(RealmStorageManager.shared.getCurrentUser()!.recentMovies))
+        self.movies = filtredMovies
+        DispatchQueue.main.async {
+            self.moviesCollection.reloadData()
+        }
+        
     }
 }
 

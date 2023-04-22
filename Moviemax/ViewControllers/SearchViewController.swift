@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol SearchViewDelegate: AnyObject {
+    func getSearchMovies(movies: [Movie])
+}
+
+
 final class SearchViewController: UIViewController, UICollectionViewDelegate {
     
-    private var movieViewModels = [MovieViewModel]()
+    private var movies: [Movie] = [Movie]()
+    private var startMovies: [Movie] = [Movie]()
     
     private lazy var searchLabel: UILabel = {
         let label = UILabel()
@@ -43,6 +49,8 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
+        categoryView.myDelegate = self
+        searchView.delegate = self
         addViews()
         setConstraints()
         fetchData()
@@ -54,68 +62,14 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
     }
     
     private func fetchData() {
+        
         NetworkManager.shared.getPopularMovies { [weak self] result in
             switch result {
             case .success(let movies):
-                var movieIDsArray = [Int]()
-                let ids = movies.map { $0.id }
-                movieIDsArray.append(contentsOf: ids)
-//                print(movieIDsArray)
-                
-                for id in movieIDsArray {
-                    self?.fetchMovieDetail(movieID: id)
-                }
+                self?.movies = movies
+                self?.startMovies = movies
             case .failure(let error):
                 print(error)
-            }
-        }
-    }
-    
-    private func fetchMovieDetail(movieID: Int) {
-        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
-            switch result {
-            case .success(let movieDetail):
-                self?.createMovieViewModels(movie: movieDetail)
-                DispatchQueue.main.async {
-                    self?.moviesCollection.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func createMovieViewModels(movie: MovieDetailData) {
-        guard let movieID = movie.id else { return }
-        
-        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
-            NetworkManager.shared.getMovieCast(id: movieID) { result in
-                switch result {
-                case .success(let crew):
-                    completion(crew)
-                case .failure(let error):
-                    print(error)
-                    completion([])
-                }
-            }
-        }
-        
-        var movieViewModel = MovieViewModel(
-            id: movieID,
-            posterURL: movie.posterPath ?? "",
-            title: movie.originalTitle ?? "",
-            runtime: "\(movie.runtime ?? 0) Minutes",
-            reliseDate: movie.releaseDate ?? "",
-            genre: movie.genres?.first?.name ?? "",
-            overview: movie.overview ?? "",
-            voteAverage: movie.voteAverage ?? 0.0,
-            crew: nil)
-        
-        
-        fetchCrew { [weak self] crew in
-            movieViewModel.crew = crew
-            DispatchQueue.main.async {
-                self?.movieViewModels.append(movieViewModel)
             }
         }
     }
@@ -156,21 +110,64 @@ final class SearchViewController: UIViewController, UICollectionViewDelegate {
 }
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movieViewModels.count
+        movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
-        let model = movieViewModels[indexPath.row]
-        cell.configure(with: model)
+        let model = movies[indexPath.row]
+        cell.set(id: model.id)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = movieViewModels[indexPath.row]
+        let movie = movies[indexPath.row]
         let movieDetailVC = MovieDetail()
         movieDetailVC.id = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
-    
+}
+
+extension SearchViewController: SearchViewDelegate {
+    func getSearchMovies(movies: [Movie]) {
+        self.movies = movies
+        self.startMovies = movies
+        DispatchQueue.main.async {
+            self.moviesCollection.reloadData()
+        }
+    }
+}
+
+extension SearchViewController: CategoryCollectionViewDelegate {
+    func sortOfCategory(categories: String) {
+        if categories == "All" {
+            self.movies = self.startMovies
+            DispatchQueue.main.async {
+                self.moviesCollection.reloadData()
+            }
+            return
+        }
+        var sortMovie: [Movie] = []
+        for movie in startMovies {
+            let id = movie.id
+            NetworkManager.shared.getMovieDetail(id: id) { result in
+                    switch result {
+                    case .success(let film):
+                        if let genres = film.genres {
+                            if  genres.count > 0 {
+                                if genres[0].name == categories {
+                                    sortMovie.append(movie)
+                                }
+                            }
+                        }
+                        self.movies = sortMovie
+                        DispatchQueue.main.async {
+                            self.moviesCollection.reloadData()
+                        }
+                    case .failure(let error):
+                        print(error)
+                }
+            }
+        }
+    }
 }

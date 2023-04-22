@@ -20,7 +20,7 @@ final class FilmCell: UICollectionViewCell {
     
     private lazy var movieName: UILabel = {
         let label = UILabel()
-        label.text = "Drifting Home"
+        label.text = ""
         label.font = Resources.Fonts.plusJakartaSansBold(with: 18)
         label.textColor = .white
         return label
@@ -51,15 +51,21 @@ final class FilmCell: UICollectionViewCell {
         NetworkManager.shared.getTVDetail(id: movieId) { result in
             switch result {
             case .success(let movie):
-                print("ЭТО TV \(movie)")
-//                guard let url = movie.posterPath else {return}
-//                NetworkManager.shared.downloadImage(path: url) { image in
-//                    DispatchQueue.main.async {
-//                        self.movieImage.image = image
-//                        self.movieName.text = movie.originalTitle
-//                        self.categoryLabel.text = movie.genres?[0].name
-//                    }
-//                }
+                guard let url = movie.posterPath else {return}
+                NetworkManager.shared.downloadImage(path: url) { image in
+                    DispatchQueue.main.async {
+                        self.movieImage.image = image
+                        if let movieTitle = movie.originalTitle {
+                            self.movieName.text = movieTitle
+                        }
+
+                        if let categoryTitles = movie.genres {
+                            if  categoryTitles.count > 0 {
+                                self.categoryLabel.text = categoryTitles[0].name
+                            }
+                        }
+                    }
+                }
             case .failure(let error):
                 print(error)
             }

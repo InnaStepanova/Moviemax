@@ -267,15 +267,20 @@ class MovieDetail: UIViewController {
     
     private func addInRecentwatch(movie: MovieDetailData) {
         guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
+        guard let id = movie.id else {return}
+        if !RealmStorageManager.shared.hasRecentMovie(withId: id, in: currentUser) {
                 let recentMovie = MovieRealm()
         recentMovie.id = movie.id ?? 0
         recentMovie.name = movie.originalTitle ?? ""
         recentMovie.imageUrl = movie.posterPath ?? ""
         recentMovie.date = movie.releaseDate ?? ""
         recentMovie.long = "\(movie.runtime ?? 0)"
-        recentMovie.category = movie.genres?[0].name ?? ""
-        if !currentUser.recentMovies.contains(recentMovie) {
-            RealmStorageManager.shared.recent(user: currentUser, movie: recentMovie)
+            if let genres = movie.genres {
+                if genres.count > 0 {
+                    recentMovie.category = genres[0].name ?? ""
+                }
+            }
+        RealmStorageManager.shared.recent(user: currentUser, movie: recentMovie)
         }
     }
     
