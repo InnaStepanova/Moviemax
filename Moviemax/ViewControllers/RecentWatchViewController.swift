@@ -9,7 +9,8 @@ import UIKit
 
 final class RecentWatchViewController: UIViewController, UICollectionViewDelegate {
     
-    private var movieViewModels = [MovieViewModel]()
+    private var movies = RealmStorageManager.shared.getCurrentUser()!.recentMovies
+    
     
     private lazy var recentWatchLabel: UILabel = {
         let label = UILabel()
@@ -40,76 +41,62 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         addViews()
         setConstraints()
-        fetchData()
     }
     
-    private func fetchData() {
-        NetworkManager.shared.getPopularMovies { [weak self] result in
-            switch result {
-            case .success(let movies):
-                var movieIDsArray = [Int]()
-                let ids = movies.map { $0.id }
-                movieIDsArray.append(contentsOf: ids)
-                print(movieIDsArray)
-                
-                for id in movieIDsArray {
-                    self?.fetchMovieDetail(movieID: id)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        moviesCollection.reloadData()
     }
     
-    private func fetchMovieDetail(movieID: Int) {
-        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
-            switch result {
-            case .success(let movieDetail):
-                self?.createMovieViewModels(movie: movieDetail)
-                DispatchQueue.main.async {
-                    self?.moviesCollection.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    private func fetchMovieDetail(movieID: Int) {
+//        NetworkManager.shared.getMovieDetail(id: movieID) { [weak self] result in
+//            switch result {
+//            case .success(let movieDetail):
+//                self?.createMovieViewModels(movie: movieDetail)
+//                DispatchQueue.main.async {
+//                    self?.moviesCollection.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
-    private func createMovieViewModels(movie: MovieDetailData) {
-        guard let movieID = movie.id else { return }
-        
-        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
-            NetworkManager.shared.getMovieCast(id: movieID) { result in
-                switch result {
-                case .success(let crew):
-                    completion(crew)
-                case .failure(let error):
-                    print(error)
-                    completion([])
-                }
-            }
-        }
-        
-        var movieViewModel = MovieViewModel(
-            id: movieID,
-            posterURL: movie.posterPath ?? "",
-            title: movie.originalTitle ?? "",
-            runtime: "\(movie.runtime ?? 0) Minutes",
-            reliseDate: movie.releaseDate ?? "",
-            genre: movie.genres?.first?.name ?? "",
-            overview: movie.overview ?? "",
-            voteAverage: movie.voteAverage ?? 0.0,
-            crew: nil)
-        
-        
-        fetchCrew { [weak self] crew in
-            movieViewModel.crew = crew
-            DispatchQueue.main.async {
-                self?.movieViewModels.append(movieViewModel)
-                print(self?.movieViewModels)
-            }
-        }
-    }
+//    private func createMovieViewModels(movie: MovieDetailData) {
+//        guard let movieID = movie.id else { return }
+//
+//        func fetchCrew(completion: @escaping ([Crew]) -> Void) {
+//            NetworkManager.shared.getMovieCast(id: movieID) { result in
+//                switch result {
+//                case .success(let crew):
+//                    completion(crew)
+//                case .failure(let error):
+//                    print(error)
+//                    completion([])
+//                }
+//            }
+//        }
+//
+//        var movieViewModel = MovieViewModel(
+//            id: movieID,
+//            posterURL: movie.posterPath ?? "",
+//            title: movie.originalTitle ?? "",
+//            runtime: "\(movie.runtime ?? 0) Minutes",
+//            reliseDate: movie.releaseDate ?? "",
+//            genre: movie.genres?.first?.name ?? "",
+//            overview: movie.overview ?? "",
+//            voteAverage: movie.voteAverage ?? 0.0,
+//            crew: nil)
+//
+//
+//        fetchCrew { [weak self] crew in
+//            movieViewModel.crew = crew
+//            DispatchQueue.main.async {
+////                self?.movieViewModels.append(movieViewModel)
+////                print(self?.movieViewModels)
+//            }
+//        }
+//    }
     
     private func addViews() {
         view.addSubview(recentWatchLabel)
@@ -141,18 +128,20 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
 
 extension RecentWatchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movieViewModels.count
+        movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
-        let model = movieViewModels[indexPath.row]
-        cell.configure(with: model)
+        let model = movies[indexPath.row]
+        cell.set(movie: model)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = movies[indexPath.row]
         let movieDetailVC = MovieDetail()
+        movieDetailVC.id = model.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

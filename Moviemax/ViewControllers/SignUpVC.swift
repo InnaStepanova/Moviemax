@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseAuth
 
+
 final class SignUpVC: UIViewController {
 
     //MARK: - Create UI
@@ -267,15 +268,7 @@ final class SignUpVC: UIViewController {
                         guard let lastName = self.lastNameTextField.text else { return }
                         guard let email = self.emailTextField.text else { return }
                         guard let password = self.passwordTextField.text else { return }
-                        
-                        StorageManader.shared.saveUser { user in
-                            user.firstName = firstName
-                            user.lastName = lastName
-                            user.email = email
-                            user.password = password
-                            user.currentUser = true
-                        }
-                        
+                   
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
                         tabBarController.modalPresentationStyle = .fullScreen
@@ -284,18 +277,6 @@ final class SignUpVC: UIViewController {
                 }
             }
         }
-//        guard let firstName = firstNameTextField.text else { return }
-//        guard let lastName = lastNameTextField.text else { return }
-//        guard let email = emailTextField.text else { return }
-//        guard let password = passwordTextField.text else { return }
-//        
-//        StorageManader.shared.saveUser { user in
-//            user.firstName = firstName
-//            user.lastName = lastName
-//            user.email = email
-//            user.password = password
-//            StorageManader.shared.saveCurrentUser(user: user)
-//        }
     }
     
     

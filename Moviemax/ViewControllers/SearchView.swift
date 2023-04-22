@@ -134,8 +134,8 @@ final class SearchView: UIView {
     }
     
     @objc func applyFilter () {
-        print(CategoryImageViewController.stars ?? 0)
-        print(CategoryCollectionView.films ?? 0)
+//        print(CategoryImageViewController.stars ?? 0)
+//        print(CategoryCollectionView.films ?? 0)
         self.alert.dismiss(animated: true)
         let indexPath = IndexPath(arrayLiteral: 0)
         categoryCollection.reloadItems(at: [indexPath])

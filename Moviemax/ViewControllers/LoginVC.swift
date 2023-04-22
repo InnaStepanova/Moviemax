@@ -201,7 +201,9 @@ class LoginVC : UIViewController {
                 if let e = error {
                     print(e)
                 }else {
-                    if let _ = StorageManader.shared.getCurrentUser() {
+                    
+                    if let user = RealmStorageManager.shared.findUser(email1: email, password1: password) {
+                        
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
                         tabBarController.modalPresentationStyle = .fullScreen

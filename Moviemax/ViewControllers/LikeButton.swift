@@ -9,8 +9,11 @@ import UIKit
 
 final class LikeButton: UIButton {
     
-    var isFavorite: Bool = false
+    private var likeMoviesId = RealmStorageManager.shared.getCurrentUser()!.likeMovies.map { $0.id }
+
     
+    var isFavorite: Bool = false
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -21,8 +24,13 @@ final class LikeButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
-        setImage(UIImage(named: "heart"), for: .normal)
+    func configure() {
+        if isFavorite {
+            setImage(UIImage(named: "heart_fill"), for: .normal)
+        } else {
+            setImage(UIImage(named: "heart"), for: .normal)
+            tintColor = .gray
+        }
         addTarget(self, action: #selector(buttonTapped(_ :)), for: .touchUpInside)
     }
     
@@ -37,12 +45,43 @@ final class LikeButton: UIButton {
         isFavorite.toggle()
         if isFavorite {
             setImage(UIImage(named: "heart_fill"), for: .normal)
-//            DataManager.shared.save(recipe: recipe)
+            
+            guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
+            let movies = currentUser.likeMovies
+            NetworkManager.shared.getMovieDetail(id: sender.tag) { result in
+                switch result {
+                case .success(let movieDetail):
+                    DispatchQueue.main.async {
+                        print("LIKEBUTTONPRESSED - \(movieDetail), tag - \(sender.tag)")
+                        let movie = MovieRealm()
+                        movie.id = sender.tag
+                        movie.name = movieDetail.originalTitle ?? ""
+                        movie.imageUrl = movieDetail.posterPath ?? ""
+                        movie.date = movieDetail.releaseDate ?? ""
+                        movie.long = String(movieDetail.runtime ?? 0)
+                        movie.category = movieDetail.genres?.first?.name ?? ""
+                        if !movies.contains(movie) {
+                            RealmStorageManager.shared.like(user: currentUser, movie: movie)
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
         } else {
             setImage(UIImage(named: "heart"), for: .normal)
             tintColor = .gray
-//            DataManager.shared.delete(recipe: recipe)
+            
+            guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
+            RealmStorageManager.shared.removeMovieFromLiked(id: sender.tag, user: currentUser)
         }
     }
     
+    func isLike(id: Int) {
+        if likeMoviesId.contains(id) {
+            isFavorite = true
+            configure()
+        }
+    }
 }
+

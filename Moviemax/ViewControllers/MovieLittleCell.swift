@@ -25,6 +25,7 @@ final class MovieLittleCell: UICollectionViewCell {
     
     private lazy var movieName: UILabel = {
         let label = UILabel()
+        label.sizeToFit()
         label.text = "Drifting Home"
         label.font = Resources.Fonts.plusJakartaSansBold(with: 18)
         return label
@@ -85,6 +86,36 @@ final class MovieLittleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        likeButton.isFavorite = false
+        likeButton.configure()
+    }
+    
+    func set(id: Int) {
+        NetworkManager.shared.getMovieDetail(id: id) { result in
+            switch result {
+            case .success(let movie):
+                guard let url = movie.posterPath else {return}
+                NetworkManager.shared.downloadImage(path: url) { image in
+                    DispatchQueue.main.async {
+                        self.movieImage.image = image
+                        self.movieName.text = movie.originalTitle
+                        self.timeLabel.text = "\(movie.runtime ?? 0) min"
+                        self.categoryLabel.text = movie.genres?[0].name
+//                        self.qtyVoiceLabel.text = movie.overview
+                        self.ratingLabel.text = "\(movie.voteAverage ?? 0)"
+                        if let id = movie.id {
+                            self.likeButton.tag = id
+                            self.likeButton.isLike(id: id)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     private func addViews() {
         addSubview(movieImage)
         addSubview(movieName)
@@ -120,7 +151,7 @@ final class MovieLittleCell: UICollectionViewCell {
             
             movieName.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 3),
             movieName.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 12),
-            
+            movieName.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -5),
             timeIcon.topAnchor.constraint(equalTo: movieName.bottomAnchor, constant: 12),
             timeIcon.leadingAnchor.constraint(equalTo: movieName.leadingAnchor),
             

@@ -10,6 +10,8 @@ import UIKit
 class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var navigationController: UINavigationController?
+    
+    var popularTV: [Movie] = []
 
 
     func presentVC() {
@@ -36,6 +38,7 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        getPopularTV()
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -51,17 +54,34 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return popularTV.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilmCell", for: indexPath) as! FilmCell
+        let movie = popularTV[indexPath.item]
+        print("Это ТВ \(movie)")
+        cell.set(movieId: movie.id)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = popularTV[indexPath.item]
         let movieDetailVC = MovieDetail()
+        movieDetailVC.id = movie.id
+        movieDetailVC.likeButton.tag = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
+    }
+    
+    func getPopularTV() {
+        NetworkManager.shared.getPopularTV { result in
+            switch result {
+            case .success(let films):
+            self.popularTV = films
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
 }

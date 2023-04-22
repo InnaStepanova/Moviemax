@@ -9,10 +9,7 @@ import UIKit
 
 final class MovieLargeCell: UICollectionViewCell {
     
-    private lazy var likeButton: LikeButton = {
-        let button = LikeButton()
-        return button
-    }()
+    private lazy var likeButton = LikeButton()
     
     private lazy var movieImage: UIImageView = {
         let imageView = UIImageView()
@@ -25,6 +22,7 @@ final class MovieLargeCell: UICollectionViewCell {
     
     private lazy var movieName: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 3
         label.text = "Drifting Home"
         label.font = Resources.Fonts.plusJakartaSansBold(with: 18)
         return label
@@ -85,6 +83,11 @@ final class MovieLargeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        likeButton.isFavorite = false
+        likeButton.configure()
+    }
+    
     public func configure(with model: MovieViewModel) {
         let url = model.posterURL
         NetworkManager.shared.downloadImage(path: url) { [weak self] image in
@@ -96,7 +99,24 @@ final class MovieLargeCell: UICollectionViewCell {
         self.dateLabel.text = model.reliseDate
         self.timeLabel.text = model.runtime
         self.watchNowButton.setTitle(model.genre, for: .normal)
+        self.likeButton.tag = model.id
+        self.likeButton.isLike(id: model.id)
         }
+    
+    func set(movie: MovieRealm) {
+        let url = movie.imageUrl
+        NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+           DispatchQueue.main.async {
+               self?.movieImage.image = image
+           }
+        }
+        self.movieName.text = movie.name
+        self.dateLabel.text = movie.date
+        self.timeLabel.text = movie.long
+        self.watchNowButton.setTitle(movie.category, for: .normal)
+        self.likeButton.tag = movie.id
+        self.likeButton.isLike(id: movie.id)
+    }
     
     private func addViews() {
         addSubview(movieImage)
@@ -130,6 +150,7 @@ final class MovieLargeCell: UICollectionViewCell {
             
             movieName.topAnchor.constraint(equalTo: movieImage.topAnchor),
             movieName.leadingAnchor.constraint(equalTo: movieImage.trailingAnchor, constant: 15),
+            movieName.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -10),
             
             timeIcon.topAnchor.constraint(equalTo: movieName.bottomAnchor, constant: 12),
             timeIcon.leadingAnchor.constraint(equalTo: movieName.leadingAnchor),
