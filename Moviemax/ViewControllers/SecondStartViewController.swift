@@ -35,19 +35,22 @@ class SecondStartViewController: UIViewController {
     //MARK: FIX
     private lazy var dotAnimationIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "dotIcon")
+        imageView.image = UIImage(named: "dotIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor(named: "BlueButtonColor")
         return imageView
     }()
 
     private lazy var dotIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "dotIcon")
+        imageView.image = UIImage(named: "dotIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .lightGray
         return imageView
     }()
 
     private lazy var dotIcon2: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "dotIcon")
+        imageView.image = UIImage(named: "dotIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .lightGray
         return imageView
     }()
     private lazy var textLabelBold: UILabel = {
@@ -145,7 +148,7 @@ class SecondStartViewController: UIViewController {
             whiteView.topAnchor.constraint(equalTo: girlIcon.bottomAnchor, constant: 0),
             whiteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -46),
             
-            dotAnimationIcon.leftAnchor.constraint(equalTo: whiteView.leftAnchor, constant: 136),
+            dotAnimationIcon.leftAnchor.constraint(equalTo: whiteView.leftAnchor, constant: 160),
             dotAnimationIcon.topAnchor.constraint(equalTo: whiteView.topAnchor, constant: 28),
 
             dotIcon.leftAnchor.constraint(equalTo: dotAnimationIcon.rightAnchor, constant: 8),
@@ -184,11 +187,15 @@ class SecondStartViewController: UIViewController {
         case 0:
             textLabelBold.text = "Search for movies"
             textLabel.text = "All movies in one app! Are you ready to watch the best movies and shows?"
+            dotIcon.tintColor = UIColor(named: "BlueButtonColor")
+            dotAnimationIcon.tintColor = .lightGray
             count += 1
         case 1:
             textLabelBold.text = "The best in always at hand"
             textLabel.text = "Add your favorite movies to favorites! Easy to search and find what you want to watch."
             continueButton.setTitle("Start", for: .normal)
+            dotIcon2.tintColor = UIColor(named: "BlueButtonColor")
+            dotIcon.tintColor = .lightGray
             count += 1
         case 2:
             let createVC = CreateAccountVC()

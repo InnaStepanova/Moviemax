@@ -202,7 +202,7 @@ class LoginVC : UIViewController {
                     print(e)
                 }else {
                     
-                    if let user = RealmStorageManager.shared.findUser(email1: email, password1: password) {
+                    if let _ = RealmStorageManager.shared.findUser(email1: email, password1: password) {
                         
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
