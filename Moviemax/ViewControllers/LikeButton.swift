@@ -78,10 +78,9 @@ final class LikeButton: UIButton {
     }
     
     func isLike(id: Int) {
-        guard let _ = likeMoviesId?.contains(id) else {
+        if let _ = likeMoviesId?.contains(id) {
             return
         }
-        
         isFavorite = true
         configure()
     }

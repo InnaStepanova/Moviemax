@@ -204,30 +204,20 @@ class LoginVC : UIViewController {
                     let alert = UIAlertController(title: "Error", message: "User not found", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
                     self.present(alert, animated: true)
+                    self.emailTextField.text = ""
+                    self.passwordTextField.text = ""
                     print(error)
                 } else {
-                    let tabBarController = TabBarController()
-                    tabBarController.selectedIndex = 2
-                    tabBarController.modalPresentationStyle = .fullScreen
-                    self.present(tabBarController, animated: true)
-                    //                    }
-                    //                        let secondStart = SecondStartViewController()
-                    //                        self!.present(secondStart, animated: true)
-                if let e = error {
-                    print(e)
-                }else {
-                    
                     if let currentUser = RealmStorageManager.shared.findUser(email1: email, password1: password) {
                         RealmStorageManager.shared.edit {
                             currentUser.isCurrent = true
                         }
-                        let tabBarController = TabBarController()
-                        tabBarController.selectedIndex = 2
-                        tabBarController.modalPresentationStyle = .fullScreen
-                        self!.present(tabBarController, animated: true)
+                    let tabBarController = TabBarController()
+                    tabBarController.selectedIndex = 2
+                    tabBarController.modalPresentationStyle = .fullScreen
+                    self.present(tabBarController, animated: true)
+//                                        self!.present(secondStart, animated: true)
                     }
-//                        let secondStart = SecondStartViewController()
-//                        self!.present(secondStart, animated: true)
                 }
             }
         }

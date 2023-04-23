@@ -10,11 +10,11 @@ import UIKit
 
 class MovieDetail: UIViewController {
     
-    var id: Int! {
-        didSet {
-            set()
-        }
-    }
+//    var id: Int! {
+//        didSet {
+//            set()
+//        }
+//    }
     var buttonTapped = true
     
     private lazy var scrollView: UIScrollView = {

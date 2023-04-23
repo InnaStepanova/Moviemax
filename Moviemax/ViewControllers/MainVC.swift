@@ -81,6 +81,7 @@ class MainVC : UIViewController {
     private let networkManager = NetworkManager.shared
     private var popularMovies: [Movie] = []
     private var popularTV: [Movie] = []
+    private var startMovies: [Movie] = []
     private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
     
     // MARK: - Lifecycle
@@ -92,8 +93,8 @@ class MainVC : UIViewController {
         }
         categoryCollectionView.myDelegate = self
         self.navigationController?.navigationBar.isHidden = true
-        let filmCellView = FilmCellView()
-        filmCellView.delegate = self
+//        let filmCellView = FilmCellView()
+//        filmCellView.delegate = self
         setupView()
         getPopularFilm()
     }
@@ -121,17 +122,6 @@ class MainVC : UIViewController {
         view.addSubview(boxCollectionView)
        
         setConstraints()
-    }
-    
-    func getPopularFilm() {
-        networkManager.getPopularMovies { result in
-            switch result {
-            case .success(let films):
-                self.popularMovies = films
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 
     func getPopularTV() {
@@ -251,7 +241,7 @@ extension MainVC: FilmCellViewDelegate {
         viewController.likeButton.tag = model.id
         navigationController?.pushViewController(viewController, animated: true)
     }
-}
+    
     func getPopularFilm() {
         networkManager.getPopularMovies { result in
             switch result {
@@ -265,14 +255,14 @@ extension MainVC: FilmCellViewDelegate {
     }
 }
 
-extension MainVC: FilmCellViewDelegate {
-    func precentMovieDetail(id: Int) {
-        print(id)
-//        let movieDetailVC = MovieDetail()
-//        movieDetailVC.id = id
-//        navigationController?.pushViewController(movieDetailVC, animated: true)
-    }
-}
+//extension MainVC: FilmCellViewDelegate {
+//    func precentMovieDetail(id: Int) {
+//        print(id)
+////        let movieDetailVC = MovieDetail()
+////        movieDetailVC.id = id
+////        navigationController?.pushViewController(movieDetailVC, animated: true)
+//    }
+//}
 
 extension MainVC: CategoryCollectionViewDelegate {
     func sortOfCategory(categories: String) {
