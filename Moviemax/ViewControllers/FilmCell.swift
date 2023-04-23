@@ -9,11 +9,11 @@ import UIKit
 
 final class FilmCell: UICollectionViewCell {
 
-    private lazy var movieImage: UIImageView = {
+    private let movieImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = 16
+        imageView.clipsToBounds = true
         imageView.image = UIImage(named: "DriftingHome")
         return imageView
     }()
@@ -52,14 +52,19 @@ final class FilmCell: UICollectionViewCell {
             switch result {
             case .success(let movie):
                 print("ЭТО TV \(movie)")
-//                guard let url = movie.posterPath else {return}
-//                NetworkManager.shared.downloadImage(path: url) { image in
-//                    DispatchQueue.main.async {
-//                        self.movieImage.image = image
-//                        self.movieName.text = movie.originalTitle
-//                        self.categoryLabel.text = movie.genres?[0].name
-//                    }
-//                }
+                guard let url = movie.posterPath else { return }
+                
+                NetworkManager.shared.downloadImage(path: url) { image in
+                    guard let image else {
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.movieImage.image = image
+                        self.movieName.text = movie.originalTitle
+                        self.categoryLabel.text = movie.genres?[0].name
+                    }
+                }
             case .failure(let error):
                 print(error)
             }
@@ -79,18 +84,12 @@ final class FilmCell: UICollectionViewCell {
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-          //  movieImage.heightAnchor.constraint(equalToConstant: 400),
-          //  movieImage.widthAnchor.constraint(equalToConstant: 250),
-            movieImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            movieImage.topAnchor.constraint(equalTo: topAnchor),
+            movieImage.topAnchor.constraint(equalTo: topAnchor, constant: 50),
             movieImage.leadingAnchor.constraint(equalTo: leadingAnchor),
             movieImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor),
+            movieImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -50),
             
-           
-            //categoryLabel.topAnchor.constraint(equalTo: topAnchor),
             categoryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-           // categoryLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             categoryLabel.bottomAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: -110),
 
             movieName.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5),

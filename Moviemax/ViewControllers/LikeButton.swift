@@ -9,7 +9,7 @@ import UIKit
 
 final class LikeButton: UIButton {
     
-    private var likeMoviesId = RealmStorageManager.shared.getCurrentUser()!.likeMovies.map { $0.id }
+    private var likeMoviesId = RealmStorageManager.shared.getCurrentUser()?.likeMovies.map { $0.id }
 
     
     var isFavorite: Bool = false
@@ -78,10 +78,12 @@ final class LikeButton: UIButton {
     }
     
     func isLike(id: Int) {
-        if likeMoviesId.contains(id) {
-            isFavorite = true
-            configure()
+        guard let _ = likeMoviesId?.contains(id) else {
+            return
         }
+        
+        isFavorite = true
+        configure()
     }
 }
 

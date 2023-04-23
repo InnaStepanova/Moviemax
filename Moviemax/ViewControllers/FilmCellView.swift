@@ -7,17 +7,14 @@
 
 import UIKit
 
+protocol FilmCellViewDelegate: AnyObject {
+    func showMovieDetailViewController(with model: Movie)
+}
+
 class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    var navigationController: UINavigationController?
-    
-    var popularTV: [Movie] = []
-
-
-    func presentVC() {
-        let movieDetailVC = MovieDetail()
-        navigationController?.pushViewController(movieDetailVC, animated: true)
-    }
+    private var popularTV: [Movie] = []
+    private weak var delegate: FilmCellViewDelegate?
     
     private lazy var collectionView: WheelCollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -25,22 +22,43 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let collectionView = WheelCollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = UIColor(named: "BackgroundColor")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.bounces = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(FilmCell.self, forCellWithReuseIdentifier: "FilmCell")
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         return collectionView
     }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        getPopularTV()
+    
+    // MARK: - Initialize
+    
+    init(delegate: FilmCellViewDelegate) {
+        self.delegate = delegate
+        super.init(frame: .zero)
+        self.getPopularTV()
+        self.configureView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Private methods
+    
+    private func configureView() {
+        configureConstraints()
+        backgroundColor = UIColor(named: "BackgroundColor")
+    }
+    
+    private func configureConstraints() {
         addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -49,9 +67,7 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Collection View Delegate
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return popularTV.count
@@ -64,39 +80,38 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         cell.set(movieId: movie.id)
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = popularTV[indexPath.item]
-        let movieDetailVC = MovieDetail()
-        movieDetailVC.id = movie.id
-        movieDetailVC.likeButton.tag = movie.id
-        navigationController?.pushViewController(movieDetailVC, animated: true)
+        delegate?.showMovieDetailViewController(with: movie)
     }
     
     func getPopularTV() {
         NetworkManager.shared.getPopularTV { result in
             switch result {
             case .success(let films):
-            self.popularTV = films
+                self.popularTV = films
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             case .failure(let error):
                 print(error)
             }
         }
     }
-    
 }
 
 
 class WheelCollectionView: UICollectionView {
-
-    let centralCellScale: CGFloat = 1.0 // масштаб центральной ячейки
+    
+    let centralCellScale: CGFloat = 0.8 // масштаб центральной ячейки
     let cellOffset: CGFloat = 10.0 // смещение ячеек от центра
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         let centerX = self.contentOffset.x + 300
-
+        
         for cell in self.visibleCells {
             let distanceFromCenter = abs(centerX - cell.center.x)
             let distanceFromCenter1 = centerX - cell.center.x
@@ -105,7 +120,7 @@ class WheelCollectionView: UICollectionView {
             let scaleFactor = max(centralCellScale - offset, 0.8)
             let translateY = (1 - scaleFactor) * cellOffset
             let angle = -offset1 * .pi / 6
-
+            
             // Масштабирование и смещение ячейки
             let transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
                 .translatedBy(x: 0, y: translateY)

@@ -9,7 +9,7 @@ import UIKit
 
 final class FavoritesViewController: UIViewController {
     
-    private var likeMovies = RealmStorageManager.shared.getCurrentUser()!.likeMovies
+    private var likeMovies = RealmStorageManager.shared.getCurrentUser()?.likeMovies
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -68,20 +68,25 @@ final class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        likeMovies.count
+        likeMovies?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as? MovieLargeCell else { return UICollectionViewCell() }
-        let movie = likeMovies[indexPath.item]
-        cell.set(movie: movie)
+        if let movie = likeMovies?[indexPath.item] {
+            cell.set(movie: movie)
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = likeMovies[indexPath.item]
-        let movieDetailVC = MovieDetail()
-        movieDetailVC.id = movie.id
+        guard let id = likeMovies?[indexPath.item].id else {
+            return
+        }
+        
+        let movieDetailVC = MovieDetail(id: id, isTv: false)
+
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

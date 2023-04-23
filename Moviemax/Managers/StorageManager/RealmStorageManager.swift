@@ -19,7 +19,6 @@ class RealmStorageManager {
         }
     }
     
-    
     func removeMovieFromLiked(id: Int, user: UserRealm) {
         if let movie = user.likeMovies.filter("id == \(id)").first {
             print(movie.name)
@@ -30,8 +29,6 @@ class RealmStorageManager {
             }
         }
     }
-
-
     
     func recent(user: UserRealm, movie: MovieRealm) {
         try! realm.write {
@@ -54,13 +51,10 @@ class RealmStorageManager {
         return currentUsers[0]
     }
     
-    func findUser(email1: String, password1: String) -> UserRealm? {
-        let users = realm.objects(UserRealm.self).filter{ $0.email == email1 && $0.password == password1 }
-
-        if users.count == 0 {
-            return nil
-        }
-        return users[0]
+    func checkIsUserInDatabase(email: String, password: String) -> Bool {
+        let users = realm.objects(UserRealm.self).filter{ $0.email == email && $0.password == password }
+        
+        return users.count == 0 ? false : true
     }
     
     func edit(completion: () -> Void) {
