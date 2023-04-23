@@ -101,9 +101,9 @@ class LoginVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        emailTextField.text = "1@1.com"
-        passwordTextField.text = "123456"
     }
+   
+    
     
     
     func setupView() {
@@ -202,8 +202,10 @@ class LoginVC : UIViewController {
                     print(e)
                 }else {
                     
-                    if let _ = RealmStorageManager.shared.findUser(email1: email, password1: password) {
-                        
+                    if let currentUser = RealmStorageManager.shared.findUser(email1: email, password1: password) {
+                        RealmStorageManager.shared.edit {
+                            currentUser.isCurrent = true
+                        }
                         let tabBarController = TabBarController()
                         tabBarController.selectedIndex = 2
                         tabBarController.modalPresentationStyle = .fullScreen
@@ -222,6 +224,9 @@ class LoginVC : UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emailTextField.text = ""
+        passwordTextField.text = ""
         navigationController?.isNavigationBarHidden = true
     }
     

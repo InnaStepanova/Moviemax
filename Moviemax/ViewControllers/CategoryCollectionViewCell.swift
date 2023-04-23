@@ -18,7 +18,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = self.isSelected ? UIColor(named: "BlueButtonColor") : .white
+            backgroundColor = self.isSelected ? UIColor(named: "BlueButtonColor") : UIColor(named: "BackgroundScreenColor")
             categoryLabel.textColor = self.isSelected ? .white : UIColor(red: 156.0/255.0, green: 164.0/255.0, blue: 171.0/255.0, alpha: 1)
             layer.borderColor = self.isSelected ? UIColor(named: "BlueButtonColor")?.cgColor : UIColor(red: 156.0/255.0, green: 164.0/255.0, blue: 171.0/255.0, alpha: 1).cgColor
         }
