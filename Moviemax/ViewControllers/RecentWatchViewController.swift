@@ -80,20 +80,30 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
 
 extension RecentWatchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movies.count
+        guard let movies = movies else {
+            return 0
+        }
+        
+        return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let model = movies else {
+            return UICollectionViewCell()
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieLargeCell", for: indexPath) as! MovieLargeCell
-        let model = movies[indexPath.row]
-        cell.set(movie: model)
+        cell.set(movie: model[indexPath.row])
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = movies[indexPath.row]
-        let movieDetailVC = MovieDetail()
-        movieDetailVC.id = model.id
+        guard let id = movies?[indexPath.item].id else {
+            return
+        }
+        
+        let movieDetailVC = MovieDetail(id: id, isTv: false)
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

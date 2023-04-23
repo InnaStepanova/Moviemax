@@ -7,17 +7,10 @@
 
 import UIKit
 
-protocol FilmCellViewDelegate {
-    func precentMovieDetail(id: Int)
+
+class MainVC : UIViewController {
     
-}
-class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    let networkManager = NetworkManager.shared
-    var popularMovies: [Movie] = []
-    var startMovies: [Movie] = []
-    
-    private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
+    // MARK: - Properties
     
     private lazy var boxCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -32,10 +25,11 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(MovieLittleCell.self, forCellWithReuseIdentifier: "boxCollection")
+        
         return collectionView
     }()
     
-    private lazy var filmCollectionView = FilmCellView()
+    private lazy var filmCollectionView = FilmCellView(delegate: self)
     private lazy var categoryCollectionView = CategoryCollectionView()
 
     private lazy var avatarImageView: UIImageView = {
@@ -44,14 +38,16 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         imageView.layer.cornerRadius = 20
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        
         return imageView
     }()
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi, \(currentUser?.name) \(currentUser!.secondName)"
+        label.text = getUserFullNameData()
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
         label.textColor = .black
+        
         return label
     }()
     
@@ -60,6 +56,7 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         label.text = "only streaming movie lovers"
         label.font = Resources.Fonts.plusJakartaSans(with: 12)
         label.textColor = .gray
+        
         return label
     }()
     
@@ -68,6 +65,7 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         label.text = "Category"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         label.textColor = .black
+        
         return label
     }()
     
@@ -76,8 +74,16 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         label.text = "Box Office"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
         label.textColor = .black
+        
         return label
     }()
+    
+    private let networkManager = NetworkManager.shared
+    private var popularMovies: [Movie] = []
+    private var popularTV: [Movie] = []
+    private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,6 +107,8 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         UserDefaults.standard.setValue(1, forKey: "FirstRun")
     }
     
+    // MARK: - Public methods
+    
     func setupView(){
         view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         view.addSubview(nameLabel)
@@ -115,6 +123,30 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         setConstraints()
     }
     
+    func getPopularFilm() {
+        networkManager.getPopularMovies { result in
+            switch result {
+            case .success(let films):
+                self.popularMovies = films
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    func getPopularTV() {
+        networkManager.getPopularTV { result in
+            switch result {
+            case .success(let films):
+                self.popularTV = films
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - Private methods
+    
     private func setCurrentUser() {
         guard let currentUser = currentUser else { return }
         nameLabel.text = "Hi, \(currentUser.name) \(currentUser.secondName)"
@@ -123,6 +155,19 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         } else {
             self.avatarImageView.image = UIImage(named: "avatar")
         }
+    }
+    
+    private func getUserFullNameData() -> String {
+        var text = "Hi!"
+        if let name = currentUser?.name, let secondName = currentUser?.secondName {
+            text = "Hi, \(name) \(secondName)"
+        } else if let name = currentUser?.name {
+            text = "Hi, \(name)"
+        } else if let secondName = currentUser?.secondName {
+            text = "Hi, \(secondName)"
+        }
+        
+        return text
     }
     
     private func setConstraints() {
@@ -169,9 +214,12 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             boxCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             boxCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60)
         ])
-
     }
-    
+}
+
+// MARK: - Collection View DataSource/Delegate
+
+extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return popularMovies.count
@@ -179,8 +227,8 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = popularMovies[indexPath.item]
-        let movieDetailVC = MovieDetail()
-        movieDetailVC.id = movie.id
+        let movieDetailVC = MovieDetail(id: movie.id, isTv: false)
+//        movieDetailVC.id = movie.id
         navigationController?.pushViewController(movieDetailVC, animated: true)
         print(indexPath.item)
     }
@@ -191,8 +239,19 @@ class MainVC : UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         cell.set(id: movie.id)
         return cell
     }
+}
 
+// MARK: - FilmCellViewDelegate
+
+extension MainVC: FilmCellViewDelegate {
     
+    func showMovieDetailViewController(with model: Movie) {
+        let viewController = MovieDetail(id: model.id, isTv: true)
+        viewController.id = model.id
+        viewController.likeButton.tag = model.id
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
     func getPopularFilm() {
         networkManager.getPopularMovies { result in
             switch result {

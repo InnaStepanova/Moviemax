@@ -16,8 +16,7 @@ class MovieDetail: UIViewController {
         }
     }
     var buttonTapped = true
-//    var heatButton = true
-
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize = contentView.frame.size
@@ -71,14 +70,14 @@ class MovieDetail: UIViewController {
         return label
     }()
     
-        var likeButton = LikeButton()
-//    private lazy var likeButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setImage(UIImage(named: "heart"), for: .normal)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
-//        return button
-//    }()
+    var likeButton = LikeButton()
+    //    private lazy var likeButton: UIButton = {
+    //        let button = UIButton(type: .system)
+    //        button.setImage(UIImage(named: "heart"), for: .normal)
+    //        button.translatesAutoresizingMaskIntoConstraints = false
+    //        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
+    //        return button
+    //    }()
     
     private lazy var image: UIImageView = {
         let image = UIImageView()
@@ -185,7 +184,7 @@ class MovieDetail: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Show more", for: .normal)
         button.titleLabel?.font = UIFont(name: "Plus Jakarta Sans", size: 14)
-//        button.backgroundColor = UIColor.blue
+        //        button.backgroundColor = UIColor.blue
         button.setTitleColor(UIColor.blue, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showText), for: .touchUpInside)
@@ -235,35 +234,38 @@ class MovieDetail: UIViewController {
         return button
     }()
     
+    var id: Int?
+    var isTv: Bool?
+    
+    // MARK: - Initialize
+    
+    init(id: Int, isTv: Bool) {
+        self.id = id
+        self.isTv = isTv
+        super.init(nibName: nil, bundle: .main)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(scrollView)
+        configureView()
+        set(id: id, isTV: isTv)
+    }
+    
+    // MARK: - Private methods
+    
+    private func configureView() {
         view.backgroundColor = .white
         
         collectionViewAuthor.delegate = self
         collectionViewAuthor.dataSource = self
         setContraints()
     }
-    
-//    init(movieID: Int) {
-//        super.init(nibName: nil, bundle: nil)
-//        let id = movieID
-//         нужно из CoreData достать информацию по id
-//    }
-    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-//    //функция для добавления в избранное
-//    @objc func likeButtonPressed () {
-//        if heatButton {
-//            likeButton.setImage(UIImage(named: "heart_fill"), for: .normal)
-//        } else {
-//            likeButton.setImage(UIImage(named: "heart"), for: .normal)
-//        }
-//            heatButton = !heatButton
-//    }
     
     private func addInRecentwatch(movie: MovieDetailData) {
         guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
@@ -284,36 +286,35 @@ class MovieDetail: UIViewController {
         }
     }
     
-    private func set() {
-        NetworkManager.shared.getMovieDetail(id: id) { result in
-            switch result {
-            case .success(let movie):
-                guard let url = movie.posterPath else { return }
-                NetworkManager.shared.downloadImage(path: url) { [weak self] image in
-                   DispatchQueue.main.async {
-                       self?.addInRecentwatch(movie: movie)
-                       self?.image.image = image
-                       self?.filmLabel.text = movie.originalTitle
-                       if let time = movie.runtime {
-                           self?.timeLabel.text = "\(time) min"
-                       }
-                       self?.dateLabel.text = movie.releaseDate
-                       self?.genreLabel.text = movie.genres?[0].name
-                       self?.textLabel.text = movie.overview
-                       if let id = movie.id {
-                           self?.likeButton.tag = id
-                           self?.likeButton.isLike(id: id)
-                       }
-                   }
-                }
-            case .failure(let error):
-                print(error)
-            }
+    private func set(id: Int?, isTV: Bool?) {
+        guard let id, let isTV else {
+            return
+        }
+        
+        if isTV {
+            fetchTVData(for: id)
+        } else {
+            fetchMovieData(for: id)
         }
     }
     
-    
-
+    private func fillViewWithData(for movie: MovieDetailData, image: UIImage) {
+        DispatchQueue.main.async {
+            self.addInRecentwatch(movie: movie)
+            self.image.image = image
+            self.filmLabel.text = movie.originalTitle
+            if let time = movie.runtime {
+                self.timeLabel.text = "\(time) min"
+            }
+            self.dateLabel.text = movie.releaseDate
+            self.genreLabel.text = movie.genres?[0].name
+            self.textLabel.text = movie.overview
+            if let id = movie.id {
+                self.likeButton.tag = id
+                self.likeButton.isLike(id: id)
+            }
+        }
+    }
     
     //фунция для перехода в другой VC
     @objc func backButtonPressed () {
@@ -327,87 +328,147 @@ class MovieDetail: UIViewController {
         } else {
             textLabel.numberOfLines = 5
         }
-            buttonTapped = !buttonTapped
+        buttonTapped = !buttonTapped
     }
-
+    
     //функция для показа фильма
     @objc func watchNowButtonPressed () {
         
     }
+    
+    //    //функция для добавления в избранное
+    //    @objc func likeButtonPressed () {
+    //        if heatButton {
+    //            likeButton.setImage(UIImage(named: "heart_fill"), for: .normal)
+    //        } else {
+    //            likeButton.setImage(UIImage(named: "heart"), for: .normal)
+    //        }
+    //            heatButton = !heatButton
+    //    }
 }
-    extension MovieDetail {
-        func setContraints () {
-            likeButton.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                likeButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 31),
-                likeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-                
-                titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 31),
-                titleLabel.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
-                
-                backButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 13),
-                backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                
-                image.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
-                image.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
-                image.heightAnchor.constraint(equalToConstant: 300),
-                image.widthAnchor.constraint(equalToConstant: 250),
-                
-                filmLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 5),
-                filmLabel.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
-                
-                stackView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
-                stackView.topAnchor.constraint(equalTo: filmLabel.bottomAnchor, constant: 10),
-                
-                starStackView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
-                starStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
-                
-                textStoryLabel.topAnchor.constraint(equalTo: starStackView.bottomAnchor, constant: 5),
-                textStoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                
-                textLabel.topAnchor.constraint(equalTo: textStoryLabel.topAnchor, constant: 30),
-                textLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
-                textLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-                
-                showTextButton.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 0),
-                showTextButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                showTextButton.widthAnchor.constraint(equalToConstant: 80),
-                showTextButton.heightAnchor.constraint(equalToConstant: 30),
-                
-                castLabel.topAnchor.constraint(equalTo: showTextButton.bottomAnchor, constant: 5),
-                castLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                
-                collectionViewAuthor.topAnchor.constraint(equalTo: castLabel.bottomAnchor, constant: 0),
-                collectionViewAuthor.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                collectionViewAuthor.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                collectionViewAuthor.heightAnchor.constraint(equalToConstant: 150),
-                
-                watchNowButton.topAnchor.constraint(equalTo: collectionViewAuthor.topAnchor, constant: 80),
-                watchNowButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 100),
-                watchNowButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100),
-                watchNowButton.heightAnchor.constraint(equalToConstant: 80)
-            ])
+
+// MARK: - API
+
+extension MovieDetail {
+    
+    private func fetchMovieData(for id: Int) {
+        NetworkManager.shared.getMovieDetail(id: id) { result in
+            switch result {
+            case .success(let movie):
+                guard let url = movie.posterPath else { return }
+                NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+                    guard let self, let image else {
+                        return
+                    }
+                    
+                    self.fillViewWithData(for: movie, image: image)
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
     }
     
-    extension MovieDetail: UICollectionViewDelegate, UICollectionViewDataSource {
-        
-        func numberOfSections(in collectionView: UICollectionView) -> Int {
-            1
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            nameArray.count
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCollectionViewCell
-            cell.titleLabel.text = nameArray[indexPath.row]
-            cell.subtitleLabel.text = profArray[indexPath.row]
-            cell.imageView.image = UIImage(named: imageArray[indexPath.row])
-            
-            return cell
+    private func fetchTVData(for id: Int) {
+        NetworkManager.shared.getTVDetail(id: id) { result in
+            switch result {
+            case .success(let movie):
+                print("ЭТО TV \(movie)")
+                guard let url = movie.posterPath else { return }
+                
+                NetworkManager.shared.downloadImage(path: url) { [weak self] image in
+                    guard let self, let image else {
+                        return
+                    }
+                    
+                    self.fillViewWithData(for: movie, image: image)
+                }
+            case .failure(let error):
+                print(error)
+            }
         }
     }
+}
+
+// MARK: - Layout
+
+extension MovieDetail {
+    func setContraints () {
+        view.addSubview(scrollView)
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            likeButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 31),
+            likeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 31),
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+            
+            backButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 13),
+            backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            
+            image.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15),
+            image.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+            image.heightAnchor.constraint(equalToConstant: 300),
+            image.widthAnchor.constraint(equalToConstant: 250),
+            
+            filmLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 5),
+            filmLabel.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+            
+            stackView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: filmLabel.bottomAnchor, constant: 10),
+            
+            starStackView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+            starStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
+            
+            textStoryLabel.topAnchor.constraint(equalTo: starStackView.bottomAnchor, constant: 5),
+            textStoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            
+            textLabel.topAnchor.constraint(equalTo: textStoryLabel.topAnchor, constant: 30),
+            textLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            textLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            
+            showTextButton.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 0),
+            showTextButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            showTextButton.widthAnchor.constraint(equalToConstant: 80),
+            showTextButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            castLabel.topAnchor.constraint(equalTo: showTextButton.bottomAnchor, constant: 5),
+            castLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            
+            collectionViewAuthor.topAnchor.constraint(equalTo: castLabel.bottomAnchor, constant: 0),
+            collectionViewAuthor.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            collectionViewAuthor.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            collectionViewAuthor.heightAnchor.constraint(equalToConstant: 150),
+            
+            watchNowButton.topAnchor.constraint(equalTo: collectionViewAuthor.topAnchor, constant: 80),
+            watchNowButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 100),
+            watchNowButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100),
+            watchNowButton.heightAnchor.constraint(equalToConstant: 80)
+        ])
+    }
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
+extension MovieDetail: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        nameArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCollectionViewCell
+        cell.titleLabel.text = nameArray[indexPath.row]
+        cell.subtitleLabel.text = profArray[indexPath.row]
+        cell.imageView.image = UIImage(named: imageArray[indexPath.row])
+        
+        return cell
+    }
+}
 
 

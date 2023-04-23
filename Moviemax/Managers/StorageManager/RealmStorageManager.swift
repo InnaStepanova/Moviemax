@@ -19,7 +19,6 @@ class RealmStorageManager {
         }
     }
     
-    
     func removeMovieFromLiked(id: Int, user: UserRealm) {
         if let movie = user.likeMovies.filter("id == \(id)").first {
             if let index = user.likeMovies.index(of: movie) {

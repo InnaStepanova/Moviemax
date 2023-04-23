@@ -376,7 +376,7 @@
 			);
 			mainGroup = 02E964A429DABF26001649E5;
 			packageReferences = (
-				024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
 			);
 			productRefGroup = 02E964AE29DABF26001649E5 /* Products */;
 			projectDirPath = "";
@@ -431,9 +431,11 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Moviemax/Pods-Moviemax-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Moviemax/Pods-Moviemax-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -706,7 +708,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -719,27 +721,27 @@
 /* Begin XCSwiftPackageProductDependency section */
 		024E017A29EEA5CA0023C1E7 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAnalytics;
 		};
 		024E017C29EEA5CA0023C1E7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAuth;
 		};
 		024E017E29EEA5CA0023C1E7 /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseDatabase;
 		};
 		024E018029EEA5CA0023C1E7 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseFirestore;
 		};
 		024E018229EEA5CA0023C1E7 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 024E017929EEA5CA0023C1E7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
