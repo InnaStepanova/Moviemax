@@ -109,8 +109,10 @@ class SettingsViewController: UIViewController {
     }
     
     @objc private func logOutButtonPressed() {
+        print("LogOUT")
+        guard let user = RealmStorageManager.shared.getCurrentUser() else {return}
+        print(user)
         RealmStorageManager.shared.edit {
-            guard let user = RealmStorageManager.shared.getCurrentUser() else {return}
             user.isCurrent = false
         }
         dismiss(animated: true)

@@ -29,6 +29,7 @@ final class RecentWatchViewController: UIViewController, UICollectionViewDelegat
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(MovieLargeCell.self, forCellWithReuseIdentifier: "MovieLargeCell")
