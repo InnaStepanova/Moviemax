@@ -20,7 +20,7 @@ final class FilmCell: UICollectionViewCell {
     
     private lazy var movieName: UILabel = {
         let label = UILabel()
-        label.text = "Drifting Home"
+        label.text = ""
         label.font = Resources.Fonts.plusJakartaSansBold(with: 18)
         label.textColor = .white
         return label

@@ -11,6 +11,20 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Types
     
+    private lazy var logOutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitleColor(UIColor(named: "BlueButtonColor"), for: .normal)
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = 30
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor(named: "BlueButtonColor")?.cgColor
+        button.setTitle("Log Out", for: .normal)
+        button.titleLabel?.font = Resources.Fonts.plusJakartaSansMedium(with: 16)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(logOutButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
     enum SectionType {
         case userInfo, personalInfo, security
         
@@ -80,13 +94,30 @@ class SettingsViewController: UIViewController {
     
     private func configureConstraints() {
         view.addSubview(tableView)
+        view.addSubview(logOutButton)
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 38),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            logOutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            logOutButton.heightAnchor.constraint(equalToConstant: 60),
+            logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -87)
         ])
+    }
+    
+    @objc private func logOutButtonPressed() {
+        print("LogOUT")
+        guard let user = RealmStorageManager.shared.getCurrentUser() else {return}
+        print(user)
+        RealmStorageManager.shared.edit {
+            user.isCurrent = false
+        }
+        let secondVC = SecondStartViewController()
+        secondVC.modalPresentationStyle = .fullScreen
+        present(secondVC, animated: true)
     }
 }
 
@@ -174,6 +205,8 @@ extension SettingsViewController: UITableViewDataSource {
             navigationController?.pushViewController(profileSettingsVS, animated: true)
         case .security:
             switch indexPath.row {
+            case 0: let chandePassvordVC = ChangePasswordVC()
+                navigationController?.pushViewController(chandePassvordVC, animated: true)
             case 1:
                 let alert = UIAlertController(title: "", message: "A message about password change has been sent to your email", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))

@@ -9,6 +9,8 @@ import UIKit
 
 class SecondStartViewController: UIViewController {
     
+    private var count = 0
+    
     private lazy var girlIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "girlIcon")
@@ -33,19 +35,22 @@ class SecondStartViewController: UIViewController {
     //MARK: FIX
     private lazy var dotAnimationIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "dotAnimationIcon")
+        imageView.image = UIImage(named: "dotIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor(named: "BlueButtonColor")
         return imageView
     }()
 
     private lazy var dotIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "dotIcon")
+        imageView.image = UIImage(named: "dotIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .lightGray
         return imageView
     }()
 
     private lazy var dotIcon2: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "dotIcon")
+        imageView.image = UIImage(named: "dotIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .lightGray
         return imageView
     }()
     private lazy var textLabelBold: UILabel = {
@@ -61,7 +66,7 @@ class SecondStartViewController: UIViewController {
     private lazy var textLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "grayTextColor")
-        label.text = "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem."
+        label.text = "Lots of favorite movies with trailers and reviews! Top rating recomendations."
         label.font = Resources.Fonts.plusJakartaSans(with: 14)
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -75,12 +80,12 @@ class SecondStartViewController: UIViewController {
         return view
     }()
     
-    private lazy var continueLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.text = "Continue"
-        label.font = Resources.Fonts.plusJakartaSans(with: 24)
-        return label
+    private lazy var continueButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Continue", for: .normal)
+        button.titleLabel?.font = Resources.Fonts.plusJakartaSans(with: 24)
+        return button
     }()
     
     
@@ -102,13 +107,13 @@ class SecondStartViewController: UIViewController {
         whiteView.addSubview(textLabelBold)
         whiteView.addSubview(textLabel)
         whiteView.addSubview(purpleView)
-        purpleView.addSubview(continueLabel)
+        purpleView.addSubview(continueButton)
         
         
         //Тут вместо создания кнопки сделал, действие при нажатии на label   Xlori
         let continueTapGesture = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
-        continueLabel.isUserInteractionEnabled = true
-        continueLabel.addGestureRecognizer(continueTapGesture)
+        continueButton.isUserInteractionEnabled = true
+        continueButton.addGestureRecognizer(continueTapGesture)
         
     }
     
@@ -122,7 +127,7 @@ class SecondStartViewController: UIViewController {
         textLabelBold.translatesAutoresizingMaskIntoConstraints = false
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         purpleView.translatesAutoresizingMaskIntoConstraints = false
-        continueLabel.translatesAutoresizingMaskIntoConstraints = false
+        continueButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             girlIcon.heightAnchor.constraint(equalToConstant: 408),
@@ -143,7 +148,7 @@ class SecondStartViewController: UIViewController {
             whiteView.topAnchor.constraint(equalTo: girlIcon.bottomAnchor, constant: 0),
             whiteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -46),
             
-            dotAnimationIcon.leftAnchor.constraint(equalTo: whiteView.leftAnchor, constant: 136),
+            dotAnimationIcon.leftAnchor.constraint(equalTo: whiteView.leftAnchor, constant: 160),
             dotAnimationIcon.topAnchor.constraint(equalTo: whiteView.topAnchor, constant: 28),
 
             dotIcon.leftAnchor.constraint(equalTo: dotAnimationIcon.rightAnchor, constant: 8),
@@ -168,9 +173,9 @@ class SecondStartViewController: UIViewController {
             purpleView.centerXAnchor.constraint(equalTo: whiteView.centerXAnchor),
             purpleView.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: -28),
             
-            continueLabel.centerXAnchor.constraint(equalTo: purpleView.centerXAnchor),
-            continueLabel.centerYAnchor.constraint(equalTo: purpleView.centerYAnchor),
-            continueLabel.topAnchor.constraint(equalTo: purpleView.topAnchor, constant: 16),
+            continueButton.centerXAnchor.constraint(equalTo: purpleView.centerXAnchor),
+            continueButton.centerYAnchor.constraint(equalTo: purpleView.centerYAnchor),
+            continueButton.topAnchor.constraint(equalTo: purpleView.topAnchor, constant: 16),
         ])
     }
     
@@ -178,8 +183,28 @@ class SecondStartViewController: UIViewController {
 
     // xlori
     @objc func loginTapped(_ sender: UITapGestureRecognizer) {
-        let createVC = CreateAccountVC()
-        navigationController?.pushViewController(createVC, animated: true)
+        switch count {
+        case 0:
+            textLabelBold.text = "Search for movies"
+            textLabel.text = "All movies in one app! Are you ready to watch the best movies and shows?"
+            dotIcon.tintColor = UIColor(named: "BlueButtonColor")
+            dotAnimationIcon.tintColor = .lightGray
+            count += 1
+        case 1:
+            textLabelBold.text = "The best in always at hand"
+            textLabel.text = "Add your favorite movies to favorites! Easy to search and find what you want to watch."
+            continueButton.setTitle("Start", for: .normal)
+            dotIcon2.tintColor = UIColor(named: "BlueButtonColor")
+            dotIcon.tintColor = .lightGray
+            count += 1
+        case 2:
+            count = 0
+            let createVC = CreateAccountVC()
+            navigationController?.pushViewController(createVC, animated: true)
+            
+        default:
+            break
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

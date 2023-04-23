@@ -175,30 +175,60 @@ class ChangePasswordVC : UIViewController {
         ])
     }
     
-    @objc
-    private func changePasswordButtonPressed() {
+    @objc private func changePasswordButtonPressed() {
         if let newPassword = newPasswordTextField.text, let repeatNewPassword = newPasswordTextField.text {
             if newPassword == repeatNewPassword {
-                Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
-                    if let e = error {
-                        print(e)
-                    } else {
-                        let tabBarController = TabBarController()
-                        tabBarController.selectedIndex = 4
-                        tabBarController.modalPresentationStyle = .fullScreen
-                        self.present(tabBarController, animated: true)
+                // Reauthenticate the user
+                let currentUser = Auth.auth().currentUser
+                let credential = EmailAuthProvider.credential(withEmail: currentUser?.email ?? "", password: RealmStorageManager.shared.getCurrentUser()?.password ?? "")
+                currentUser?.reauthenticate(with: credential, completion: { (result, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
                     }
-                }
+                    
+                    // Update the user's password
+                    currentUser?.updatePassword(to: newPassword, completion: { (error) in
+                        if let error = error {
+                            print(error.localizedDescription)
+                            return
+                        }
+                        
+                        // Update the password in the local storage
+                        guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
+                        RealmStorageManager.shared.edit {
+                            currentUser.password = newPassword
+                        }
+                        
+                        // Pop the view controller
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                })
             }
         }
     }
+
+//    private func changePasswordButtonPressed() {
+//        if let newPassword = newPasswordTextField.text, let repeatNewPassword = newPasswordTextField.text {
+//            if newPassword == repeatNewPassword {
+//                Auth.auth().currentUser?.updatePassword(to: newPassword) { error in
+//                    if let e = error {
+//                        print(e)
+//                    } else {
+//                        guard let currentUser = RealmStorageManager.shared.getCurrentUser() else {return}
+//                        RealmStorageManager.shared.edit {
+//                            currentUser.password = newPassword
+//                        }
+//                        self.navigationController?.popViewController(animated: true)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     @objc
     private func backButtonPressed() {
-        let tabBarController = TabBarController()
-        tabBarController.selectedIndex = 4
-        tabBarController.modalPresentationStyle = .fullScreen
-        self.present(tabBarController, animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

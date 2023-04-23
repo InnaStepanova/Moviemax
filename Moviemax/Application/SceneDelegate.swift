@@ -13,15 +13,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let navController = UINavigationController(rootViewController: CreateAccountVC())
         let navController1 = UINavigationController(rootViewController: SecondStartViewController())
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.rootViewController = StartViewController()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if let currentUser = RealmStorageManager.shared.getCurrentUser() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            if let _ = RealmStorageManager.shared.getCurrentUser() {
                 let tabBar = TabBarController()
                 tabBar.selectedIndex = 2
                 self.window?.rootViewController = tabBar
@@ -29,15 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.window?.rootViewController = navController1
             }
         }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//            if let currentUser = UserDefaults.standard.object(forKey: "FirstRun") as? Int {
-//                self.window?.rootViewController = navController
-//            } else {
-//                self.window?.rootViewController = navController1
-//            }
-//        }
 
-        
         if let currentScheme = UserDefaults.standard.value(forKey: "theme") as? Int {
             window?.rootViewController?.overrideUserInterfaceStyle = currentScheme == 1 ? .light : .dark
         }

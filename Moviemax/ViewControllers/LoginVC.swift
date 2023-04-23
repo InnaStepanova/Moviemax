@@ -101,9 +101,9 @@ class LoginVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        emailTextField.text = "1@1.com"
-        passwordTextField.text = "123456"
     }
+   
+    
     
     
     func setupView() {
@@ -204,15 +204,20 @@ class LoginVC : UIViewController {
                     let alert = UIAlertController(title: "Error", message: "User not found", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default))
                     self.present(alert, animated: true)
+                    self.emailTextField.text = ""
+                    self.passwordTextField.text = ""
                     print(error)
                 } else {
+                    if let currentUser = RealmStorageManager.shared.findUser(email1: email, password1: password) {
+                        RealmStorageManager.shared.edit {
+                            currentUser.isCurrent = true
+                        }
                     let tabBarController = TabBarController()
                     tabBarController.selectedIndex = 2
                     tabBarController.modalPresentationStyle = .fullScreen
                     self.present(tabBarController, animated: true)
-                    //                    }
-                    //                        let secondStart = SecondStartViewController()
-                    //                        self!.present(secondStart, animated: true)
+//                                        self!.present(secondStart, animated: true)
+                    }
                 }
             }
         }
@@ -224,6 +229,9 @@ class LoginVC : UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emailTextField.text = ""
+        passwordTextField.text = ""
         navigationController?.isNavigationBarHidden = true
     }
     

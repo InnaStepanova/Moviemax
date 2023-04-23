@@ -76,7 +76,6 @@ class FilmCellView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilmCell", for: indexPath) as! FilmCell
         let movie = popularTV[indexPath.item]
-        print("Это ТВ \(movie)")
         cell.set(movieId: movie.id)
         return cell
     }

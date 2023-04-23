@@ -16,7 +16,6 @@ final class MovieLargeCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
-        imageView.image = UIImage(named: "DriftingHome")
         return imageView
     }()
     
@@ -84,6 +83,7 @@ final class MovieLargeCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        movieImage.image = UIImage()
         likeButton.isFavorite = false
         likeButton.configure()
     }
@@ -116,6 +116,39 @@ final class MovieLargeCell: UICollectionViewCell {
         self.watchNowButton.setTitle(movie.category, for: .normal)
         self.likeButton.tag = movie.id
         self.likeButton.isLike(id: movie.id)
+    }
+    
+    func set(id: Int) {
+        NetworkManager.shared.getMovieDetail(id: id) { result in
+            switch result {
+            case .success(let movie):
+                guard let url = movie.posterPath else {return}
+                NetworkManager.shared.downloadImage(path: url) { image in
+                    DispatchQueue.main.async {
+                        self.movieImage.image = image
+                        self.movieName.text = movie.originalTitle
+                        self.timeLabel.text = "\(movie.runtime ?? 0) min"
+                        if let genres = movie.genres {
+                            if genres.count > 0 {
+                                self.watchNowButton.setTitle(movie.genres?[0].name, for: .normal)
+                            }
+                        }
+                        if let genres = movie.genres {
+                            if genres.count > 0 {
+                                self.watchNowButton.setTitle(movie.genres?[0].name, for: .normal)
+                            }
+                        }
+                        self.dateLabel.text = movie.releaseDate
+                        if let id = movie.id {
+                            self.likeButton.tag = id
+                            self.likeButton.isLike(id: id)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     private func addViews() {
@@ -175,3 +208,4 @@ final class MovieLargeCell: UICollectionViewCell {
         ])
     }
 }
+

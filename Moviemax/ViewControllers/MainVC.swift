@@ -46,7 +46,7 @@ class MainVC : UIViewController {
         let label = UILabel()
         label.text = getUserFullNameData()
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
-        label.textColor = .black
+//        label.textColor = .black
         
         return label
     }()
@@ -64,7 +64,7 @@ class MainVC : UIViewController {
         let label = UILabel()
         label.text = "Category"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        label.textColor = .black
+//        label.textColor = .black
         
         return label
     }()
@@ -73,7 +73,7 @@ class MainVC : UIViewController {
         let label = UILabel()
         label.text = "Box Office"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        label.textColor = .black
+//        label.textColor = .black
         
         return label
     }()
@@ -81,6 +81,7 @@ class MainVC : UIViewController {
     private let networkManager = NetworkManager.shared
     private var popularMovies: [Movie] = []
     private var popularTV: [Movie] = []
+    private var startMovies: [Movie] = []
     private lazy var currentUser = RealmStorageManager.shared.getCurrentUser()
     
     // MARK: - Lifecycle
@@ -90,7 +91,10 @@ class MainVC : UIViewController {
         if let currentUser = RealmStorageManager.shared.getCurrentUser() {
             self.currentUser = currentUser
         }
+        categoryCollectionView.myDelegate = self
         self.navigationController?.navigationBar.isHidden = true
+//        let filmCellView = FilmCellView()
+//        filmCellView.delegate = self
         setupView()
         getPopularFilm()
     }
@@ -118,17 +122,6 @@ class MainVC : UIViewController {
         view.addSubview(boxCollectionView)
        
         setConstraints()
-    }
-    
-    func getPopularFilm() {
-        networkManager.getPopularMovies { result in
-            switch result {
-            case .success(let films):
-                self.popularMovies = films
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 
     func getPopularTV() {
@@ -247,5 +240,60 @@ extension MainVC: FilmCellViewDelegate {
         viewController.id = model.id
         viewController.likeButton.tag = model.id
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func getPopularFilm() {
+        networkManager.getPopularMovies { result in
+            switch result {
+            case .success(let films):
+                self.popularMovies = films
+                self.startMovies = films
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+}
+
+//extension MainVC: FilmCellViewDelegate {
+//    func precentMovieDetail(id: Int) {
+//        print(id)
+////        let movieDetailVC = MovieDetail()
+////        movieDetailVC.id = id
+////        navigationController?.pushViewController(movieDetailVC, animated: true)
+//    }
+//}
+
+extension MainVC: CategoryCollectionViewDelegate {
+    func sortOfCategory(categories: String) {
+        if categories == "All" {
+            self.popularMovies = self.startMovies
+            DispatchQueue.main.async {
+                self.boxCollectionView.reloadData()
+            }
+            return
+        }
+        var sortMovie: [Movie] = []
+        for movie in startMovies {
+            let id = movie.id
+            NetworkManager.shared.getMovieDetail(id: id) { result in
+                    switch result {
+                    case .success(let film):
+                        if let genres = film.genres {
+                            if  genres.count > 0 {
+                                if genres[0].name == categories {
+                                    sortMovie.append(movie)
+                                }
+                            }
+                        }
+                        self.popularMovies = sortMovie
+                        DispatchQueue.main.async {
+                            self.boxCollectionView.reloadData()
+                        }
+                    case .failure(let error):
+                        print(error)
+                }
+            }
+        }
     }
 }
