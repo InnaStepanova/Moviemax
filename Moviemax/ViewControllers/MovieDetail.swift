@@ -21,12 +21,13 @@ class MovieDetail: UIViewController {
         let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize = contentView.frame.size
         scrollView.addSubview(contentView)
+        scrollView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         return scrollView
     }()
     
     private lazy var contentView: UIView = {
         let contentView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 900))
-        
+        contentView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         contentView.addSubview(likeButton)
         contentView.addSubview(titleLabel)
         contentView.addSubview(backButton)
@@ -81,7 +82,7 @@ class MovieDetail: UIViewController {
     
     private lazy var image: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "DriftingHome")
+        image.image = UIImage()
         image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
         image.layer.cornerRadius = 26
@@ -91,7 +92,7 @@ class MovieDetail: UIViewController {
     
     private lazy var filmLabel: UILabel = {
         let label = UILabel.signBigLabel
-        label.text = "Drifting Home"
+        label.text = "No name"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -103,6 +104,7 @@ class MovieDetail: UIViewController {
         stackView.distribution = .equalSpacing
         stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         return stackView
     }()
     
@@ -207,7 +209,7 @@ class MovieDetail: UIViewController {
         let collectionView = UICollectionView(frame:.zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(named: "BackgroundScreenColor")
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
@@ -253,6 +255,7 @@ class MovieDetail: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "BackgroundScreenColor")
         configureView()
         set(id: id, isTV: isTv)
     }

@@ -46,7 +46,7 @@ class MainVC : UIViewController {
         let label = UILabel()
         label.text = getUserFullNameData()
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 18)
-        label.textColor = .black
+//        label.textColor = .black
         
         return label
     }()
@@ -64,7 +64,7 @@ class MainVC : UIViewController {
         let label = UILabel()
         label.text = "Category"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        label.textColor = .black
+//        label.textColor = .black
         
         return label
     }()
@@ -73,7 +73,7 @@ class MainVC : UIViewController {
         let label = UILabel()
         label.text = "Box Office"
         label.font = Resources.Fonts.plusJakartaSansSemiBold(with: 16)
-        label.textColor = .black
+//        label.textColor = .black
         
         return label
     }()

@@ -198,8 +198,10 @@ class SecondStartViewController: UIViewController {
             dotIcon.tintColor = .lightGray
             count += 1
         case 2:
+            count = 0
             let createVC = CreateAccountVC()
             navigationController?.pushViewController(createVC, animated: true)
+            
         default:
             break
         }

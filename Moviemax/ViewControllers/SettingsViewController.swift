@@ -115,7 +115,9 @@ class SettingsViewController: UIViewController {
         RealmStorageManager.shared.edit {
             user.isCurrent = false
         }
-        dismiss(animated: true)
+        let secondVC = SecondStartViewController()
+        secondVC.modalPresentationStyle = .fullScreen
+        present(secondVC, animated: true)
     }
 }
 
