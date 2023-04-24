@@ -72,20 +72,14 @@ class MovieDetail: UIViewController {
     }()
     
     var likeButton = LikeButton()
-    //    private lazy var likeButton: UIButton = {
-    //        let button = UIButton(type: .system)
-    //        button.setImage(UIImage(named: "heart"), for: .normal)
-    //        button.translatesAutoresizingMaskIntoConstraints = false
-    //        button.addTarget(self, action: #selector(likeButtonPressed), for: .touchUpInside)
-    //        return button
-    //    }()
     
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.image = UIImage()
         image.contentMode = .scaleAspectFit
-        image.clipsToBounds = true
         image.layer.cornerRadius = 26
+        image.layer.masksToBounds = true
+        image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
